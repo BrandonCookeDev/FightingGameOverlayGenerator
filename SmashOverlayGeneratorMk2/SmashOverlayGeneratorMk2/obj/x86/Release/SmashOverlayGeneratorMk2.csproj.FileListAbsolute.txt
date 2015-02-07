@@ -1,8 +1,0 @@
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\bin\Release\SmashOverlayGeneratorMk2.exe
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\bin\Release\SmashOverlayGeneratorMk2.pdb
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.SmashOverlayGenerator.resources
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.Properties.Resources.resources
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.csproj.GenerateResource.Cache
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.exe
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.pdb
-C:\Users\BrandonADMIN\documents\visual studio 2010\Projects\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.PicturePreviewForm.resources
