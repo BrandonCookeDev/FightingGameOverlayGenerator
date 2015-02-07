@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7E3264B4-BDE8-4928-9209-CE0029B8AB0D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SmashOverlayGeneratorMk2</RootNamespace>
+    <AssemblyName>SmashOverlayGeneratorMk2</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>smash-bros-logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExternalInterfaceProxy">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\ExternalInterfaceProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.XSplitBroadcasterLib">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\Interop.XSplitBroadcasterLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SplitMediaLabs.StreamingSdk">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\SplitMediaLabs.StreamingSdk.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XSplit.ControlLibrary">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\XSplit.ControlLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="XSplit.Core">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\XSplit.Core.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Points\CasterPoint.cs" />
+    <Compile Include="Objects\Points\CompetitorPoint.cs" />
+    <Compile Include="Objects\Points\ScorePoint.cs" />
+    <Compile Include="Objects\Points\TemplatePoint.cs" />
+    <Compile Include="Objects\Points\TournamentPoint.cs" />
+    <Compile Include="Objects\Points\TwitterPoint.cs" />
+    <Compile Include="Objects\Template\CasterTemplate.cs" />
+    <Compile Include="Objects\Template\CompetitorTemplate.cs" />
+    <Compile Include="DataPoint.cs" />
+    <Compile Include="Objects\Template\Template.cs" />
+    <Compile Include="SmashOverlayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SmashOverlayForm.Designer.cs">
+      <DependentUpon>SmashOverlayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PicturePreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PicturePreviewForm.Designer.cs">
+      <DependentUpon>PicturePreviewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XSplit\Broadcaster.cs" />
+    <Compile Include="XSplit\ResourceManagerX.cs" />
+    <Compile Include="XSplit\Resources.Designer.cs" />
+    <EmbeddedResource Include="SmashOverlayForm.resx">
+      <DependentUpon>SmashOverlayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PicturePreviewForm.resx">
+      <DependentUpon>PicturePreviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="320px-Super_Smash_Bros_4_merged_logo_no_subtitle %282%29.ico" />
+    <EmbeddedResource Include="Images\Caster\CasterOverlay1.0.png" />
+    <EmbeddedResource Include="Images\ICO\smash-bros-logo.ico" />
+    <EmbeddedResource Include="Images\Templates\SpaceSmashOverlay.png" />
+    <None Include="Resources\BannerCKS_V2_Blank.png" />
+    <None Include="Resources\Logo.png" />
+    <None Include="Resources\4666.jpg" />
+    <None Include="Resources\3d_landscape_1551920x1080.jpg" />
+    <None Include="Resources\fantasy-landscape-3d-wallpaper-9018-hd-widescreen-wallpapers.jpg" />
+    <None Include="Resources\future-city.jpg" />
+    <EmbeddedResource Include="Images\Templates\CrudeCityOverlay.png" />
+    <EmbeddedResource Include="Images\Templates\SpaceWarOverlay.png" />
+    <EmbeddedResource Include="Images\Templates\SpaceSunriseOverlay.png" />
+    <EmbeddedResource Include="Images\Templates\GreenOverlay.png" />
+    <EmbeddedResource Include="Images\Templates\PurpleOverlay.png" />
+    <Content Include="smash-bros-logo.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
