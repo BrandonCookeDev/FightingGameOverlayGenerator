@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,19 +36,23 @@
   <PropertyGroup>
     <ApplicationIcon>smash-bros-logo.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExternalInterfaceProxy">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\ExternalInterfaceProxy.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.XSplitBroadcasterLib">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\Interop.XSplitBroadcasterLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="SmashOverlayGeneratorWebServiceLib">
+      <HintPath>..\..\SmashOverlayGeneratorWebServiceLib\SmashOverlayGeneratorWebServiceLib\bin\Release\SmashOverlayGeneratorWebServiceLib.dll</HintPath>
     </Reference>
     <Reference Include="SplitMediaLabs.StreamingSdk">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\SplitMediaLabs.StreamingSdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,12 +61,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="XSplit.ControlLibrary">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\XSplit.ControlLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="XSplit.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\SplitMediaLabs\XSplit\XSplit.Core.exe</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objects\Points\CasterPoint.cs" />
@@ -122,7 +120,6 @@
     <Content Include="320px-Super_Smash_Bros_4_merged_logo_no_subtitle %282%29.ico" />
     <EmbeddedResource Include="Images\Caster\CasterOverlay1.0.png" />
     <EmbeddedResource Include="Images\ICO\smash-bros-logo.ico" />
-    <EmbeddedResource Include="Images\Templates\SpaceSmashOverlay.png" />
     <None Include="Resources\BannerCKS_V2_Blank.png" />
     <None Include="Resources\Logo.png" />
     <None Include="Resources\4666.jpg" />
@@ -136,7 +133,9 @@
     <EmbeddedResource Include="Images\Templates\PurpleOverlay.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Objects\Connection\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

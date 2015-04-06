@@ -104,9 +104,12 @@
             this.caster2Label = new System.Windows.Forms.Label();
             this.caster1Label = new System.Windows.Forms.Label();
             this.settingsTab = new System.Windows.Forms.TabPage();
+            this.makeConnectionBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.autoUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundTextbox = new System.Windows.Forms.ComboBox();
+            this.logMessageLabel = new System.Windows.Forms.Label();
             this.competitorsTab.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -503,8 +506,8 @@
             this.tournamentRoundLabel.AutoSize = true;
             this.tournamentRoundLabel.BackColor = System.Drawing.Color.Transparent;
             this.tournamentRoundLabel.Font = new System.Drawing.Font("Constantia", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tournamentRoundLabel.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tournamentRoundLabel.Location = new System.Drawing.Point(195, 323);
+            this.tournamentRoundLabel.ForeColor = System.Drawing.Color.DarkBlue;
+            this.tournamentRoundLabel.Location = new System.Drawing.Point(29, 318);
             this.tournamentRoundLabel.Name = "tournamentRoundLabel";
             this.tournamentRoundLabel.Size = new System.Drawing.Size(203, 23);
             this.tournamentRoundLabel.TabIndex = 16;
@@ -515,7 +518,7 @@
             // 
             this.generateButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.generateButton.Font = new System.Drawing.Font("Constantia", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.generateButton.Location = new System.Drawing.Point(424, 327);
+            this.generateButton.Location = new System.Drawing.Point(422, 318);
             this.generateButton.Name = "generateButton";
             this.generateButton.Size = new System.Drawing.Size(96, 50);
             this.generateButton.TabIndex = 13;
@@ -938,6 +941,8 @@
             // 
             // settingsTab
             // 
+            this.settingsTab.Controls.Add(this.makeConnectionBtn);
+            this.settingsTab.Controls.Add(this.label1);
             this.settingsTab.Controls.Add(this.autoUpdateCheckbox);
             this.settingsTab.Location = new System.Drawing.Point(4, 22);
             this.settingsTab.Name = "settingsTab";
@@ -945,6 +950,25 @@
             this.settingsTab.TabIndex = 4;
             this.settingsTab.Text = "Settings";
             this.settingsTab.UseVisualStyleBackColor = true;
+            // 
+            // makeConnectionBtn
+            // 
+            this.makeConnectionBtn.Location = new System.Drawing.Point(72, 194);
+            this.makeConnectionBtn.Name = "makeConnectionBtn";
+            this.makeConnectionBtn.Size = new System.Drawing.Size(95, 42);
+            this.makeConnectionBtn.TabIndex = 2;
+            this.makeConnectionBtn.Text = "Make Connection";
+            this.makeConnectionBtn.UseVisualStyleBackColor = true;
+            this.makeConnectionBtn.Click += new System.EventHandler(this.makeConnectionBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(176, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "This functionality is not yet available";
             // 
             // autoUpdateCheckbox
             // 
@@ -962,11 +986,11 @@
             this.versionLabel.AutoSize = true;
             this.versionLabel.BackColor = System.Drawing.Color.Transparent;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.versionLabel.Location = new System.Drawing.Point(13, 364);
+            this.versionLabel.Location = new System.Drawing.Point(490, 9);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(37, 15);
             this.versionLabel.TabIndex = 14;
-            this.versionLabel.Text = "v 2.3";
+            this.versionLabel.Text = "v 3.0";
             // 
             // tournamentRoundTextbox
             // 
@@ -981,17 +1005,30 @@
             "Losers\' Semi Finals",
             "Losers\' Finals",
             "Grand Finals"});
-            this.tournamentRoundTextbox.Location = new System.Drawing.Point(225, 349);
+            this.tournamentRoundTextbox.Location = new System.Drawing.Point(238, 318);
             this.tournamentRoundTextbox.Name = "tournamentRoundTextbox";
-            this.tournamentRoundTextbox.Size = new System.Drawing.Size(191, 21);
+            this.tournamentRoundTextbox.Size = new System.Drawing.Size(178, 21);
             this.tournamentRoundTextbox.TabIndex = 18;
+            // 
+            // logMessageLabel
+            // 
+            this.logMessageLabel.AutoSize = true;
+            this.logMessageLabel.BackColor = System.Drawing.Color.Transparent;
+            this.logMessageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logMessageLabel.Location = new System.Drawing.Point(17, 362);
+            this.logMessageLabel.Name = "logMessageLabel";
+            this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
+            this.logMessageLabel.TabIndex = 19;
+            this.logMessageLabel.Text = "...";
+            this.logMessageLabel.Click += new System.EventHandler(this.logMessageLabel_Click);
             // 
             // SmashOverlayGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::SmashOverlayGeneratorMk2.Properties.Resources.future_city;
-            this.ClientSize = new System.Drawing.Size(538, 389);
+            this.ClientSize = new System.Drawing.Size(538, 419);
+            this.Controls.Add(this.logMessageLabel);
             this.Controls.Add(this.tournamentRoundTextbox);
             this.Controls.Add(this.tournamentRoundLabel);
             this.Controls.Add(this.versionLabel);
@@ -1110,6 +1147,9 @@
         private System.Windows.Forms.ComboBox tournamentRoundTextbox;
         private System.Windows.Forms.TabPage settingsTab;
         private System.Windows.Forms.CheckBox autoUpdateCheckbox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button makeConnectionBtn;
+        private System.Windows.Forms.Label logMessageLabel;
 
 
     }

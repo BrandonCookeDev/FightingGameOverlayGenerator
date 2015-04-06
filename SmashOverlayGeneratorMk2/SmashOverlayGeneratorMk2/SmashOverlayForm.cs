@@ -12,14 +12,21 @@ using System.Reflection;
 using SmashOverlayGeneratorMk2.Objects.Points;
 using SmashOverlayGeneratorMk2.Objects;
 using XSplit.Core.Properties;
-using XSplitBroadcasterLib;
+using System.ServiceModel;
+using SmashOverlayGeneratorWebServiceLib;
+using SmashOverlayGeneratorWebServiceLib.Objects;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Linq;
+//using XSplitBroadcasterLib;
 
 namespace SmashOverlayGeneratorMk2
 {
+    [DataContract]
     public partial class SmashOverlayGenerator : Form
     {
         /* GLOBAL VARIABLES */
-        #region Data Fields
+        #region Data Fields        
         private string templateFile;
         private string newTemplateFile;
         private string templateFileName;
@@ -43,6 +50,10 @@ namespace SmashOverlayGeneratorMk2
         private ArrayList casterTemplates;
         private Resources _resources = new Resources();
         
+        private ISOGControlService service = null;
+
+        //This will define the connection to the service
+        private Connection conn = null;
         
 
         Assembly myAssembly = Assembly.GetExecutingAssembly();  
@@ -50,130 +61,159 @@ namespace SmashOverlayGeneratorMk2
 
         /* GETTERS AND SETTERS */
         #region Getters and Setters
+
+        [DataMember]
         public bool IsError
         {
             get { return this.isError; }
             set { this.isError = value; }
         }
 
+        [DataMember]
         public string TemplateFile
         {
             get{ return this.templateFile; }
             set{ this.templateFile = value; }
         }
 
+        [DataMember]
         public string NewTemplateFile
         {
             get { return this.newTemplateFile; }
             set { this.newTemplateFile = value; }
         }
 
+        [DataMember]
         public string Competitor1
         {
             get { return this.competitor1; }
             set { this.competitor1 = value; }
         }
 
+        [DataMember]
         public string Competitor2
         {
             get { return this.competitor2; }
             set { this.competitor2 = value; }
         }
 
+        [DataMember]
         public string Score1
         {
             get { return this.score1; }
             set { this.score1 = value; }
         }
 
+        [DataMember]
         public string Score2
         {
             get { return this.score2; }
             set { this.score2 = value; }
         }
 
+        [DataMember]
         public string Caster1
         {
             get { return this.caster1; }
             set { this.caster1 = value; } 
         }
 
+        [DataMember]
         public string Caster2
         {
             get { return this.caster2; }
             set { this.caster2 = value; }
         }
 
+        [DataMember]
         public string Caster1Twitter
         {
             get { return this.caster1Twitter; }
             set { this.caster1Twitter = value; }
         }
 
+        [DataMember]
         public string Caster2Twitter
         {
             get { return this.caster2Twitter; }
             set { this.caster2Twitter = value; }             
         }
 
+        [DataMember]
         public string CasterTemplateFile
         {
             get { return this.casterTemplateFile; }
             set { this.casterTemplateFile = value; }
         }
 
+        [DataMember]
         public string CasterTemplateFileName
         {
             get { return this.casterTemplateFileName; }
             set { this.casterTemplateFileName = value; }
         }
 
+        [DataMember]
         public string TournamentName
         {
             get { return this.tournamentName; }
             set { this.tournamentName = value; }
         }
 
+        [DataMember]
         public string TournamentRound
         {
             get { return this.tournamentRound; }
             set { this.tournamentRound = value; }
         }
 
+        [DataMember]
         public string GameType
         {
             get { return this.gameType; }
             set { this.gameType = value; }
         }
 
+        [DataMember]
         public string TemplateFileName
         {
             get { return this.templateFileName; }
             set { this.templateFileName = value; } 
         }
 
+        [DataMember]
         public string ResourceType
         {
             get { return this.resourceType; }
             set { this.resourceType = value; }
         }
 
+        [DataMember]
         public bool IsAutoUpdate
         {
             get { return this.isAutoUpdate; }
             set { this.isAutoUpdate = value;}
         }
 
+        [DataMember]
         public ArrayList Templates
         {
             get { return this.templates; }
             set { this.templates = value; }
         }
 
+        [DataMember]
         public ArrayList CasterTemplates
         {
             get { return this.casterTemplates; }
             set { this.casterTemplates = value; }
+        }
+
+        [DataMember]
+        public Connection Conn
+        {
+            get { return this.conn; }
+            set { this.conn = value; }
         }
 
         /*
@@ -194,11 +234,14 @@ namespace SmashOverlayGeneratorMk2
         #endregion Constructors
 
         /* METHODS */
-        
+
+        delegate void SetTextCallback(string text, bool err);
+
         #region GeneratePicture
         private void paintCompetitorText(string filePath, string resourceType)
         {
-            
+            logToUser("GENERATING...", false);
+
             Image template = null;
             Bitmap bMap = null;
             Stream imageStream = null;
@@ -219,97 +262,13 @@ namespace SmashOverlayGeneratorMk2
 
             ResourceType = resourceType;
 
-            /*
-            //DEFINE THE GENERIC GRAPHICS OBJECT FOR THE IMAGE
-            Graphics g = Graphics.FromImage(bMap);
-
-            //DETERMINE FONT SIZE
-            int[] fontSize = determineFontSize();
-
-            Font name1Font = null;
-            Font name2Font = null;
-            Font scoreFont = null;
-            Font tourneyFont = null;
-
-            //DEFINE THE FONT TO USE
-            if (resourceType.Equals("file"))
-            {
-                name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
-                name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
-                scoreFont = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
-                tourneyFont = new Font(FontFamily.GenericSansSerif, 23, FontStyle.Bold);
-            }
-            else
-            {
-                name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
-                name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
-                scoreFont = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
-                tourneyFont = new Font(FontFamily.GenericSansSerif, 23, FontStyle.Bold);
-            }
-
-            //CENTER NAME TEXT
-            StringFormat nameFormat = new StringFormat();
-            nameFormat.LineAlignment = StringAlignment.Center;
-            nameFormat.Alignment = StringAlignment.Center;
-
-            /* DEFINE LOCATIONS ON TEMPLATE 
-            //PLAYER 1: 416, 1050 or 501, 1050 and 1521, 351 or 1686, 351
-            //Point p1 = new Point(416, 1050);
-            Point p1 = new Point(501,1060);
-            //Point p1Cam = new Point(1521, 351);
-            Point p1Cam = new Point(1686, 351);
-            
-            
-            //PLAYER 2: 1075, 1050 or 976, 1050 and 1521, 717 or 1686, 717
-            //Point p2 = new Point(1075, 1050);
-            Point p2 = new Point(976, 1060);
-            //Point p2Cam = new Point(1521, 717);
-            Point p2Cam = new Point(1686, 717);
-            
-            //PLAYER 1 SCORE: 702, 1050
-            Point p1Score = new Point(665, 1030);
-            
-            //PLAYER 2 SCORE: 775, 1050
-            Point p2Score = new Point(775, 1030);
-            
-            //TOURNAMENT NAME AND ROUND: 579, 20 or 900, 20
-            //Point tourneyData = new Point(579, 20);
-            Point pTourneyData = new Point(900, 25);
-            
-            /* DRAW THE TEXT 
-            //PLAYER 1
-            g.DrawString(Competitor1, name1Font, Brushes.White, p1, nameFormat);
-            g.DrawString(Competitor1, name1Font, Brushes.White, p1Cam, nameFormat);
-            //PLAYER 2
-            g.DrawString(Competitor2, name2Font, Brushes.White, p2, nameFormat);
-            g.DrawString(Competitor2, name2Font, Brushes.White, p2Cam, nameFormat);
-            //PLAYER 1 SCORE
-            g.DrawString(Score1, scoreFont, Brushes.White, p1Score);
-            //PLAYER 2 SCORE
-            g.DrawString(Score2, scoreFont, Brushes.White, p2Score);
-            //TOURNAMENT NAME AND ROUND
-            g.DrawString(tournamentNameTextbox.Text + " | " + tourneyRoundTextbox.Text,
-                            tourneyFont, Brushes.White, pTourneyData, nameFormat);
-
-            String fileName;
-            //RELOAD THE NEW TEMPLATE
-            if (resourceType.Equals("file"))
-            {
-                fileName = NewTemplateFile.Substring(0, NewTemplateFile.Length - 4) + "_official.png";
-                template.Dispose();
-            }
-            else
-            {
-                fileName = TemplateFileName.Substring(0, TemplateFileName.Length - 4) + tournamentNameTextbox.Text + "_official.png";
-                imageStream.Close();
-            }
-            bMap.Save(fileName);
-             */
             debugCompetitorTemplate(resourceType, filePath);
         }
 
         private void paintCasterText(string filePath)
         {
+            logToUser("GENERATING...", false);
+
             Bitmap bMap = null;
             Stream imageStream = null;
 
@@ -317,55 +276,7 @@ namespace SmashOverlayGeneratorMk2
             imageStream = myAssembly.GetManifestResourceStream(filePath);
             bMap = new Bitmap(imageStream);
 
-            /*
-            //DEFINE THE GENERIC GRAPHICS OBJECT FOR THE IMAGE
-            Graphics g = Graphics.FromImage(bMap);
-
-            //DETERMINE FONT SIZE
-            //int[] fontSize = determineFontSize();
-
-            //DEFINE THE FONT TO USE
-            Font name1Font = new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold);
-            Font name2Font = new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold);
-            Font twitterFont = new Font(FontFamily.GenericSansSerif, 40, FontStyle.Bold);
-
-            //CENTER NAME TEXT
-            StringFormat nameFormat = new StringFormat();
-            nameFormat.LineAlignment = StringAlignment.Center;
-            nameFormat.Alignment = StringAlignment.Center;
-
-            /* DEFINE LOCATIONS ON TEMPLATE */
-            /*
-            //PLAYER 1: 416, 1050 or 501, 1050 and 1521, 351 or 1686, 351
-            Point p1 = new Point(450,890);
             
-            
-            //PLAYER 2: 1075, 1050 or 976, 1050 and 1521, 717 or 1686, 717
-            Point p2 = new Point(1320, 890);
-            
-            //PLAYER 1 SCORE: 702, 1050
-            Point twitter1Point = new Point(430, 910);
-            
-            //PLAYER 2 SCORE: 775, 1050
-            Point twitter2Point = new Point(1300, 910);
-                        
-            /* DRAW THE TEXT */
-            /*
-            //PLAYER 1
-            g.DrawString(Caster1, name1Font, Brushes.White, p1, nameFormat);
-            //PLAYER 2
-            g.DrawString(Caster2, name2Font, Brushes.White, p2, nameFormat);
-            //PLAYER 1 SCORE
-            g.DrawString(Caster1Twitter, twitterFont, Brushes.White, twitter1Point);
-            //PLAYER 2 SCORE
-            g.DrawString(Caster2Twitter, twitterFont, Brushes.White, twitter2Point);
-            
-            String fileName;
-            //RELOAD THE NEW TEMPLATE
-            fileName = CasterTemplateFileName.Substring(0, CasterTemplateFileName.Length - 4) + "_official.png";
-            imageStream.Close();
-            bMap.Save(fileName);        
-            */
             debugCasterTemplate(filePath);
         }
 
@@ -435,6 +346,14 @@ namespace SmashOverlayGeneratorMk2
         #endregion GeneratePicture
 
         #region FormOperations
+        private void SmashOverlayGeneratorMk2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '.')
+            {
+                incrementPlayer1();
+            }
+        }
+
         private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
@@ -451,7 +370,32 @@ namespace SmashOverlayGeneratorMk2
 
             populateTemplatesList();
             populateCasterTemplatesList();
+
+            try
+            {
+                Thread thread = new Thread(()=> {
+                        EndpointAddress address = new EndpointAddress(new Uri("http://192.168.0.5:8081/SOGCS.svc"));
+                        //NetTcpBinding binding = new NetTcpBinding();
+                        //EndpointAddress address = new EndpointAddress(new Uri("net.tcp://192.168.0.5/SOGCS.svc"));
+                        WSHttpBinding binding = new WSHttpBinding();
+                        ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
+
+                        service = fac.CreateChannel();
+                        //MessageBox.Show("Connection channel successfully made!");
+                        logToUser("Connection Channel successfully made!", false);
+                        makeConnection();
+                    }
+                );
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Connection was not made");
+                logToUser("Connection was not made", true);
+            }
+
         }
+
 
         public void populateTemplatesList()
         {
@@ -749,6 +693,38 @@ namespace SmashOverlayGeneratorMk2
         #endregion FormOperations
 
         #region ButtonListeners
+        private void incrementPlayer1Button_Click(object sender, EventArgs e)
+        {
+            incrementPlayer1();
+        }
+        private void decrementPlayer1Button_Click(object sender, EventArgs e)
+        {
+            decrementPlayer1();
+        }
+        private void incrementPlayer2Button_Click(object sender, EventArgs e)
+        {
+            incrementPlayer2();
+        }
+        private void decrementPlayer2Button_Click(object sender, EventArgs e)
+        {
+            decrementPlayer2();
+        }
+        private void incrementTeam1Button_Click(object sender, EventArgs e)
+        {
+            incrementTeam1();
+        }
+        private void decrementTeam1Button_Click(object sender, EventArgs e)
+        {
+            decrementTeam1();
+        }
+        private void incrementTeam2Button_Click(object sender, EventArgs e)
+        {
+            incrementTeam2();
+        }
+        private void decrementTeam2Button_Click(object sender, EventArgs e)
+        {
+            decrementTeam2();
+        }
         private void generateButton_Click(object sender, EventArgs e)
         {
             try
@@ -758,7 +734,7 @@ namespace SmashOverlayGeneratorMk2
             catch (Exception ex)
             {
                 // Need to put this in front of the form
-                MessageBox.Show(ex.Message);
+                logToUser(ex.Message.ToString(), true);
                 //MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace);
             }
         }
@@ -790,7 +766,7 @@ namespace SmashOverlayGeneratorMk2
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                logToUser(ex.Message.ToString(), true);
             }
         }
 
@@ -804,7 +780,7 @@ namespace SmashOverlayGeneratorMk2
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                logToUser(ex.Message.ToString(), true);
             }
         }
 
@@ -942,6 +918,23 @@ namespace SmashOverlayGeneratorMk2
         #endregion ButtonListeners             
 
         #region ErrorHandling
+
+        private bool dataFilledIn()
+        {
+            try
+            {
+                verifyTourneyDataFilled();
+                verifyCombatantsFilled();
+                verifyTournamentRoundFilled();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message.ToString(), true);
+                return false;
+            }
+            return true;
+        }
+
         private void verifyCombatantsFilled()
         {
             if(GameType.Equals("singles")){
@@ -1187,23 +1180,10 @@ namespace SmashOverlayGeneratorMk2
         }
         #endregion DEBUG
 
-        private bool dataFilledIn()
-        {
-            try
-            {
-                verifyTourneyDataFilled();
-                verifyCombatantsFilled();
-                verifyTournamentRoundFilled();                
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-            return true;
-        }
+        
 
-        private void incrementPlayer1Button_Click(object sender, EventArgs e)
+        
+        private void incrementPlayer1()
         {
             if (dataFilledIn())
             {
@@ -1213,10 +1193,10 @@ namespace SmashOverlayGeneratorMk2
 
                 generate();
             }
-            
         }
 
-        private void decrementPlayer1Button_Click(object sender, EventArgs e)
+        
+        private void decrementPlayer1()
         {
             int score = Int32.Parse(singlesP1ScoreTextbox.Text);
             if (score > 0)
@@ -1231,7 +1211,8 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void incrementPlayer2Button_Click(object sender, EventArgs e)
+        
+        private void incrementPlayer2()
         {
             if (dataFilledIn())
             {
@@ -1243,7 +1224,8 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void decrementPlayer2Button_Click(object sender, EventArgs e)
+        
+        private void decrementPlayer2()
         {
             int score = Int32.Parse(singlesP2ScoreTextbox.Text);
             if (score > 0)
@@ -1258,7 +1240,8 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void incrementTeam1Button_Click(object sender, EventArgs e)
+        
+        private void incrementTeam1()
         {
             if (dataFilledIn())
             {
@@ -1270,7 +1253,9 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void decrementTeam1Button_Click(object sender, EventArgs e)
+
+        
+        private void decrementTeam1()
         {
             int score = Int32.Parse(doublesT1ScoreTextbox.Text);
             if (score > 0)
@@ -1285,7 +1270,8 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void incrementTeam2Button_Click(object sender, EventArgs e)
+        
+        private void incrementTeam2()
         {
             if (dataFilledIn())
             {
@@ -1297,7 +1283,9 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void decrementTeam2Button_Click(object sender, EventArgs e)
+        
+
+        private void decrementTeam2()
         {
             int score = Int32.Parse(doublesT2ScoreTextbox.Text);
             if (score > 0)
@@ -1312,9 +1300,143 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
+        public void makeWindowTest()
+        {
+            MessageBox.Show("It worked!");
+        }
+
+        
+
+        #region ServiceMethods
+
+        /** THIS METHOD WILL NEED TO RUN AN ASYNC THREAD IN THE BG **/
+        public void refresh(){
+
+            if (Conn != null)
+            {
+                TourneyData td = service.getRecentTourneyData(Conn);
+                updateInfo(td);
+            }
+        }
+
+        private void makeConnectionBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool success = makeConnection();
+                if (success)
+                {
+                    makeWindowTest();
+                }
+                else
+                {
+                    MessageBox.Show("Connection Failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR");
+            }
+        }
+
+        public bool makeConnection()
+        {
+            try
+            {
+                int num = service.requestConnectionNumber();
+                Conn = new Connection(num, this);
+                bool success = service.addConnection(Conn);
+
+                if (success) return true;
+                else return false;
+            }
+            catch (Exception e)
+            {
+                //MessageBox.Show("Error on makeConnection()");
+                logToUser("Error on makeConnection()", true);
+                return false;
+            }
+        }
+
         private void autoUpdateCheckbox_CheckedChanged(object sender, EventArgs e)
         {
 
         }
-    }
+
+        public bool updateInfo(TourneyData td)
+        {
+            if (Conn != null)
+            {
+                try
+                {
+                    if (td.GameType.Equals("singles"))
+                    {
+                        TournamentRound = td.TourneyRound;
+                        Competitor1 = td.Player1Name;
+                        Competitor2 = td.Player2Name;
+                        Score1 = td.Score1;
+                        Score2 = td.Score2;
+
+                        generate();
+                    }
+                    else
+                    {
+                        TournamentRound = td.TourneyRound;
+                        Competitor1 = td.Player1Name + " & " + td.Player2Name;
+                        Competitor2 = td.Player3Name + " & " + td.Player4Name;
+                        Score1 = td.Score1;
+                        Score2 = td.Score2;
+
+                        generate();
+                    }
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        #endregion ServiceMethods
+
+        #region Threads
+        public static Thread connThread(Action action)
+        {
+            //Thread thread = new Thread();
+            return null;
+        }
+        #endregion Threads
+
+        /*
+         * Method logs information to user on the GUI dynamically as opposed to popups
+         */
+        private void logToUser(string msg, bool err)
+        {
+            if (err)
+            {
+                logMessageLabel.ForeColor = Color.Red;               
+            }
+            else
+            {
+                logMessageLabel.ForeColor = Color.Navy;
+            }
+            if (logMessageLabel.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(logToUser);
+                logMessageLabel.Invoke(d, new object[] { msg, err });
+            }
+            else
+            {
+                logMessageLabel.Text = "..." + msg;
+            }            
+        }
+
+        private void logMessageLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+    }    
 }
+
