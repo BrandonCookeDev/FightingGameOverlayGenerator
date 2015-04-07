@@ -1,0 +1,1 @@
+C:\Users\BrandonADMIN\Documents\Visual Studio 2010\Projects\SmashOverlayGeneratorWebServiceLib\SmashOverlayGeneratorWebServiceLib\obj\Debug\SmashOverlayGeneratorWebServiceLib.csprojResolveAssemblyReference.cache
