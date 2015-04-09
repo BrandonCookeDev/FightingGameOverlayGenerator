@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using SmashOverlayGeneratorMk2;
+//using SmashOverlayGeneratorMk2;
 using SmashOverlayGeneratorWebServiceLib.Objects;
 
 namespace SmashOverlayGeneratorWebServiceLib

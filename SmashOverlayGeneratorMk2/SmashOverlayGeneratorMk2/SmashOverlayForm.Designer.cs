@@ -105,8 +105,6 @@
             this.caster1Label = new System.Windows.Forms.Label();
             this.settingsTab = new System.Windows.Forms.TabPage();
             this.makeConnectionBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.autoUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundTextbox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
@@ -420,7 +418,7 @@
             // 
             // singlesClearButton
             // 
-            this.singlesClearButton.Location = new System.Drawing.Point(41, 228);
+            this.singlesClearButton.Location = new System.Drawing.Point(62, 228);
             this.singlesClearButton.Name = "singlesClearButton";
             this.singlesClearButton.Size = new System.Drawing.Size(91, 23);
             this.singlesClearButton.TabIndex = 22;
@@ -899,9 +897,9 @@
             // 
             this.generateCasterOverlayButton.BackColor = System.Drawing.Color.Red;
             this.generateCasterOverlayButton.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.generateCasterOverlayButton.Location = new System.Drawing.Point(40, 219);
+            this.generateCasterOverlayButton.Location = new System.Drawing.Point(3, 219);
             this.generateCasterOverlayButton.Name = "generateCasterOverlayButton";
-            this.generateCasterOverlayButton.Size = new System.Drawing.Size(121, 48);
+            this.generateCasterOverlayButton.Size = new System.Drawing.Size(222, 48);
             this.generateCasterOverlayButton.TabIndex = 4;
             this.generateCasterOverlayButton.Text = "Generate Caster Overlay";
             this.generateCasterOverlayButton.UseVisualStyleBackColor = false;
@@ -942,8 +940,6 @@
             // settingsTab
             // 
             this.settingsTab.Controls.Add(this.makeConnectionBtn);
-            this.settingsTab.Controls.Add(this.label1);
-            this.settingsTab.Controls.Add(this.autoUpdateCheckbox);
             this.settingsTab.Location = new System.Drawing.Point(4, 22);
             this.settingsTab.Name = "settingsTab";
             this.settingsTab.Size = new System.Drawing.Size(506, 273);
@@ -953,33 +949,13 @@
             // 
             // makeConnectionBtn
             // 
-            this.makeConnectionBtn.Location = new System.Drawing.Point(72, 194);
+            this.makeConnectionBtn.Location = new System.Drawing.Point(3, 228);
             this.makeConnectionBtn.Name = "makeConnectionBtn";
             this.makeConnectionBtn.Size = new System.Drawing.Size(95, 42);
             this.makeConnectionBtn.TabIndex = 2;
             this.makeConnectionBtn.Text = "Make Connection";
             this.makeConnectionBtn.UseVisualStyleBackColor = true;
             this.makeConnectionBtn.Click += new System.EventHandler(this.makeConnectionBtn_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(176, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "This functionality is not yet available";
-            // 
-            // autoUpdateCheckbox
-            // 
-            this.autoUpdateCheckbox.AutoSize = true;
-            this.autoUpdateCheckbox.Location = new System.Drawing.Point(26, 39);
-            this.autoUpdateCheckbox.Name = "autoUpdateCheckbox";
-            this.autoUpdateCheckbox.Size = new System.Drawing.Size(122, 17);
-            this.autoUpdateCheckbox.TabIndex = 0;
-            this.autoUpdateCheckbox.Text = "Auto Update Picture";
-            this.autoUpdateCheckbox.UseVisualStyleBackColor = true;
-            this.autoUpdateCheckbox.CheckedChanged += new System.EventHandler(this.autoUpdateCheckbox_CheckedChanged);
             // 
             // versionLabel
             // 
@@ -1020,7 +996,6 @@
             this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
-            //this.logMessageLabel.Click += new System.EventHandler(this.logMessageLabel_Click);
             // 
             // SmashOverlayGenerator
             // 
@@ -1035,13 +1010,11 @@
             this.Controls.Add(this.smashOverlayTabControl);
             this.Controls.Add(this.generateButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "SmashOverlayGenerator";
             this.Text = "Smash Bros Overlay Generator";
             this.Load += new System.EventHandler(this.SmashOverlayGeneratorMk2_Load);
-            this.KeyPreview = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyDown);
-            //this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SmashOverlayGenerator_KeyPress);
-            //this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyUp);
             this.competitorsTab.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -1065,7 +1038,6 @@
             this.casterTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.casterTemplatePictureBox)).EndInit();
             this.settingsTab.ResumeLayout(false);
-            this.settingsTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1150,8 +1122,6 @@
         private System.Windows.Forms.Button incrementPlayer1Button;
         private System.Windows.Forms.ComboBox tournamentRoundTextbox;
         private System.Windows.Forms.TabPage settingsTab;
-        private System.Windows.Forms.CheckBox autoUpdateCheckbox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button makeConnectionBtn;
         private System.Windows.Forms.Label logMessageLabel;
 

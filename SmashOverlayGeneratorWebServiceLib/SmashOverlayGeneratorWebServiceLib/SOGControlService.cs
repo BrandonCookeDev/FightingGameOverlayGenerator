@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Collections;
-using SmashOverlayGeneratorMk2;
+//using SmashOverlayGeneratorMk2;
 using SmashOverlayGeneratorWebServiceLib.Objects;
 
 namespace SmashOverlayGeneratorWebServiceLib
@@ -51,7 +51,7 @@ namespace SmashOverlayGeneratorWebServiceLib
         public bool addConnection(Connection c)
         {
             try{
-                if (c.ConnNumber == 0 && c.SOG == null)                
+                if (c.ConnNumber == 0 /*&& c.SOG == null*/)                
                     throw new Exception("Bad Connection");
                 
                 ArrayList temp = ConnectionList;
@@ -108,8 +108,8 @@ namespace SmashOverlayGeneratorWebServiceLib
             {
                 foreach(Connection conn in ConnectionList)
                 {
-                    if (conn.ConnNumber == connNum)
-                        conn.SOG.makeWindowTest();
+                    if (conn.ConnNumber == connNum) { }
+                        //conn.SOG.makeWindowTest();
                 }
 
                 return true;
