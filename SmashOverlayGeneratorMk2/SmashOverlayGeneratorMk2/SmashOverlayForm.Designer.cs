@@ -1020,7 +1020,7 @@
             this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
-            this.logMessageLabel.Click += new System.EventHandler(this.logMessageLabel_Click);
+            //this.logMessageLabel.Click += new System.EventHandler(this.logMessageLabel_Click);
             // 
             // SmashOverlayGenerator
             // 
@@ -1038,6 +1038,10 @@
             this.Name = "SmashOverlayGenerator";
             this.Text = "Smash Bros Overlay Generator";
             this.Load += new System.EventHandler(this.SmashOverlayGeneratorMk2_Load);
+            this.KeyPreview = true;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyDown);
+            //this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SmashOverlayGenerator_KeyPress);
+            //this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyUp);
             this.competitorsTab.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

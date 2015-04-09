@@ -26,7 +26,7 @@ namespace SmashOverlayGeneratorMk2
     public partial class SmashOverlayGenerator : Form
     {
         /* GLOBAL VARIABLES */
-        #region Data Fields        
+        #region Data Fields
         private string templateFile;
         private string newTemplateFile;
         private string templateFileName;
@@ -54,9 +54,11 @@ namespace SmashOverlayGeneratorMk2
 
         //This will define the connection to the service
         private Connection conn = null;
-        
+
+        delegate void SetTextCallback(string text, bool err);
 
         Assembly myAssembly = Assembly.GetExecutingAssembly();  
+        
         #endregion Data Fields
 
         /* GETTERS AND SETTERS */
@@ -234,9 +236,6 @@ namespace SmashOverlayGeneratorMk2
         #endregion Constructors
 
         /* METHODS */
-
-        delegate void SetTextCallback(string text, bool err);
-
         #region GeneratePicture
         private void paintCompetitorText(string filePath, string resourceType)
         {
@@ -346,14 +345,7 @@ namespace SmashOverlayGeneratorMk2
         #endregion GeneratePicture
 
         #region FormOperations
-        private void SmashOverlayGeneratorMk2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == '.')
-            {
-                incrementPlayer1();
-            }
-        }
-
+        
         private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
@@ -690,9 +682,151 @@ namespace SmashOverlayGeneratorMk2
             picturePreviewForm.Location = new Point(500, 100);
             picturePreviewForm.Show();
         }
+
         #endregion FormOperations
 
-        #region ButtonListeners
+        #region BackendOps
+
+        private void logToUser(string msg, bool err)
+        {
+            if (err)
+            {
+                logMessageLabel.ForeColor = Color.Red;
+            }
+            else
+            {
+                logMessageLabel.ForeColor = Color.Navy;
+            }
+            if (logMessageLabel.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(logToUser);
+                logMessageLabel.Invoke(d, new object[] { msg, err });
+            }
+            else
+            {
+                logMessageLabel.Text = "..." + msg;
+            }
+        }
+
+        private void incrementPlayer1()
+        {
+            if (dataFilledIn())
+            {
+                int score = Int32.Parse(singlesP1ScoreTextbox.Text);
+                score++;
+                singlesP1ScoreTextbox.Text = score.ToString();
+
+                generate();
+            }
+        }
+
+
+        private void decrementPlayer1()
+        {
+            int score = Int32.Parse(singlesP1ScoreTextbox.Text);
+            if (score > 0)
+            {
+                if (dataFilledIn())
+                {
+                    score--;
+                    singlesP1ScoreTextbox.Text = score.ToString();
+
+                    generate();
+                }
+            }
+        }
+
+
+        private void incrementPlayer2()
+        {
+            if (dataFilledIn())
+            {
+                int score = Int32.Parse(singlesP2ScoreTextbox.Text);
+                score++;
+                singlesP2ScoreTextbox.Text = score.ToString();
+
+                generate();
+            }
+        }
+
+
+        private void decrementPlayer2()
+        {
+            int score = Int32.Parse(singlesP2ScoreTextbox.Text);
+            if (score > 0)
+            {
+                if (dataFilledIn())
+                {
+                    score--;
+                    singlesP2ScoreTextbox.Text = score.ToString();
+
+                    generate();
+                }
+            }
+        }
+
+
+        private void incrementTeam1()
+        {
+            if (dataFilledIn())
+            {
+                int score = Int32.Parse(doublesT1ScoreTextbox.Text);
+                score++;
+                doublesT1ScoreTextbox.Text = score.ToString();
+
+                generate();
+            }
+        }
+
+
+
+        private void decrementTeam1()
+        {
+            int score = Int32.Parse(doublesT1ScoreTextbox.Text);
+            if (score > 0)
+            {
+                if (dataFilledIn())
+                {
+                    score--;
+                    doublesT1ScoreTextbox.Text = score.ToString();
+
+                    generate();
+                }
+            }
+        }
+
+
+        private void incrementTeam2()
+        {
+            if (dataFilledIn())
+            {
+                int score = Int32.Parse(doublesT2ScoreTextbox.Text);
+                score++;
+                doublesT2ScoreTextbox.Text = score.ToString();
+
+                generate();
+            }
+        }
+
+
+
+        private void decrementTeam2()
+        {
+            int score = Int32.Parse(doublesT2ScoreTextbox.Text);
+            if (score > 0)
+            {
+                if (dataFilledIn())
+                {
+                    score--;
+                    doublesT2ScoreTextbox.Text = score.ToString();
+
+                    generate();
+                }
+            }
+        }
+        #endregion BackendOps
+
+        #region Listeners
         private void incrementPlayer1Button_Click(object sender, EventArgs e)
         {
             incrementPlayer1();
@@ -914,8 +1048,28 @@ namespace SmashOverlayGeneratorMk2
                 //Do nothing
             }
         }
+
+        private void SmashOverlayGenerator_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                incrementPlayer1();
+            }
+            else if (e.KeyCode == Keys.F6)
+            {
+                decrementPlayer1();
+            }
+            else if (e.KeyCode == Keys.F7)
+            {
+                incrementPlayer2();
+            }
+            else if (e.KeyCode == Keys.F8)
+            {
+                decrementPlayer2();
+            }
+        }
         
-        #endregion ButtonListeners             
+        #endregion Listeners             
 
         #region ErrorHandling
 
@@ -1129,9 +1283,7 @@ namespace SmashOverlayGeneratorMk2
 
             return true;
         }
-        #endregion General
-
-        
+        #endregion General        
 
         #region DEBUG
         private CasterTemplate debugCasterTemplate(string fileName)
@@ -1180,133 +1332,11 @@ namespace SmashOverlayGeneratorMk2
         }
         #endregion DEBUG
 
-        
-
-        
-        private void incrementPlayer1()
-        {
-            if (dataFilledIn())
-            {
-                int score = Int32.Parse(singlesP1ScoreTextbox.Text);
-                score++;
-                singlesP1ScoreTextbox.Text = score.ToString();
-
-                generate();
-            }
-        }
-
-        
-        private void decrementPlayer1()
-        {
-            int score = Int32.Parse(singlesP1ScoreTextbox.Text);
-            if (score > 0)
-            {
-                if (dataFilledIn())
-                {
-                    score--;
-                    singlesP1ScoreTextbox.Text = score.ToString();
-
-                    generate();
-                }
-            }
-        }
-
-        
-        private void incrementPlayer2()
-        {
-            if (dataFilledIn())
-            {
-                int score = Int32.Parse(singlesP2ScoreTextbox.Text);
-                score++;
-                singlesP2ScoreTextbox.Text = score.ToString();
-
-                generate();
-            }
-        }
-
-        
-        private void decrementPlayer2()
-        {
-            int score = Int32.Parse(singlesP2ScoreTextbox.Text);
-            if (score > 0)
-            {
-                if (dataFilledIn())
-                {
-                    score--;
-                    singlesP2ScoreTextbox.Text = score.ToString();
-
-                    generate();
-                }
-            }
-        }
-
-        
-        private void incrementTeam1()
-        {
-            if (dataFilledIn())
-            {
-                int score = Int32.Parse(doublesT1ScoreTextbox.Text);
-                score++;
-                doublesT1ScoreTextbox.Text = score.ToString();
-
-                generate();
-            }
-        }
-
-
-        
-        private void decrementTeam1()
-        {
-            int score = Int32.Parse(doublesT1ScoreTextbox.Text);
-            if (score > 0)
-            {
-                if (dataFilledIn())
-                {
-                    score--;
-                    doublesT1ScoreTextbox.Text = score.ToString();
-
-                    generate();
-                }
-            }
-        }
-
-        
-        private void incrementTeam2()
-        {
-            if (dataFilledIn())
-            {
-                int score = Int32.Parse(doublesT2ScoreTextbox.Text);
-                score++;
-                doublesT2ScoreTextbox.Text = score.ToString();
-
-                generate();
-            }
-        }
-
-        
-
-        private void decrementTeam2()
-        {
-            int score = Int32.Parse(doublesT2ScoreTextbox.Text);
-            if (score > 0)
-            {
-                if (dataFilledIn())
-                {
-                    score--;
-                    doublesT2ScoreTextbox.Text = score.ToString();
-
-                    generate();
-                }
-            }
-        }
-
         public void makeWindowTest()
         {
             MessageBox.Show("It worked!");
         }
-
         
-
         #region ServiceMethods
 
         /** THIS METHOD WILL NEED TO RUN AN ASYNC THREAD IN THE BG **/
@@ -1409,34 +1439,6 @@ namespace SmashOverlayGeneratorMk2
         }
         #endregion Threads
 
-        /*
-         * Method logs information to user on the GUI dynamically as opposed to popups
-         */
-        private void logToUser(string msg, bool err)
-        {
-            if (err)
-            {
-                logMessageLabel.ForeColor = Color.Red;               
-            }
-            else
-            {
-                logMessageLabel.ForeColor = Color.Navy;
-            }
-            if (logMessageLabel.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(logToUser);
-                logMessageLabel.Invoke(d, new object[] { msg, err });
-            }
-            else
-            {
-                logMessageLabel.Text = "..." + msg;
-            }            
-        }
-
-        private void logMessageLabel_Click(object sender, EventArgs e)
-        {
-
-        }
     }    
 }
 
