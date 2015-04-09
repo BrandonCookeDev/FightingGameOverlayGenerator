@@ -17,7 +17,6 @@ using SmashOverlayGeneratorWebServiceLib;
 using SmashOverlayGeneratorWebServiceLib.Objects;
 using System.Runtime.Serialization;
 using System.Threading;
-using System.Linq;
 //using XSplitBroadcasterLib;
 
 namespace SmashOverlayGeneratorMk2
@@ -262,6 +261,7 @@ namespace SmashOverlayGeneratorMk2
             ResourceType = resourceType;
 
             debugCompetitorTemplate(resourceType, filePath);
+            logToUser("Completed without error...", false);
         }
 
         private void paintCasterText(string filePath)
@@ -277,6 +277,7 @@ namespace SmashOverlayGeneratorMk2
 
             
             debugCasterTemplate(filePath);
+            logToUser("Completed without error...", false);
         }
 
         private int[] determineFontSize()
@@ -455,13 +456,12 @@ namespace SmashOverlayGeneratorMk2
             doublesT2P1Textbox.Text = "";
             doublesT2P2Textbox.Text = "";
             doublesT1ScoreTextbox.Text = "0";
-            doublesT2ScoreTextbox.Text = "0";
+            doublesT2ScoreTextbox.Text = "0";            
         }
 
         private void clearTourneyFields()
         {
             tournamentNameTextbox.Text = "";
-            //tourneyRoundTextbox.Text = "";
             selectedFileLabel.Text = "";
             TemplateFile = "";
             NewTemplateFile = "";
@@ -1066,6 +1066,16 @@ namespace SmashOverlayGeneratorMk2
             else if (e.KeyCode == Keys.F8)
             {
                 decrementPlayer2();
+            }
+            else if (e.KeyCode == Keys.F1)
+            {
+                putCursorInBox(singlesP1Textbox);
+                singlesP1Textbox.SelectAll();
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                putCursorInBox(singlesP2Textbox);
+                singlesP2Textbox.SelectAll();
             }
         }
         
