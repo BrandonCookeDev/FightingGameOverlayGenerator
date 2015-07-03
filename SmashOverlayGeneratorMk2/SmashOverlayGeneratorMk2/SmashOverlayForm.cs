@@ -1384,7 +1384,7 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 int num = service.requestConnectionNumber();
-                Conn = new Connection(num);
+                Conn = new Connection(num, this);
                 bool success = service.addConnection(Conn);
 
                 if (success) return true;
