@@ -108,7 +108,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.autoUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.versionLabel = new System.Windows.Forms.Label();
-            this.tournamentRoundTextbox = new System.Windows.Forms.ComboBox();
+            this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
             this.competitorsTab.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -994,8 +994,8 @@
             // 
             // tournamentRoundTextbox
             // 
-            this.tournamentRoundTextbox.FormattingEnabled = true;
-            this.tournamentRoundTextbox.Items.AddRange(new object[] {
+            this.tournamentRoundCombobox.FormattingEnabled = true;
+            this.tournamentRoundCombobox.Items.AddRange(new object[] {
             "Friendlies",
             "Pools",
             "Winners\' Bracket",
@@ -1005,10 +1005,10 @@
             "Losers\' Semi Finals",
             "Losers\' Finals",
             "Grand Finals"});
-            this.tournamentRoundTextbox.Location = new System.Drawing.Point(238, 318);
-            this.tournamentRoundTextbox.Name = "tournamentRoundTextbox";
-            this.tournamentRoundTextbox.Size = new System.Drawing.Size(178, 21);
-            this.tournamentRoundTextbox.TabIndex = 18;
+            this.tournamentRoundCombobox.Location = new System.Drawing.Point(238, 318);
+            this.tournamentRoundCombobox.Name = "tournamentRoundTextbox";
+            this.tournamentRoundCombobox.Size = new System.Drawing.Size(178, 21);
+            this.tournamentRoundCombobox.TabIndex = 18;
             // 
             // logMessageLabel
             // 
@@ -1029,7 +1029,7 @@
             this.BackgroundImage = global::SmashOverlayGeneratorMk2.Properties.Resources.future_city;
             this.ClientSize = new System.Drawing.Size(538, 419);
             this.Controls.Add(this.logMessageLabel);
-            this.Controls.Add(this.tournamentRoundTextbox);
+            this.Controls.Add(this.tournamentRoundCombobox);
             this.Controls.Add(this.tournamentRoundLabel);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.smashOverlayTabControl);
@@ -1148,7 +1148,7 @@
         private System.Windows.Forms.Button incrementPlayer2Button;
         private System.Windows.Forms.Button decrementPlayer1Button;
         private System.Windows.Forms.Button incrementPlayer1Button;
-        private System.Windows.Forms.ComboBox tournamentRoundTextbox;
+        private System.Windows.Forms.ComboBox tournamentRoundCombobox;
         private System.Windows.Forms.TabPage settingsTab;
         private System.Windows.Forms.CheckBox autoUpdateCheckbox;
         private System.Windows.Forms.Label label1;

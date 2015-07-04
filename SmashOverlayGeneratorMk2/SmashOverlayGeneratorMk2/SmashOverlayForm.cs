@@ -17,6 +17,8 @@ using SmashOverlayGeneratorWebServiceLib;
 using SmashOverlayGeneratorWebServiceLib.Objects;
 using System.Runtime.Serialization;
 using System.Threading;
+using SmashOverlayGeneratorMk2.ErrorHandling;
+using SmashOverlayGeneratorMk2.General;
 //using XSplitBroadcasterLib;
 
 namespace SmashOverlayGeneratorMk2
@@ -335,7 +337,7 @@ namespace SmashOverlayGeneratorMk2
         private void getTournamentData()
         {
             TournamentName = tournamentNameTextbox.Text;
-            TournamentRound = tournamentRoundTextbox.Text;
+            TournamentRound = tournamentRoundCombobox.Text;
         }
 
         private void createNewImageFile(string source, string destination)
@@ -877,17 +879,23 @@ namespace SmashOverlayGeneratorMk2
         {
             try
             {
+                /*
                 //VERIFY TOURNAMENT AND ROUND ARE FILLED IN
                 verifyTourneyDataFilled();
                 //VERIFY THE TOURNAMENT ROUND IS FILLED
                 verifyTournamentRoundFilled();
                 //VERIFY THE COMBATANTS FIELDS
                 verifyCombatantsFilled();
+                 */
+
+                if (!dataFilledIn())
+                    return;
+                
 
                 //GET THE COMBATANTS' NAMES (SET TO THE GLOBAL VARIABLES)
                 getCombatants(GameType);
                 //VERIFY THE SCORES ARE IN CORRECT FORMAT
-                checkScoreFormat();
+                ErrorHandler.checkScoreFormat(Score1, Score2);
 
                 getTournamentData();
 
@@ -908,7 +916,9 @@ namespace SmashOverlayGeneratorMk2
         {
             try
             {
-                verifyCasterDataFilledIn();
+                if(!casterDataFilledIn())
+                    return;
+
                 getCasters();
                 paintCasterText(CasterTemplateFile);
             }
@@ -1069,12 +1079,12 @@ namespace SmashOverlayGeneratorMk2
             }
             else if (e.KeyCode == Keys.F1)
             {
-                putCursorInBox(singlesP1Textbox);
+                GenFcns.putCursorInBox(singlesP1Textbox);
                 singlesP1Textbox.SelectAll();
             }
             else if (e.KeyCode == Keys.F2)
             {
-                putCursorInBox(singlesP2Textbox);
+                GenFcns.putCursorInBox(singlesP2Textbox);
                 singlesP2Textbox.SelectAll();
             }
         }
@@ -1083,13 +1093,50 @@ namespace SmashOverlayGeneratorMk2
 
         #region ErrorHandling
 
+        private bool casterDataFilledIn()
+        {
+            try
+            {
+                ErrorHandler.verifyCasterDataFilledIn(CasterTemplateFile,
+                                                     caster1Label, caster2Label,
+                                                     caster1Checkbox, caster2Checkbox,
+                                                     caster1Textbox, caster2Textbox,
+                                                     smashOverlayTabControl,
+                                                     casterTab);
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message.ToString(), true);
+                return false;
+            }
+            return true;            
+        }
+
         private bool dataFilledIn()
         {
             try
             {
-                verifyTourneyDataFilled();
-                verifyCombatantsFilled();
-                verifyTournamentRoundFilled();
+                //verifyTourneyDataFilled();
+                ErrorHandler.verifyTourneyDataFilled(TemplateFile, tournamentNameLabel,
+                                             tournamentNameTextbox, browseButton,
+                                             smashOverlayTabControl, tourneyDataTab);
+
+                //verifyCombatantsFilled();
+                ErrorHandler.verifyCombatantsFilled(GameType,
+                                             singlesP1Label, singlesP2Label,
+                                             singlesP1ScoreLabel, singlesP2ScoreLabel,
+                                             singlesP1Textbox, singlesP2Textbox,
+                                             singlesP1ScoreTextbox, singlesP2ScoreTextbox,
+
+                                             doublesT1P1Label, doublesT1P2Label, doublesT2P1Label,
+                                             doublesT2P2Label, doublesT1ScoreLabel, doublesT2ScoreLabel,
+                                             doublesT1P1Textbox, doublesT1P2Textbox,
+                                             doublesT2P1Textbox, doublesT2P2Textbox,
+                                             doublesT1ScoreTextbox, doublesT2ScoreTextbox);
+                
+                //verifyTournamentRoundFilled();
+                ErrorHandler.verifyTournamentRoundFilled(tournamentRoundCombobox,
+                                                  tournamentRoundLabel);
             }
             catch (Exception ex)
             {
@@ -1099,178 +1146,9 @@ namespace SmashOverlayGeneratorMk2
             return true;
         }
 
-        private void verifyCombatantsFilled()
-        {
-            if(GameType.Equals("singles")){
-
-                singlesP1Label.ForeColor = Color.Black;
-                singlesP2Label.ForeColor = Color.Black;
-                singlesP1ScoreLabel.ForeColor = Color.Black;
-                singlesP2ScoreLabel.ForeColor = Color.Black;
-
-                if (isEmpty(singlesP1Textbox))
-                {
-                    singlesP1Label.ForeColor = Color.Red;
-                    putCursorInBox(singlesP1Textbox);
-                    throw new Exception("Player 1 must have a name");
-                }
-                else if (isEmpty(singlesP2Textbox))
-                {
-                    singlesP2Label.ForeColor = Color.Red;
-                    putCursorInBox(singlesP2Textbox);
-                    throw new Exception("Player 2 must have a name");
-                }
-                else if (isEmpty(singlesP1ScoreTextbox))
-                {
-                    singlesP1ScoreLabel.ForeColor = Color.Red;
-                    putCursorInBox(singlesP1ScoreTextbox);
-                    throw new Exception("Player 1 must have a score");
-                }
-                else if (isEmpty(singlesP2ScoreTextbox))
-                {
-                    singlesP2ScoreLabel.ForeColor = Color.Red;
-                    putCursorInBox(singlesP2ScoreTextbox);
-                    throw new Exception("Player 2 must have a score");
-                }
-            }
-            else if (GameType.Equals("doubles"))
-            {
-                doublesT1P1Label.ForeColor = Color.Black;
-                doublesT1P2Label.ForeColor = Color.Black;
-                doublesT2P1Label.ForeColor = Color.Black;
-                doublesT2P2Label.ForeColor = Color.Black;
-                doublesT1ScoreLabel.ForeColor = Color.Black;
-                doublesT2ScoreLabel.ForeColor = Color.Black;
-
-                if (isEmpty(doublesT1P1Textbox))
-                {
-                    doublesT1P1Label.ForeColor = Color.Red;
-                    putCursorInBox(doublesT1P1Textbox);
-                    throw new Exception("Team 1: Member 1 must have a name");
-                }
-                else if (isEmpty(doublesT1P2Textbox))
-                {
-                    doublesT1P2Label.ForeColor = Color.Red;
-                    putCursorInBox(doublesT1P2Textbox);
-                    throw new Exception("Team 1: Member 2 must have a name");
-                }
-                else if (isEmpty(doublesT2P1Textbox))
-                {
-                    doublesT2P1Label.ForeColor = Color.Red;
-                    putCursorInBox(doublesT2P1Textbox);
-                    throw new Exception("Team 2: Member 1 must have a name");
-                }
-                else if (isEmpty(doublesT2P2Textbox))
-                {
-                    doublesT2P2Label.ForeColor = Color.Red;
-                    putCursorInBox(doublesT2P2Textbox);
-                    throw new Exception("Team 2: Member 2 must have a name");
-                }
-                else if (isEmpty(doublesT1ScoreTextbox))
-                {
-                    doublesT1ScoreLabel.ForeColor = Color.Red;
-                    putCursorInBox(doublesT1ScoreTextbox);
-                    throw new Exception("Team 1 must have a score");
-                }
-                else if (isEmpty(doublesT2ScoreTextbox))
-                {
-                    doublesT2ScoreLabel.ForeColor = Color.Red;
-                    putCursorInBox(doublesT2ScoreTextbox);
-                    throw new Exception("Team 2 must have a score");
-                }
-            }
-            else
-               throw new Exception("An Error Occured" +
-                    "\r\nIf Sinlges, only Singles section can contain text and all fields must be filled." +
-                    "\r\nIf Doubles, only Doubles section can contain text and all fields must be filled. \r\n" +
-                    "\r\nPlease correct any errors and try again. \r\nIf problem persists, contact cookiE.");
-        }
-
-        private void verifyTournamentRoundFilled()
-        {
-            if (tournamentRoundTextbox.Text.Equals(""))
-            {
-                tournamentRoundLabel.ForeColor = Color.Red;
-                tournamentRoundTextbox.Focus();
-                tournamentRoundTextbox.Select(0, 0);
-                throw new Exception("An Error Occured" +
-                    "\r\nTournament Round not filled in." +
-                    "\r\nPlease correct field and try again");
-            }
-            else
-                tournamentRoundLabel.ForeColor = Color.Black;
-        }
-
-        private void verifyTourneyDataFilled()
-        {
-            tournamentNameLabel.ForeColor = Color.Black;
-            browseButton.ForeColor = Color.Black;
-
-            if (tournamentNameTextbox.Text.Equals(""))
-            {
-                smashOverlayTabControl.SelectedTab = tourneyDataTab;
-                tournamentNameLabel.ForeColor = Color.Red;
-                tournamentNameTextbox.Focus();
-                tournamentNameTextbox.Select(0, 0);
-                throw new Exception("An Error Occured" +
-                    "\r\nTournament Name not completely filled in" +
-                    "\r\nPlease correct fields and try again");
-            }
-            else if (TemplateFile == null)
-            {
-                smashOverlayTabControl.SelectedTab = tourneyDataTab;
-                browseButton.ForeColor = Color.Red;
-                browseButton.Focus();
-                throw new Exception("An Error Occured" +
-                    "\r\nImage Overlay not selected" +
-                    "\r\nPlease select image and try again");
-            }
-        }
-
-        private void verifyCasterDataFilledIn()
-        {
-            caster1Label.ForeColor = Color.Black;
-            caster2Label.ForeColor = Color.Black;
-
-            if (!caster1Checkbox.Checked && !caster2Checkbox.Checked)
-                throw new Exception("No Casters Selected");
-
-            if (caster1Checkbox.Checked && caster1Textbox.Text.Equals(""))
-            {
-                smashOverlayTabControl.SelectedTab = casterTab;
-                caster1Label.ForeColor = Color.Red;
-                putCursorInBox(caster1Textbox);
-                throw new Exception("Caster 1's Name cannot be blank");
-            }
-                
-
-            if (caster2Checkbox.Checked && caster2Textbox.Text.Equals(""))
-            {
-                smashOverlayTabControl.SelectedTab = casterTab;
-                caster2Label.ForeColor = Color.Red;
-                putCursorInBox(caster2Textbox);
-                throw new Exception("Caster 2's Name cannot be blank");
-            }
-
-            if (CasterTemplateFile == null || CasterTemplateFile.Equals(""))
-            {
-                throw new Exception("Caster Template File not selected!");
-            }
-        }
-
-        private void checkScoreFormat()
-        {
-            //CHECK SCORE ONE
-            if (!checkIfDigits(Score1) || !checkIfDigits(Score2))
-                throw new Exception("A score is formatted incorrectly" +
-                    "\r\nPlease make sure that all scores are only numeric");
-            else if (Int32.Parse(Score1) < 0 || Int32.Parse(Score1) > 100
-                     || Int32.Parse(Score2) < 0 || Int32.Parse(Score2) > 100)
-                throw new Exception("A score is not in the acceptable range" +
-                    "\r\nPlease make sure that all scores are between 0 and 100");
-        }
         #endregion ErrorHandling
 
+        /*
         #region General
         public void putCursorInBox(TextBox box)
         {
@@ -1294,6 +1172,7 @@ namespace SmashOverlayGeneratorMk2
             return true;
         }
         #endregion General        
+        */
 
         #region DEBUG
         private CasterTemplate debugCasterTemplate(string fileName)
@@ -1451,4 +1330,3 @@ namespace SmashOverlayGeneratorMk2
 
     }    
 }
-
