@@ -1004,7 +1004,8 @@
             "Losers\' Bracket",
             "Losers\' Semi Finals",
             "Losers\' Finals",
-            "Grand Finals"});
+            "Grand Finals",
+            "Grand Finals \(L\)"});
             this.tournamentRoundCombobox.Location = new System.Drawing.Point(238, 318);
             this.tournamentRoundCombobox.Name = "tournamentRoundTextbox";
             this.tournamentRoundCombobox.Size = new System.Drawing.Size(178, 21);
