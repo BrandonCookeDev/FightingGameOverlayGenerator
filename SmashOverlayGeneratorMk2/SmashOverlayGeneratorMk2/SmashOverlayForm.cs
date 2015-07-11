@@ -379,9 +379,9 @@ namespace SmashOverlayGeneratorMk2
             doublesT1ScoreTextbox.Text = 0.ToString();
             doublesT2ScoreTextbox.Text = 0.ToString();
 
-            GenFcns.populateListView(myAssembly, templateListView, "Templates");
-            GenFcns.populateListView(myAssembly, casterTemplateListView, "Caster");
-            GenFcns.populateListView(myAssembly, matchupPicListView, "Matchup");
+            ListBoxFcns.populateListView(myAssembly, templateListView, "Templates");
+            ListBoxFcns.populateListView(myAssembly, casterTemplateListView, "Caster");
+            ListBoxFcns.populateListView(myAssembly, matchupPicListView, "Matchup");
 
             try
             {
@@ -606,11 +606,11 @@ namespace SmashOverlayGeneratorMk2
                 if (!selectedFileLabel.Text.Equals("")) { selectedFileLabel.Text = ""; }
 
                 string resource = (string)templateListView.Items[templateListView.SelectedIndex];
-                TemplateFile = getImageResourcePath("template", resource);
+                TemplateFile = ListBoxFcns.getImageResourcePath(this.ProductName, "template", resource);
                 TemplateFileName = resource;
 
                 string imageFilePath = TemplateFile;
-                changePictureInBox(templatePictureBox, imageFilePath);
+                ListBoxFcns.changePictureInBox(myAssembly, templatePictureBox, imageFilePath);
             }
             catch (Exception ex)
             {
@@ -623,11 +623,11 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 string resource = (string)casterTemplateListView.Items[casterTemplateListView.SelectedIndex];
-                CasterTemplateFile = getImageResourcePath("caster", resource);
+                CasterTemplateFile = ListBoxFcns.getImageResourcePath(this.ProductName, "caster", resource);
                 CasterTemplateFileName = resource;
 
                 string imageFilePath = CasterTemplateFile;
-                changePictureInBox(casterTemplatePictureBox, imageFilePath);
+                ListBoxFcns.changePictureInBox(myAssembly, casterTemplatePictureBox, imageFilePath);
             }
             catch (Exception ex)
             {
@@ -640,55 +640,18 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 string resource = (string)matchupPicListView.Items[matchupPicListView.SelectedIndex];
-                MatchupPicFile = getImageResourcePath("matchup", resource);
+                MatchupPicFile = ListBoxFcns.getImageResourcePath(this.ProductName, "matchup", resource);
                 MatchupPicFileName = resource;
 
                 string imageFilePath = MatchupPicFile;
-                changePictureInBox(matchupPictureBox, imageFilePath);
+                ListBoxFcns.changePictureInBox(myAssembly, matchupPictureBox, imageFilePath);
             }
             catch (Exception ex)
             {
             }
         }
 
-        private void changePictureInBox(PictureBox box, string resourcePath)
-        {
-            Stream imageStream = myAssembly.GetManifestResourceStream(resourcePath);
-            Bitmap image = new Bitmap(imageStream);                        
-
-            box.SizeMode = PictureBoxSizeMode.Zoom;
-            box.Image = image;
-            imageStream.Close();
-        }
-
-        private string getImageResourcePath(string type, string resourceName)
-        {
-            //return this.ProductName + ".Images." + type + "." + resourceName;
-
-            if (type.Equals("template"))
-            {
-                return this.ProductName + ".Images.Templates." + resourceName;
-            }
-            else if (type.Equals("caster"))
-            {
-                return this.ProductName + ".Images.Caster." + resourceName;
-            }
-            else if (type.Equals("matchup"))
-            {
-                return this.ProductName + ".Images.Matchup." + resourceName;
-            }
-            else
-                throw new Exception("String type agrument can only be 'template' or 'caster'");
-            
-        }
-
-        public void showPicturePreviewForm(Image image)
-        {
-            PicturePreviewForm picturePreviewForm = new PicturePreviewForm(image);
-            picturePreviewForm.Location = new Point(500, 100);
-            picturePreviewForm.Show();
-        }
-
+        
         #endregion FormOperations
 
         #region BackendOps
@@ -1039,7 +1002,7 @@ namespace SmashOverlayGeneratorMk2
                 Stream imageStream = myAssembly.GetManifestResourceStream(CasterTemplateFile);
                 Bitmap image = new Bitmap(imageStream);
 
-                showPicturePreviewForm(image);
+                ListBoxFcns.showPicturePreviewForm(image);
             }
             catch (Exception ex)
             {
@@ -1055,7 +1018,23 @@ namespace SmashOverlayGeneratorMk2
                 Stream imageStream = myAssembly.GetManifestResourceStream(TemplateFile);
                 Bitmap image = new Bitmap(imageStream);
 
-                showPicturePreviewForm(image);
+                ListBoxFcns.showPicturePreviewForm(image);
+            }
+            catch (Exception ex)
+            {
+                //Do nothing
+            }
+        }
+
+        private void matchupPictureBox_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                myAssembly = Assembly.GetExecutingAssembly();
+                Stream imageStream = myAssembly.GetManifestResourceStream(MatchupPicFile);
+                Bitmap image = new Bitmap(imageStream);
+
+                ListBoxFcns.showPicturePreviewForm(image);
             }
             catch (Exception ex)
             {
@@ -1342,10 +1321,7 @@ namespace SmashOverlayGeneratorMk2
 
         }
 
-        private void matchupPictureBox_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         
 

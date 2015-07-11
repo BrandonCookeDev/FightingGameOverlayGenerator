@@ -63,8 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackendPictureGen\PictureGen.cs" />
     <Compile Include="ErrorHandling\ErrorHandler.cs" />
     <Compile Include="General\GenFcns.cs" />
+    <Compile Include="General\ListBoxFcns.cs" />
     <Compile Include="Objects\Points\CasterPoint.cs" />
     <Compile Include="Objects\Points\CompetitorPoint.cs" />
     <Compile Include="Objects\Points\ScorePoint.cs" />

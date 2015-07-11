@@ -11,21 +11,6 @@ namespace SmashOverlayGeneratorMk2.General
     class GenFcns
     {
         #region General
-        public static void populateListView(Assembly myAssembly, ListBox listBox, string suffix)
-        {
-            ArrayList temp = new ArrayList();
-            string[] resources = myAssembly.GetManifestResourceNames();
-
-            foreach (string resource in resources)
-            {
-                if (resource.Contains("." + suffix))
-                {
-                    string resourceName = resource.Substring(resource.LastIndexOf("." + suffix + ".") + (suffix.Length + 2));
-                    temp.Add(resource);
-                    listBox.Items.Add(resourceName);
-                }
-            }
-        }
 
         public static void putCursorInBox(TextBox box)
         {
