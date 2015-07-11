@@ -69,6 +69,7 @@
     <Compile Include="General\GenFcns.cs" />
     <Compile Include="General\ListBoxFcns.cs" />
     <Compile Include="Objects\Points\CasterPoint.cs" />
+    <Compile Include="Objects\Points\CharacterPoint.cs" />
     <Compile Include="Objects\Points\CompetitorPoint.cs" />
     <Compile Include="Objects\Points\ScorePoint.cs" />
     <Compile Include="Objects\Points\TemplatePoint.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Objects\Template\CasterTemplate.cs" />
     <Compile Include="Objects\Template\CompetitorTemplate.cs" />
     <Compile Include="DataPoint.cs" />
+    <Compile Include="Objects\Template\MatchupPictureTemplate.cs" />
     <Compile Include="Objects\Template\Template.cs" />
     <Compile Include="SmashOverlayForm.cs">
       <SubType>Form</SubType>
@@ -111,6 +113,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Images\Characters\SmashRenders\Thumbs.db" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -137,6 +140,32 @@
     <EmbeddedResource Include="Images\Templates\GreenOverlay.png" />
     <EmbeddedResource Include="Images\Templates\PurpleOverlay.png" />
     <EmbeddedResource Include="Images\Matchup\PurpleNeb.jpg" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Bowser.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\CaptainFalcon.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\DonkeyKong.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\DrMario.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Falco.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Fox.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\GameAndWatch.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Ganon.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\IceClimbers.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Jigglypuff.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Kirby.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Link.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Luigi.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Mario.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Marth.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Mewtwo.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Ness.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Peach.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Pichu.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Pikachu.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Roy.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Samus.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Sheik.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Yoshi.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\YoungLink.png" />
+    <EmbeddedResource Include="Images\Characters\SmashRenders\Zelda.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -5,11 +5,13 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using SmashOverlayGeneratorMk2.Objects.Points;
+using SmashOverlayGeneratorMk2.General;
 
 namespace SmashOverlayGeneratorMk2.Objects
 {
     class CasterTemplate : Template
     {
+        #region GLOBAL VARIABLES
         private CasterPoint caster1Point;
         private CasterPoint caster2Point;
         private TwitterPoint caster1TwitterPoint;
@@ -19,7 +21,9 @@ namespace SmashOverlayGeneratorMk2.Objects
         private Font caster1Font;
         private Font caster2Font;
         private Font twitterFont;
+        #endregion GLOBAL VARIABLES
 
+        #region CONSTRUCTORS
         public CasterTemplate(string filePath) : base(filePath) { }
 
         public CasterTemplate(string filePath,
@@ -52,7 +56,9 @@ namespace SmashOverlayGeneratorMk2.Objects
             this.caster1TwitterPoint = caster1Twitter;
             this.caster2TwitterPoint = caster2Twitter;
         }
+        #endregion CONSTRUCTORS
 
+        #region GETTERS AND SETTERS
         public CasterPoint Caster1Point
         {
             get { return this.caster1Point; }
@@ -93,35 +99,9 @@ namespace SmashOverlayGeneratorMk2.Objects
             get { return this.twitterFont; }
             set { this.twitterFont = value; }
         }
+        #endregion GETTERS AND SETTERS
 
-        public void setFontSizes(string caster1, string caster2)
-        {
-            int[] fontSize = determineFontSize(caster1, caster2);
-            
-            caster1Font = new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold);
-            caster2Font = new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold);
-            twitterFont = new Font(FontFamily.GenericSansSerif, 40, FontStyle.Bold);
-
-        }
-
-        public int[] determineFontSize(string caster1, string caster2)
-        {
-            int[] fontSizeArr = new int[2];
-            int MAX = 20, MEDIUM = 17, SMALL = 15, SMALL_PLUS = 13;
-
-            if (caster1.Length >= 23) fontSizeArr[0] = SMALL_PLUS;
-            else if (caster1.Length >= 20) fontSizeArr[0] = SMALL;
-            else if (caster1.Length >= 17) fontSizeArr[0] = MEDIUM;
-            else fontSizeArr[0] = MAX;
-
-            if (caster2.Length >= 23) fontSizeArr[1] = SMALL_PLUS;
-            else if (caster2.Length >= 20) fontSizeArr[1] = SMALL;
-            else if (caster2.Length >= 17) fontSizeArr[1] = MEDIUM;
-            else fontSizeArr[1] = MAX;
-
-            return fontSizeArr;        
-        }
-
+        #region ABSTRACTED METHODS
         public override Bitmap drawTextOnImage(SmashOverlayGenerator form)
         {
             setFontSizes(form.Caster1, form.Caster2);
@@ -152,5 +132,17 @@ namespace SmashOverlayGeneratorMk2.Objects
             fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
             image.Save(fileName);
         }
+        #endregion ABSTRACTED METHODS
+
+        public void setFontSizes(string caster1, string caster2)
+        {
+            int[] fontSize = GenFcns.determineFontSize(caster1, caster2);
+
+            caster1Font = new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold);
+            caster2Font = new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold);
+            twitterFont = new Font(FontFamily.GenericSansSerif, 40, FontStyle.Bold);
+
+        }
+
     }
 }

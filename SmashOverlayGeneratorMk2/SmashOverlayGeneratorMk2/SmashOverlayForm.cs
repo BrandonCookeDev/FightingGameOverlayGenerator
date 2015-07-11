@@ -48,6 +48,8 @@ namespace SmashOverlayGeneratorMk2
         private string casterTemplateFileName;
         private string matchupPicFile;
         private string matchupPicFileName;
+        private string matchupCompetitor1;
+        private string matchupCompetitor2;
         private string resourceType;
         private bool isError;
         private bool isAutoUpdate;
@@ -203,6 +205,20 @@ namespace SmashOverlayGeneratorMk2
         }
 
         [DataMember]
+        public string MatchupCompetitor1
+        {
+            get { return this.matchupCompetitor1; }
+            set { this.matchupCompetitor1 = value; }
+        }
+
+        [DataMember]
+        public string MatchupCompetitor2
+        {
+            get { return this.matchupCompetitor2; }
+            set { this.matchupCompetitor2 = value; }
+        }
+
+        [DataMember]
         public string ResourceType
         {
             get { return this.resourceType; }
@@ -280,7 +296,7 @@ namespace SmashOverlayGeneratorMk2
 
             ResourceType = resourceType;
 
-            debugCompetitorTemplate(resourceType, filePath);
+            hardcodedCompetitorTemplate(resourceType, filePath);
             logToUser("Completed without error...", false);
         }
 
@@ -296,7 +312,22 @@ namespace SmashOverlayGeneratorMk2
             bMap = new Bitmap(imageStream);
 
             
-            debugCasterTemplate(filePath);
+            hardcodedCasterTemplate(filePath);
+            logToUser("Completed without error...", false);
+        }
+
+        private void paintMatchupPicture(string filePath)
+        {
+            logToUser("GENERATING...", false);
+
+            Bitmap bMap = null;
+            Stream imageStream = null;
+
+            myAssembly = Assembly.GetExecutingAssembly();
+            imageStream = myAssembly.GetManifestResourceStream(filePath);
+            bMap = new Bitmap(imageStream);
+
+
             logToUser("Completed without error...", false);
         }
 
@@ -338,6 +369,11 @@ namespace SmashOverlayGeneratorMk2
         {
             TournamentName = tournamentNameTextbox.Text;
             TournamentRound = tournamentRoundCombobox.Text;
+        }
+
+        private void getMatchupData()
+        {
+
         }
         #endregion GeneratePicture
 
@@ -1060,8 +1096,8 @@ namespace SmashOverlayGeneratorMk2
         }
         #endregion ErrorHandling
 
-        #region DEBUG
-        private CasterTemplate debugCasterTemplate(string fileName)
+        #region Hardcoded Generation
+        private CasterTemplate hardcodedCasterTemplate(string fileName)
         {
             bool caster1Checked = caster1Checkbox.Checked;
             bool caster2Checked = caster2Checkbox.Checked;
@@ -1082,7 +1118,7 @@ namespace SmashOverlayGeneratorMk2
             return cTemplate;
         }
 
-        private CompetitorTemplate debugCompetitorTemplate(string resourceType, 
+        private CompetitorTemplate hardcodedCompetitorTemplate(string resourceType, 
                                                            string fileName)
         {
             CompetitorPoint player1P = new CompetitorPoint(501, 1063);
@@ -1105,7 +1141,9 @@ namespace SmashOverlayGeneratorMk2
 
             return cTemplate;
         }
-        #endregion DEBUG
+
+        
+        #endregion Hardcoded Generation
         
         #region ServiceMethods
         /** THIS METHOD WILL NEED TO RUN AN ASYNC THREAD IN THE BG **/

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using SmashOverlayGeneratorMk2.Objects.Points;
+using SmashOverlayGeneratorMk2.General;
 
 namespace SmashOverlayGeneratorMk2.Objects
 {
     class CompetitorTemplate : Template
     {
+        #region GLOBAL VARIABLES
         private CompetitorPoint competitor1Point;
         private CompetitorPoint competitor2Point;
         private CompetitorPoint competitor1WebcamPoint;
@@ -22,8 +24,10 @@ namespace SmashOverlayGeneratorMk2.Objects
         private Font name1Font;
         private Font name2Font;
         private Font scoreFont;
-        private Font tournmentFont;                 
+        private Font tournmentFont;
+        #endregion GLOBAL VARIABLES
 
+        #region CONSTRUCTORS
         public CompetitorTemplate(string filePath) : base(filePath) { }
 
         public CompetitorTemplate(string filePath,
@@ -83,7 +87,9 @@ namespace SmashOverlayGeneratorMk2.Objects
             this.score2Point = score2;
             this.tournamentNameRoundPoint = tournamentNameRound;
         }
+        #endregion CONSTRUCTORS
 
+        #region GETTERS AND SETTERS
         public CompetitorPoint Competitor1Point
         {
             get { return this.competitor1Point; }
@@ -149,46 +155,9 @@ namespace SmashOverlayGeneratorMk2.Objects
             get { return this.tournmentFont; }
             set { this.tournmentFont = value; }
         }
-
-        public void setFontSizes(string resourceType, 
-                                 string competitor1, string competitor2)
-        {
-            int[] fontSize = determineFontSize(competitor1, competitor2);
-            if (resourceType.Equals("file"))
-            {
-                Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
-                Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
-                ScoreFont = new Font(FontFamily.GenericSansSerif, 45, FontStyle.Bold);
-                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
-            }
-            else
-            {
-                Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
-                Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
-                ScoreFont = new Font(FontFamily.GenericSansSerif, 35, FontStyle.Bold);
-                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
-            }
-        }
-
-        public int[] determineFontSize(string competitor1, 
-                                                string competitor2)
-        {
-            int[] fontSizeArr = new int[2];
-            int MAX = 22, MEDIUM = 19, SMALL = 17, SMALL_PLUS = 15;
-
-            if (competitor1.Length >= 23) fontSizeArr[0] = SMALL_PLUS;
-            else if (competitor1.Length >= 20) fontSizeArr[0] = SMALL;
-            else if (competitor1.Length >= 17) fontSizeArr[0] = MEDIUM;
-            else fontSizeArr[0] = MAX;
-
-            if (competitor2.Length >= 23) fontSizeArr[1] = SMALL_PLUS;
-            else if (competitor2.Length >= 20) fontSizeArr[1] = SMALL;
-            else if (competitor2.Length >= 17) fontSizeArr[1] = MEDIUM;
-            else fontSizeArr[1] = MAX;
-
-            return fontSizeArr;
-        }
-
+        #endregion GETTERS AND SETTERS
+        
+        #region ABSTRACTED METHODS
         public override Bitmap drawTextOnImage(SmashOverlayGenerator form)
         {
             setFontSizes(form.ResourceType, form.Competitor1, form.Competitor2);
@@ -223,5 +192,28 @@ namespace SmashOverlayGeneratorMk2.Objects
             fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
             image.Save(fileName);
         }
+        #endregion ABSTRACTED METHODS
+
+        public void setFontSizes(string resourceType,
+                                 string competitor1, string competitor2)
+        {
+            int[] fontSize = GenFcns.determineFontSize(competitor1, competitor2);
+            if (resourceType.Equals("file"))
+            {
+                Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
+                Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
+                ScoreFont = new Font(FontFamily.GenericSansSerif, 45, FontStyle.Bold);
+                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+            }
+            else
+            {
+                Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
+                Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
+                ScoreFont = new Font(FontFamily.GenericSansSerif, 35, FontStyle.Bold);
+                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+            }
+        }
+
+
     }
 }
