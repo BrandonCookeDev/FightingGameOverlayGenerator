@@ -9,16 +9,18 @@ using System.Windows.Forms;
 using System.Collections;
 using System.IO;
 using System.Reflection;
-using SmashOverlayGeneratorMk2.Objects.Points;
-using SmashOverlayGeneratorMk2.Objects;
-using XSplit.Core.Properties;
-using System.ServiceModel;
-using SmashOverlayGeneratorWebServiceLib;
-using SmashOverlayGeneratorWebServiceLib.Objects;
 using System.Runtime.Serialization;
 using System.Threading;
+using System.ServiceModel;
+using SmashOverlayGeneratorMk2.BackendOps;
+using SmashOverlayGeneratorMk2.BMVersion;
+using SmashOverlayGeneratorMk2.Objects.Points;
+using SmashOverlayGeneratorMk2.Objects;
+using SmashOverlayGeneratorWebServiceLib;
+using SmashOverlayGeneratorWebServiceLib.Objects;
 using SmashOverlayGeneratorMk2.ErrorHandling;
 using SmashOverlayGeneratorMk2.General;
+using XSplit.Core.Properties;
 //using XSplitBroadcasterLib;
 
 namespace SmashOverlayGeneratorMk2
@@ -655,41 +657,45 @@ namespace SmashOverlayGeneratorMk2
         #endregion FormOperations
 
         #region BackendOps
-
-        private void logToUser(string msg, bool err)
+        private void generate()
         {
-            if (err)
+            try
             {
-                logMessageLabel.ForeColor = Color.Red;
+
+                if (!dataFilledIn())
+                    return;
+
+                //GET THE COMBATANTS' NAMES (SET TO THE GLOBAL VARIABLES)
+                getCombatants(GameType);
+                //VERIFY THE SCORES ARE IN CORRECT FORMAT
+                ErrorHandler.checkScoreFormat(Score1, Score2);
+
+                getTournamentData();
+
+                string resource = TemplateFile.Contains(".Images.Templates.") ? "resource" : "file";
+
+                //ALTER THE IMAGE WITH NEW INFORMATION
+                paintCompetitorText(TemplateFile, resource);
+
+
             }
-            else
+            catch (Exception ex)
             {
-                logMessageLabel.ForeColor = Color.Navy;
-            }
-            if (logMessageLabel.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(logToUser);
-                logMessageLabel.Invoke(d, new object[] { msg, err });
-            }
-            else
-            {
-                logMessageLabel.Text = "..." + msg;
+                logToUser(ex.Message.ToString(), true);
             }
         }
 
+        
+
+        #region Score Management
         private void incrementPlayer1()
         {
             if (dataFilledIn())
             {
-                int score = Int32.Parse(singlesP1ScoreTextbox.Text);
-                score++;
-                singlesP1ScoreTextbox.Text = score.ToString();
-
+                ScoreManager.incrementPlayer(singlesP1ScoreTextbox);
                 generate();
             }
         }
-
-
         private void decrementPlayer1()
         {
             int score = Int32.Parse(singlesP1ScoreTextbox.Text);
@@ -697,28 +703,19 @@ namespace SmashOverlayGeneratorMk2
             {
                 if (dataFilledIn())
                 {
-                    score--;
-                    singlesP1ScoreTextbox.Text = score.ToString();
-
+                    ScoreManager.decrementPlayer(score, singlesP1ScoreTextbox);
                     generate();
                 }
             }
-        }
-
-
+       }
         private void incrementPlayer2()
         {
             if (dataFilledIn())
             {
-                int score = Int32.Parse(singlesP2ScoreTextbox.Text);
-                score++;
-                singlesP2ScoreTextbox.Text = score.ToString();
-
+                ScoreManager.incrementPlayer(singlesP2ScoreTextbox);
                 generate();
             }
         }
-
-
         private void decrementPlayer2()
         {
             int score = Int32.Parse(singlesP2ScoreTextbox.Text);
@@ -726,29 +723,19 @@ namespace SmashOverlayGeneratorMk2
             {
                 if (dataFilledIn())
                 {
-                    score--;
-                    singlesP2ScoreTextbox.Text = score.ToString();
-
+                    ScoreManager.decrementPlayer(score, singlesP2ScoreTextbox);
                     generate();
                 }
             }
         }
-
-
         private void incrementTeam1()
         {
             if (dataFilledIn())
             {
-                int score = Int32.Parse(doublesT1ScoreTextbox.Text);
-                score++;
-                doublesT1ScoreTextbox.Text = score.ToString();
-
+                ScoreManager.incrementPlayer(doublesT1ScoreTextbox);
                 generate();
             }
         }
-
-
-
         private void decrementTeam1()
         {
             int score = Int32.Parse(doublesT1ScoreTextbox.Text);
@@ -756,15 +743,11 @@ namespace SmashOverlayGeneratorMk2
             {
                 if (dataFilledIn())
                 {
-                    score--;
-                    doublesT1ScoreTextbox.Text = score.ToString();
-
+                    ScoreManager.decrementPlayer(score, doublesT1ScoreTextbox);
                     generate();
                 }
             }
         }
-
-
         private void incrementTeam2()
         {
             if (dataFilledIn())
@@ -776,9 +759,6 @@ namespace SmashOverlayGeneratorMk2
                 generate();
             }
         }
-
-
-
         private void decrementTeam2()
         {
             int score = Int32.Parse(doublesT2ScoreTextbox.Text);
@@ -786,13 +766,12 @@ namespace SmashOverlayGeneratorMk2
             {
                 if (dataFilledIn())
                 {
-                    score--;
-                    doublesT2ScoreTextbox.Text = score.ToString();
-
+                    ScoreManager.decrementPlayer(score, doublesT2ScoreTextbox);
                     generate();
                 }
             }
         }
+        #endregion ScoreManagement
         #endregion BackendOps
 
         #region Listeners
@@ -828,6 +807,7 @@ namespace SmashOverlayGeneratorMk2
         {
             decrementTeam2();
         }
+
         private void generateButton_Click(object sender, EventArgs e)
         {
             try
@@ -842,41 +822,9 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
-        private void generate()
+        private void generateMatchupPicBtn_Click(object sender, EventArgs e)
         {
-            try
-            {
-                /*
-                //VERIFY TOURNAMENT AND ROUND ARE FILLED IN
-                verifyTourneyDataFilled();
-                //VERIFY THE TOURNAMENT ROUND IS FILLED
-                verifyTournamentRoundFilled();
-                //VERIFY THE COMBATANTS FIELDS
-                verifyCombatantsFilled();
-                 */
 
-                if (!dataFilledIn())
-                    return;
-                
-
-                //GET THE COMBATANTS' NAMES (SET TO THE GLOBAL VARIABLES)
-                getCombatants(GameType);
-                //VERIFY THE SCORES ARE IN CORRECT FORMAT
-                ErrorHandler.checkScoreFormat(Score1, Score2);
-
-                getTournamentData();
-
-                string resource = TemplateFile.Contains(".Images.Templates.") ? "resource" : "file";
-
-                //ALTER THE IMAGE WITH NEW INFORMATION
-                paintCompetitorText(TemplateFile, resource);
-
-                
-            }
-            catch (Exception ex)
-            {
-                logToUser(ex.Message.ToString(), true);
-            }
         }
 
         private void generateCasterOverlayButton_Click(object sender, EventArgs e)
@@ -1006,7 +954,7 @@ namespace SmashOverlayGeneratorMk2
             }
             catch (Exception ex)
             {
-                //Do nothing
+                //Do nothing. User hit White Space
             }
         }
 
@@ -1022,7 +970,7 @@ namespace SmashOverlayGeneratorMk2
             }
             catch (Exception ex)
             {
-                //Do nothing
+                //Do nothing. User Hit WHITE SPACE
             }
         }
 
@@ -1038,10 +986,11 @@ namespace SmashOverlayGeneratorMk2
             }
             catch (Exception ex)
             {
-                //Do nothing
+                //Do nothing. User hit White Space.
             }
         }
 
+        //SHORTCUT FOR SCORE UP AND DOWN
         private void SmashOverlayGenerator_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -1131,32 +1080,6 @@ namespace SmashOverlayGeneratorMk2
 
         #endregion ErrorHandling
 
-        /*
-        #region General
-        public void putCursorInBox(TextBox box)
-        {
-            box.Focus();
-            box.Select(0, 0);
-        }
-
-        public bool isEmpty(TextBox str)
-        {
-            return str.Text.Equals("");
-        }
-
-        private bool checkIfDigits(string s)
-        {
-            foreach (char c in s)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
-        }
-        #endregion General        
-        */
-
         #region DEBUG
         private CasterTemplate debugCasterTemplate(string fileName)
         {
@@ -1203,11 +1126,6 @@ namespace SmashOverlayGeneratorMk2
             return cTemplate;
         }
         #endregion DEBUG
-
-        public void makeWindowTest()
-        {
-            MessageBox.Show("It worked!");
-        }
         
         #region ServiceMethods
 
@@ -1219,6 +1137,11 @@ namespace SmashOverlayGeneratorMk2
                 TourneyData td = service.getRecentTourneyData(Conn);
                 updateInfo(td);
             }
+        }
+
+        public void makeWindowTest()
+        {
+            MessageBox.Show("It worked!");
         }
 
         private void makeConnectionBtn_Click(object sender, EventArgs e)
@@ -1294,7 +1217,7 @@ namespace SmashOverlayGeneratorMk2
 
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return false;
                 }
@@ -1311,19 +1234,26 @@ namespace SmashOverlayGeneratorMk2
         }
         #endregion Threads
 
-        private void matchupPicListView_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void logToUser(string msg, bool err)
         {
-
+            if (err)
+            {
+                logMessageLabel.ForeColor = Color.Red;
+            }
+            else
+            {
+                logMessageLabel.ForeColor = Color.Navy;
+            }
+            if (logMessageLabel.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(logToUser);
+                logMessageLabel.Invoke(d, new object[] { msg, err });
+            }
+            else
+            {
+                logMessageLabel.Text = "..." + msg;
+            }
         }
-
-        private void generateMatchupPicBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
-
-        
-
     }    
 }

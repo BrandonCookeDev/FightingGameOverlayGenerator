@@ -63,7 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackendPictureGen\PictureGen.cs" />
+    <Compile Include="BackendOps\ScoreManager.cs" />
+    <Compile Include="BMVersion\BMVersion.cs" />
     <Compile Include="ErrorHandling\ErrorHandler.cs" />
     <Compile Include="General\GenFcns.cs" />
     <Compile Include="General\ListBoxFcns.cs" />
