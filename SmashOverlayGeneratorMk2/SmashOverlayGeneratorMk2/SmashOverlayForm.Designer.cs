@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SmashOverlayGenerator));
             this.competitorsTab = new System.Windows.Forms.TabPage();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.doublesPanel = new System.Windows.Forms.Panel();
             this.decrementTeam2Button = new System.Windows.Forms.Button();
             this.incrementTeam2Button = new System.Windows.Forms.Button();
             this.decrementTeam1Button = new System.Windows.Forms.Button();
@@ -50,7 +50,7 @@
             this.doublesT1ScoreTextbox = new System.Windows.Forms.TextBox();
             this.doublesT1ScoreLabel = new System.Windows.Forms.Label();
             this.teamOneLabel = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.singlesPanel = new System.Windows.Forms.Panel();
             this.decrementPlayer2Button = new System.Windows.Forms.Button();
             this.incrementPlayer2Button = new System.Windows.Forms.Button();
             this.decrementPlayer1Button = new System.Windows.Forms.Button();
@@ -117,16 +117,16 @@
             this.matchupCompetitor1Label = new System.Windows.Forms.Label();
             this.matchupCompetitor2Label = new System.Windows.Forms.Label();
             this.matchupPictureLabel = new System.Windows.Forms.Label();
-            this.matchupPicListView = new System.Windows.Forms.ListView();
             this.generateMatchupPicBtn = new System.Windows.Forms.Button();
             this.clearMatchupDataBtn = new System.Windows.Forms.Button();
             this.matchupPictureBox = new System.Windows.Forms.PictureBox();
             this.matchupPicPreviewLabel = new System.Windows.Forms.Label();
             this.matchupCompetitor1CharacterCombobox = new System.Windows.Forms.ComboBox();
             this.matchupCompetitor2CharacterCombobox = new System.Windows.Forms.ComboBox();
+            this.matchupPicListView = new System.Windows.Forms.ListBox();
             this.competitorsTab.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.doublesPanel.SuspendLayout();
+            this.singlesPanel.SuspendLayout();
             this.gameTypeTabTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -152,8 +152,8 @@
             // 
             // competitorsTab
             // 
-            this.competitorsTab.Controls.Add(this.panel2);
-            this.competitorsTab.Controls.Add(this.panel1);
+            this.competitorsTab.Controls.Add(this.doublesPanel);
+            this.competitorsTab.Controls.Add(this.singlesPanel);
             this.competitorsTab.Location = new System.Drawing.Point(4, 22);
             this.competitorsTab.Name = "competitorsTab";
             this.competitorsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -163,32 +163,32 @@
             this.competitorsTab.UseVisualStyleBackColor = true;
             this.competitorsTab.UseWaitCursor = true;
             // 
-            // panel2
+            // doublesPanel
             // 
-            this.panel2.Controls.Add(this.decrementTeam2Button);
-            this.panel2.Controls.Add(this.incrementTeam2Button);
-            this.panel2.Controls.Add(this.decrementTeam1Button);
-            this.panel2.Controls.Add(this.incrementTeam1Button);
-            this.panel2.Controls.Add(this.doublesClearButton);
-            this.panel2.Controls.Add(this.doublesT2P2Textbox);
-            this.panel2.Controls.Add(this.doublesT2P2Label);
-            this.panel2.Controls.Add(this.doublesT2P1Textbox);
-            this.panel2.Controls.Add(this.doublesT2P1Label);
-            this.panel2.Controls.Add(this.doublesT2ScoreTextbox);
-            this.panel2.Controls.Add(this.doublesT2ScoreLabel);
-            this.panel2.Controls.Add(this.teamTwoLabel);
-            this.panel2.Controls.Add(this.doublesT1P2Textbox);
-            this.panel2.Controls.Add(this.doublesT1P2Label);
-            this.panel2.Controls.Add(this.doublesT1P1Textbox);
-            this.panel2.Controls.Add(this.doublesT1P1Label);
-            this.panel2.Controls.Add(this.doublesT1ScoreTextbox);
-            this.panel2.Controls.Add(this.doublesT1ScoreLabel);
-            this.panel2.Controls.Add(this.teamOneLabel);
-            this.panel2.Location = new System.Drawing.Point(251, 4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(249, 254);
-            this.panel2.TabIndex = 15;
-            this.panel2.UseWaitCursor = true;
+            this.doublesPanel.Controls.Add(this.decrementTeam2Button);
+            this.doublesPanel.Controls.Add(this.incrementTeam2Button);
+            this.doublesPanel.Controls.Add(this.decrementTeam1Button);
+            this.doublesPanel.Controls.Add(this.incrementTeam1Button);
+            this.doublesPanel.Controls.Add(this.doublesClearButton);
+            this.doublesPanel.Controls.Add(this.doublesT2P2Textbox);
+            this.doublesPanel.Controls.Add(this.doublesT2P2Label);
+            this.doublesPanel.Controls.Add(this.doublesT2P1Textbox);
+            this.doublesPanel.Controls.Add(this.doublesT2P1Label);
+            this.doublesPanel.Controls.Add(this.doublesT2ScoreTextbox);
+            this.doublesPanel.Controls.Add(this.doublesT2ScoreLabel);
+            this.doublesPanel.Controls.Add(this.teamTwoLabel);
+            this.doublesPanel.Controls.Add(this.doublesT1P2Textbox);
+            this.doublesPanel.Controls.Add(this.doublesT1P2Label);
+            this.doublesPanel.Controls.Add(this.doublesT1P1Textbox);
+            this.doublesPanel.Controls.Add(this.doublesT1P1Label);
+            this.doublesPanel.Controls.Add(this.doublesT1ScoreTextbox);
+            this.doublesPanel.Controls.Add(this.doublesT1ScoreLabel);
+            this.doublesPanel.Controls.Add(this.teamOneLabel);
+            this.doublesPanel.Location = new System.Drawing.Point(251, 4);
+            this.doublesPanel.Name = "doublesPanel";
+            this.doublesPanel.Size = new System.Drawing.Size(249, 254);
+            this.doublesPanel.TabIndex = 15;
+            this.doublesPanel.UseWaitCursor = true;
             // 
             // decrementTeam2Button
             // 
@@ -373,26 +373,26 @@
             this.teamOneLabel.Text = "Team 1";
             this.teamOneLabel.UseWaitCursor = true;
             // 
-            // panel1
+            // singlesPanel
             // 
-            this.panel1.Controls.Add(this.decrementPlayer2Button);
-            this.panel1.Controls.Add(this.incrementPlayer2Button);
-            this.panel1.Controls.Add(this.decrementPlayer1Button);
-            this.panel1.Controls.Add(this.incrementPlayer1Button);
-            this.panel1.Controls.Add(this.singlesClearButton);
-            this.panel1.Controls.Add(this.singlesP2ScoreTextbox);
-            this.panel1.Controls.Add(this.singlesP2ScoreLabel);
-            this.panel1.Controls.Add(this.singlesP2Textbox);
-            this.panel1.Controls.Add(this.singlesP2Label);
-            this.panel1.Controls.Add(this.singlesP1ScoreTextbox);
-            this.panel1.Controls.Add(this.singlesP1ScoreLabel);
-            this.panel1.Controls.Add(this.singlesP1Textbox);
-            this.panel1.Controls.Add(this.singlesP1Label);
-            this.panel1.Location = new System.Drawing.Point(7, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(237, 254);
-            this.panel1.TabIndex = 14;
-            this.panel1.UseWaitCursor = true;
+            this.singlesPanel.Controls.Add(this.decrementPlayer2Button);
+            this.singlesPanel.Controls.Add(this.incrementPlayer2Button);
+            this.singlesPanel.Controls.Add(this.decrementPlayer1Button);
+            this.singlesPanel.Controls.Add(this.incrementPlayer1Button);
+            this.singlesPanel.Controls.Add(this.singlesClearButton);
+            this.singlesPanel.Controls.Add(this.singlesP2ScoreTextbox);
+            this.singlesPanel.Controls.Add(this.singlesP2ScoreLabel);
+            this.singlesPanel.Controls.Add(this.singlesP2Textbox);
+            this.singlesPanel.Controls.Add(this.singlesP2Label);
+            this.singlesPanel.Controls.Add(this.singlesP1ScoreTextbox);
+            this.singlesPanel.Controls.Add(this.singlesP1ScoreLabel);
+            this.singlesPanel.Controls.Add(this.singlesP1Textbox);
+            this.singlesPanel.Controls.Add(this.singlesP1Label);
+            this.singlesPanel.Location = new System.Drawing.Point(7, 4);
+            this.singlesPanel.Name = "singlesPanel";
+            this.singlesPanel.Size = new System.Drawing.Size(237, 254);
+            this.singlesPanel.TabIndex = 14;
+            this.singlesPanel.UseWaitCursor = true;
             // 
             // decrementPlayer2Button
             // 
@@ -818,7 +818,7 @@
             // 
             this.casterTemplatePreviewLabel.AutoSize = true;
             this.casterTemplatePreviewLabel.Font = new System.Drawing.Font("Constantia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.casterTemplatePreviewLabel.Location = new System.Drawing.Point(231, 135);
+            this.casterTemplatePreviewLabel.Location = new System.Drawing.Point(251, 201);
             this.casterTemplatePreviewLabel.Name = "casterTemplatePreviewLabel";
             this.casterTemplatePreviewLabel.Size = new System.Drawing.Size(132, 13);
             this.casterTemplatePreviewLabel.TabIndex = 15;
@@ -836,9 +836,9 @@
             // 
             // casterTemplatePictureBox
             // 
-            this.casterTemplatePictureBox.Location = new System.Drawing.Point(231, 149);
+            this.casterTemplatePictureBox.Location = new System.Drawing.Point(270, 156);
             this.casterTemplatePictureBox.Name = "casterTemplatePictureBox";
-            this.casterTemplatePictureBox.Size = new System.Drawing.Size(269, 118);
+            this.casterTemplatePictureBox.Size = new System.Drawing.Size(221, 111);
             this.casterTemplatePictureBox.TabIndex = 13;
             this.casterTemplatePictureBox.TabStop = false;
             this.casterTemplatePictureBox.Click += new System.EventHandler(this.casterTemplatePictureBox_Click);
@@ -848,7 +848,7 @@
             this.casterTemplateListView.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.casterTemplateListView.FormattingEnabled = true;
             this.casterTemplateListView.ItemHeight = 15;
-            this.casterTemplateListView.Location = new System.Drawing.Point(231, 7);
+            this.casterTemplateListView.Location = new System.Drawing.Point(232, 12);
             this.casterTemplateListView.Name = "casterTemplateListView";
             this.casterTemplateListView.Size = new System.Drawing.Size(269, 109);
             this.casterTemplateListView.TabIndex = 12;
@@ -1074,11 +1074,11 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.matchupPicListView);
             this.splitContainer3.Panel2.Controls.Add(this.matchupPicPreviewLabel);
             this.splitContainer3.Panel2.Controls.Add(this.matchupPictureBox);
-            this.splitContainer3.Panel2.Controls.Add(this.matchupPicListView);
             this.splitContainer3.Size = new System.Drawing.Size(500, 267);
-            this.splitContainer3.SplitterDistance = 242;
+            this.splitContainer3.SplitterDistance = 207;
             this.splitContainer3.TabIndex = 0;
             // 
             // matchupCompetitor1Textbox
@@ -1123,15 +1123,6 @@
             this.matchupPictureLabel.TabIndex = 4;
             this.matchupPictureLabel.Text = "Matchup Picture Generator";
             // 
-            // matchupPicListView
-            // 
-            this.matchupPicListView.Location = new System.Drawing.Point(14, 13);
-            this.matchupPicListView.Name = "matchupPicListView";
-            this.matchupPicListView.Size = new System.Drawing.Size(228, 117);
-            this.matchupPicListView.TabIndex = 0;
-            this.matchupPicListView.UseCompatibleStateImageBehavior = false;
-            this.matchupPicListView.SelectedIndexChanged += new System.EventHandler(this.matchupPicListView_SelectedIndexChanged);
-            // 
             // generateMatchupPicBtn
             // 
             this.generateMatchupPicBtn.BackColor = System.Drawing.Color.Chocolate;
@@ -1155,9 +1146,9 @@
             // 
             // matchupPictureBox
             // 
-            this.matchupPictureBox.Location = new System.Drawing.Point(14, 155);
+            this.matchupPictureBox.Location = new System.Drawing.Point(56, 164);
             this.matchupPictureBox.Name = "matchupPictureBox";
-            this.matchupPictureBox.Size = new System.Drawing.Size(228, 109);
+            this.matchupPictureBox.Size = new System.Drawing.Size(204, 100);
             this.matchupPictureBox.TabIndex = 1;
             this.matchupPictureBox.TabStop = false;
             this.matchupPictureBox.Click += new System.EventHandler(this.matchupPictureBox_Click);
@@ -1165,7 +1156,7 @@
             // matchupPicPreviewLabel
             // 
             this.matchupPicPreviewLabel.AutoSize = true;
-            this.matchupPicPreviewLabel.Location = new System.Drawing.Point(11, 139);
+            this.matchupPicPreviewLabel.Location = new System.Drawing.Point(11, 148);
             this.matchupPicPreviewLabel.Name = "matchupPicPreviewLabel";
             this.matchupPicPreviewLabel.Size = new System.Drawing.Size(131, 13);
             this.matchupPicPreviewLabel.TabIndex = 2;
@@ -1243,6 +1234,15 @@
             this.matchupCompetitor2CharacterCombobox.TabIndex = 8;
             this.matchupCompetitor2CharacterCombobox.Text = "Competitor 2 Character";
             // 
+            // matchupPicListView
+            // 
+            this.matchupPicListView.FormattingEnabled = true;
+            this.matchupPicListView.Location = new System.Drawing.Point(14, 3);
+            this.matchupPicListView.Name = "matchupPicListView";
+            this.matchupPicListView.Size = new System.Drawing.Size(246, 121);
+            this.matchupPicListView.TabIndex = 3;
+            this.matchupPicListView.SelectedIndexChanged += new System.EventHandler(this.matchupPicListView_SelectedIndexChanged_1);
+            // 
             // SmashOverlayGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1262,10 +1262,10 @@
             this.Load += new System.EventHandler(this.SmashOverlayGeneratorMk2_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyDown);
             this.competitorsTab.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.doublesPanel.ResumeLayout(false);
+            this.doublesPanel.PerformLayout();
+            this.singlesPanel.ResumeLayout(false);
+            this.singlesPanel.PerformLayout();
             this.gameTypeTabTab.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -1301,7 +1301,7 @@
         #endregion
 
         private System.Windows.Forms.TabPage competitorsTab;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel doublesPanel;
         private System.Windows.Forms.Button doublesClearButton;
         private System.Windows.Forms.TextBox doublesT2P2Textbox;
         private System.Windows.Forms.Label doublesT2P2Label;
@@ -1317,7 +1317,7 @@
         private System.Windows.Forms.TextBox doublesT1ScoreTextbox;
         private System.Windows.Forms.Label doublesT1ScoreLabel;
         private System.Windows.Forms.Label teamOneLabel;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel singlesPanel;
         private System.Windows.Forms.Button singlesClearButton;
         private System.Windows.Forms.TextBox singlesP2ScoreTextbox;
         private System.Windows.Forms.Label singlesP2ScoreLabel;
@@ -1388,13 +1388,13 @@
         private System.Windows.Forms.Label matchupCompetitor1Label;
         private System.Windows.Forms.TextBox matchupCompetitor2Textbox;
         private System.Windows.Forms.TextBox matchupCompetitor1Textbox;
-        private System.Windows.Forms.ListView matchupPicListView;
         private System.Windows.Forms.Button clearMatchupDataBtn;
         private System.Windows.Forms.Button generateMatchupPicBtn;
         private System.Windows.Forms.Label matchupPicPreviewLabel;
         private System.Windows.Forms.PictureBox matchupPictureBox;
         private System.Windows.Forms.ComboBox matchupCompetitor2CharacterCombobox;
         private System.Windows.Forms.ComboBox matchupCompetitor1CharacterCombobox;
+        private System.Windows.Forms.ListBox matchupPicListView;
 
 
     }

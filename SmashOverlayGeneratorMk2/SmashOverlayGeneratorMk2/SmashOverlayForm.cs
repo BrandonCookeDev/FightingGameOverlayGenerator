@@ -44,6 +44,8 @@ namespace SmashOverlayGeneratorMk2
         private string tournamentRound;
         private string casterTemplateFile;
         private string casterTemplateFileName;
+        private string matchupPicFile;
+        private string matchupPicFileName;
         private string resourceType;
         private bool isError;
         private bool isAutoUpdate;
@@ -182,6 +184,20 @@ namespace SmashOverlayGeneratorMk2
         {
             get { return this.templateFileName; }
             set { this.templateFileName = value; } 
+        }
+
+        [DataMember]
+        public string MatchupPicFile
+        {
+            get { return this.matchupPicFile; }
+            set { this.matchupPicFile = value; }
+        }
+
+        [DataMember]
+        public string MatchupPicFileName
+        {
+            get { return this.matchupPicFileName; }
+            set { this.matchupPicFileName = value; }
         }
 
         [DataMember]
@@ -363,8 +379,9 @@ namespace SmashOverlayGeneratorMk2
             doublesT1ScoreTextbox.Text = 0.ToString();
             doublesT2ScoreTextbox.Text = 0.ToString();
 
-            populateTemplatesList();
-            populateCasterTemplatesList();
+            GenFcns.populateListView(myAssembly, templateListView, "Templates");
+            GenFcns.populateListView(myAssembly, casterTemplateListView, "Caster");
+            GenFcns.populateListView(myAssembly, matchupPicListView, "Matchup");
 
             try
             {
@@ -389,58 +406,6 @@ namespace SmashOverlayGeneratorMk2
                 logToUser("Connection was not made", true);
             }
 
-        }
-
-
-        public void populateTemplatesList()
-        {
-            ArrayList temp = new ArrayList();                      
-            string[] resources = myAssembly.GetManifestResourceNames();
-
-            foreach(string resource in resources)
-            {
-                if(resource.Contains(".Templates"))
-                {
-                    string resourceName = resource.Substring(resource.LastIndexOf("Templates.")+10);
-                    temp.Add(resource);
-                    templateListView.Items.Add(resourceName);
-                }
-            }
-            Templates = temp;            
-        }
-
-        public void populateCasterTemplatesList()
-        {
-            ArrayList temp = new ArrayList();
-            string[] resources = myAssembly.GetManifestResourceNames();
-
-            foreach (string resource in resources)
-            {
-                if (resource.Contains(".Caster"))
-                {
-                    string resourceName = resource.Substring(resource.LastIndexOf(".Caster.") + 8);
-                    temp.Add(resource);
-                    casterTemplateListView.Items.Add(resourceName);
-                }
-            }
-            CasterTemplates = temp;
-        }
-
-        public void populateMatchupPictureList()
-        {
-            ArrayList temp = new ArrayList();
-            string[] resources = myAssembly.GetManifestResourceNames();
-
-            foreach (string resource in resources)
-            {
-                if (resource.Contains(".Matchup"))
-                {
-                    string resourceName = resource.Substring(resource.LastIndexOf(".Matchup.") + 9);
-                    temp.Add(resource);
-                    matchupPicListView.Items.Add(resourceName);
-                }
-            }
-            CasterTemplates = temp;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -670,6 +635,22 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
+        private void matchupPicListView_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                string resource = (string)matchupPicListView.Items[matchupPicListView.SelectedIndex];
+                MatchupPicFile = getImageResourcePath("matchup", resource);
+                MatchupPicFileName = resource;
+
+                string imageFilePath = MatchupPicFile;
+                changePictureInBox(matchupPictureBox, imageFilePath);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
         private void changePictureInBox(PictureBox box, string resourcePath)
         {
             Stream imageStream = myAssembly.GetManifestResourceStream(resourcePath);
@@ -682,6 +663,8 @@ namespace SmashOverlayGeneratorMk2
 
         private string getImageResourcePath(string type, string resourceName)
         {
+            //return this.ProductName + ".Images." + type + "." + resourceName;
+
             if (type.Equals("template"))
             {
                 return this.ProductName + ".Images.Templates." + resourceName;
@@ -690,9 +673,13 @@ namespace SmashOverlayGeneratorMk2
             {
                 return this.ProductName + ".Images.Caster." + resourceName;
             }
+            else if (type.Equals("matchup"))
+            {
+                return this.ProductName + ".Images.Matchup." + resourceName;
+            }
             else
                 throw new Exception("String type agrument can only be 'template' or 'caster'");
-
+            
         }
 
         public void showPicturePreviewForm(Image image)
@@ -1359,6 +1346,8 @@ namespace SmashOverlayGeneratorMk2
         {
 
         }
+
+        
 
     }    
 }
