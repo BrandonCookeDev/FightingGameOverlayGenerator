@@ -110,6 +110,20 @@
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
+            this.matchupPicTab = new System.Windows.Forms.TabPage();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.matchupCompetitor1Textbox = new System.Windows.Forms.TextBox();
+            this.matchupCompetitor2Textbox = new System.Windows.Forms.TextBox();
+            this.matchupCompetitor1Label = new System.Windows.Forms.Label();
+            this.matchupCompetitor2Label = new System.Windows.Forms.Label();
+            this.matchupPictureLabel = new System.Windows.Forms.Label();
+            this.matchupPicListView = new System.Windows.Forms.ListView();
+            this.generateMatchupPicBtn = new System.Windows.Forms.Button();
+            this.clearMatchupDataBtn = new System.Windows.Forms.Button();
+            this.matchupPictureBox = new System.Windows.Forms.PictureBox();
+            this.matchupPicPreviewLabel = new System.Windows.Forms.Label();
+            this.matchupCompetitor1CharacterCombobox = new System.Windows.Forms.ComboBox();
+            this.matchupCompetitor2CharacterCombobox = new System.Windows.Forms.ComboBox();
             this.competitorsTab.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -128,6 +142,12 @@
             this.casterTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.casterTemplatePictureBox)).BeginInit();
             this.settingsTab.SuspendLayout();
+            this.matchupPicTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.matchupPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // competitorsTab
@@ -758,6 +778,7 @@
             this.smashOverlayTabControl.Controls.Add(this.gameTypeTabTab);
             this.smashOverlayTabControl.Controls.Add(this.competitorsTab);
             this.smashOverlayTabControl.Controls.Add(this.casterTab);
+            this.smashOverlayTabControl.Controls.Add(this.matchupPicTab);
             this.smashOverlayTabControl.Controls.Add(this.settingsTab);
             this.smashOverlayTabControl.Location = new System.Drawing.Point(13, 13);
             this.smashOverlayTabControl.Multiline = true;
@@ -805,7 +826,7 @@
             // 
             // clearCasterButton
             // 
-            this.clearCasterButton.Location = new System.Drawing.Point(43, 191);
+            this.clearCasterButton.Location = new System.Drawing.Point(16, 245);
             this.clearCasterButton.Name = "clearCasterButton";
             this.clearCasterButton.Size = new System.Drawing.Size(121, 22);
             this.clearCasterButton.TabIndex = 14;
@@ -899,7 +920,7 @@
             // 
             this.generateCasterOverlayButton.BackColor = System.Drawing.Color.Red;
             this.generateCasterOverlayButton.Font = new System.Drawing.Font("Constantia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.generateCasterOverlayButton.Location = new System.Drawing.Point(40, 219);
+            this.generateCasterOverlayButton.Location = new System.Drawing.Point(19, 191);
             this.generateCasterOverlayButton.Name = "generateCasterOverlayButton";
             this.generateCasterOverlayButton.Size = new System.Drawing.Size(121, 48);
             this.generateCasterOverlayButton.TabIndex = 4;
@@ -992,7 +1013,7 @@
             this.versionLabel.TabIndex = 14;
             this.versionLabel.Text = "v 3.0";
             // 
-            // tournamentRoundTextbox
+            // tournamentRoundCombobox
             // 
             this.tournamentRoundCombobox.FormattingEnabled = true;
             this.tournamentRoundCombobox.Items.AddRange(new object[] {
@@ -1007,7 +1028,7 @@
             "Grand Finals",
             "Grand Finals (L)"});
             this.tournamentRoundCombobox.Location = new System.Drawing.Point(238, 318);
-            this.tournamentRoundCombobox.Name = "tournamentRoundTextbox";
+            this.tournamentRoundCombobox.Name = "tournamentRoundCombobox";
             this.tournamentRoundCombobox.Size = new System.Drawing.Size(178, 21);
             this.tournamentRoundCombobox.TabIndex = 18;
             // 
@@ -1021,7 +1042,206 @@
             this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
-            //this.logMessageLabel.Click += new System.EventHandler(this.logMessageLabel_Click);
+            // 
+            // matchupPicTab
+            // 
+            this.matchupPicTab.Controls.Add(this.splitContainer3);
+            this.matchupPicTab.Location = new System.Drawing.Point(4, 22);
+            this.matchupPicTab.Name = "matchupPicTab";
+            this.matchupPicTab.Padding = new System.Windows.Forms.Padding(3);
+            this.matchupPicTab.Size = new System.Drawing.Size(506, 273);
+            this.matchupPicTab.TabIndex = 5;
+            this.matchupPicTab.Text = "Matchup Pic";
+            this.matchupPicTab.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.matchupCompetitor2CharacterCombobox);
+            this.splitContainer3.Panel1.Controls.Add(this.matchupCompetitor1CharacterCombobox);
+            this.splitContainer3.Panel1.Controls.Add(this.clearMatchupDataBtn);
+            this.splitContainer3.Panel1.Controls.Add(this.generateMatchupPicBtn);
+            this.splitContainer3.Panel1.Controls.Add(this.matchupPictureLabel);
+            this.splitContainer3.Panel1.Controls.Add(this.matchupCompetitor2Label);
+            this.splitContainer3.Panel1.Controls.Add(this.matchupCompetitor1Label);
+            this.splitContainer3.Panel1.Controls.Add(this.matchupCompetitor2Textbox);
+            this.splitContainer3.Panel1.Controls.Add(this.matchupCompetitor1Textbox);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.matchupPicPreviewLabel);
+            this.splitContainer3.Panel2.Controls.Add(this.matchupPictureBox);
+            this.splitContainer3.Panel2.Controls.Add(this.matchupPicListView);
+            this.splitContainer3.Size = new System.Drawing.Size(500, 267);
+            this.splitContainer3.SplitterDistance = 242;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // matchupCompetitor1Textbox
+            // 
+            this.matchupCompetitor1Textbox.Location = new System.Drawing.Point(33, 47);
+            this.matchupCompetitor1Textbox.Name = "matchupCompetitor1Textbox";
+            this.matchupCompetitor1Textbox.Size = new System.Drawing.Size(161, 20);
+            this.matchupCompetitor1Textbox.TabIndex = 0;
+            // 
+            // matchupCompetitor2Textbox
+            // 
+            this.matchupCompetitor2Textbox.Location = new System.Drawing.Point(33, 121);
+            this.matchupCompetitor2Textbox.Name = "matchupCompetitor2Textbox";
+            this.matchupCompetitor2Textbox.Size = new System.Drawing.Size(161, 20);
+            this.matchupCompetitor2Textbox.TabIndex = 1;
+            // 
+            // matchupCompetitor1Label
+            // 
+            this.matchupCompetitor1Label.AutoSize = true;
+            this.matchupCompetitor1Label.Location = new System.Drawing.Point(13, 31);
+            this.matchupCompetitor1Label.Name = "matchupCompetitor1Label";
+            this.matchupCompetitor1Label.Size = new System.Drawing.Size(66, 13);
+            this.matchupCompetitor1Label.TabIndex = 2;
+            this.matchupCompetitor1Label.Text = "Competitor 1";
+            // 
+            // matchupCompetitor2Label
+            // 
+            this.matchupCompetitor2Label.AutoSize = true;
+            this.matchupCompetitor2Label.Location = new System.Drawing.Point(13, 105);
+            this.matchupCompetitor2Label.Name = "matchupCompetitor2Label";
+            this.matchupCompetitor2Label.Size = new System.Drawing.Size(66, 13);
+            this.matchupCompetitor2Label.TabIndex = 3;
+            this.matchupCompetitor2Label.Text = "Competitor 2";
+            // 
+            // matchupPictureLabel
+            // 
+            this.matchupPictureLabel.AutoSize = true;
+            this.matchupPictureLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matchupPictureLabel.Location = new System.Drawing.Point(3, 0);
+            this.matchupPictureLabel.Name = "matchupPictureLabel";
+            this.matchupPictureLabel.Size = new System.Drawing.Size(157, 15);
+            this.matchupPictureLabel.TabIndex = 4;
+            this.matchupPictureLabel.Text = "Matchup Picture Generator";
+            // 
+            // matchupPicListView
+            // 
+            this.matchupPicListView.Location = new System.Drawing.Point(14, 13);
+            this.matchupPicListView.Name = "matchupPicListView";
+            this.matchupPicListView.Size = new System.Drawing.Size(228, 117);
+            this.matchupPicListView.TabIndex = 0;
+            this.matchupPicListView.UseCompatibleStateImageBehavior = false;
+            this.matchupPicListView.SelectedIndexChanged += new System.EventHandler(this.matchupPicListView_SelectedIndexChanged);
+            // 
+            // generateMatchupPicBtn
+            // 
+            this.generateMatchupPicBtn.BackColor = System.Drawing.Color.Chocolate;
+            this.generateMatchupPicBtn.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.generateMatchupPicBtn.Location = new System.Drawing.Point(16, 188);
+            this.generateMatchupPicBtn.Name = "generateMatchupPicBtn";
+            this.generateMatchupPicBtn.Size = new System.Drawing.Size(126, 47);
+            this.generateMatchupPicBtn.TabIndex = 5;
+            this.generateMatchupPicBtn.Text = "Generate Matchup Picture";
+            this.generateMatchupPicBtn.UseVisualStyleBackColor = false;
+            this.generateMatchupPicBtn.Click += new System.EventHandler(this.generateMatchupPicBtn_Click);
+            // 
+            // clearMatchupDataBtn
+            // 
+            this.clearMatchupDataBtn.Location = new System.Drawing.Point(16, 241);
+            this.clearMatchupDataBtn.Name = "clearMatchupDataBtn";
+            this.clearMatchupDataBtn.Size = new System.Drawing.Size(126, 23);
+            this.clearMatchupDataBtn.TabIndex = 6;
+            this.clearMatchupDataBtn.Text = "Clear Picture Data";
+            this.clearMatchupDataBtn.UseVisualStyleBackColor = true;
+            // 
+            // matchupPictureBox
+            // 
+            this.matchupPictureBox.Location = new System.Drawing.Point(14, 155);
+            this.matchupPictureBox.Name = "matchupPictureBox";
+            this.matchupPictureBox.Size = new System.Drawing.Size(228, 109);
+            this.matchupPictureBox.TabIndex = 1;
+            this.matchupPictureBox.TabStop = false;
+            this.matchupPictureBox.Click += new System.EventHandler(this.matchupPictureBox_Click);
+            // 
+            // matchupPicPreviewLabel
+            // 
+            this.matchupPicPreviewLabel.AutoSize = true;
+            this.matchupPicPreviewLabel.Location = new System.Drawing.Point(11, 139);
+            this.matchupPicPreviewLabel.Name = "matchupPicPreviewLabel";
+            this.matchupPicPreviewLabel.Size = new System.Drawing.Size(131, 13);
+            this.matchupPicPreviewLabel.TabIndex = 2;
+            this.matchupPicPreviewLabel.Text = "Preview (Click to Enlarge):";
+            // 
+            // matchupCompetitor1CharacterCombobox
+            // 
+            this.matchupCompetitor1CharacterCombobox.FormattingEnabled = true;
+            this.matchupCompetitor1CharacterCombobox.Items.AddRange(new object[] {
+            "Fox",
+            "Falco",
+            "Sheik",
+            "Marth",
+            "Captain Falcon",
+            "Peach",
+            "Jigglypuff",
+            "Ice Climbers",
+            "Bowser",
+            "Donkey Kong",
+            "Dr. Mario",
+            "Ganon",
+            "Kirby",
+            "Link",
+            "Luigi",
+            "Mario",
+            "Mewtwo",
+            "Mr. Game & Watch",
+            "Ness ",
+            "Pichu",
+            "Pikachu",
+            "Samus",
+            "Roy",
+            "Yoshi",
+            "Young Link",
+            "Zelda"});
+            this.matchupCompetitor1CharacterCombobox.Location = new System.Drawing.Point(33, 74);
+            this.matchupCompetitor1CharacterCombobox.Name = "matchupCompetitor1CharacterCombobox";
+            this.matchupCompetitor1CharacterCombobox.Size = new System.Drawing.Size(140, 21);
+            this.matchupCompetitor1CharacterCombobox.TabIndex = 7;
+            this.matchupCompetitor1CharacterCombobox.Text = "Competitor 1 Character";
+            // 
+            // matchupCompetitor2CharacterCombobox
+            // 
+            this.matchupCompetitor2CharacterCombobox.FormattingEnabled = true;
+            this.matchupCompetitor2CharacterCombobox.Items.AddRange(new object[] {
+            "Fox",
+            "Falco",
+            "Sheik",
+            "Marth",
+            "Captain Falcon",
+            "Peach",
+            "Jigglypuff",
+            "Ice Climbers",
+            "Bowser",
+            "Donkey Kong",
+            "Dr. Mario",
+            "Ganon",
+            "Kirby",
+            "Link",
+            "Luigi",
+            "Mario",
+            "Mewtwo",
+            "Mr. Game & Watch",
+            "Ness ",
+            "Pichu",
+            "Pikachu",
+            "Samus",
+            "Roy",
+            "Yoshi",
+            "Young Link",
+            "Zelda"});
+            this.matchupCompetitor2CharacterCombobox.Location = new System.Drawing.Point(33, 148);
+            this.matchupCompetitor2CharacterCombobox.Name = "matchupCompetitor2CharacterCombobox";
+            this.matchupCompetitor2CharacterCombobox.Size = new System.Drawing.Size(140, 21);
+            this.matchupCompetitor2CharacterCombobox.TabIndex = 8;
+            this.matchupCompetitor2CharacterCombobox.Text = "Competitor 2 Character";
             // 
             // SmashOverlayGenerator
             // 
@@ -1036,13 +1256,11 @@
             this.Controls.Add(this.smashOverlayTabControl);
             this.Controls.Add(this.generateButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "SmashOverlayGenerator";
             this.Text = "Smash Bros Overlay Generator";
             this.Load += new System.EventHandler(this.SmashOverlayGeneratorMk2_Load);
-            this.KeyPreview = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyDown);
-            //this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SmashOverlayGenerator_KeyPress);
-            //this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SmashOverlayGenerator_KeyUp);
             this.competitorsTab.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -1067,6 +1285,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.casterTemplatePictureBox)).EndInit();
             this.settingsTab.ResumeLayout(false);
             this.settingsTab.PerformLayout();
+            this.matchupPicTab.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel1.PerformLayout();
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.matchupPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1155,6 +1381,20 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button makeConnectionBtn;
         private System.Windows.Forms.Label logMessageLabel;
+        private System.Windows.Forms.TabPage matchupPicTab;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.Label matchupPictureLabel;
+        private System.Windows.Forms.Label matchupCompetitor2Label;
+        private System.Windows.Forms.Label matchupCompetitor1Label;
+        private System.Windows.Forms.TextBox matchupCompetitor2Textbox;
+        private System.Windows.Forms.TextBox matchupCompetitor1Textbox;
+        private System.Windows.Forms.ListView matchupPicListView;
+        private System.Windows.Forms.Button clearMatchupDataBtn;
+        private System.Windows.Forms.Button generateMatchupPicBtn;
+        private System.Windows.Forms.Label matchupPicPreviewLabel;
+        private System.Windows.Forms.PictureBox matchupPictureBox;
+        private System.Windows.Forms.ComboBox matchupCompetitor2CharacterCombobox;
+        private System.Windows.Forms.ComboBox matchupCompetitor1CharacterCombobox;
 
 
     }

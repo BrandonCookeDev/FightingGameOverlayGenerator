@@ -136,6 +136,7 @@
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\Matchup\" />
     <Folder Include="Objects\Connection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

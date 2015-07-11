@@ -426,6 +426,23 @@ namespace SmashOverlayGeneratorMk2
             CasterTemplates = temp;
         }
 
+        public void populateMatchupPictureList()
+        {
+            ArrayList temp = new ArrayList();
+            string[] resources = myAssembly.GetManifestResourceNames();
+
+            foreach (string resource in resources)
+            {
+                if (resource.Contains(".Matchup"))
+                {
+                    string resourceName = resource.Substring(resource.LastIndexOf(".Matchup.") + 9);
+                    temp.Add(resource);
+                    matchupPicListView.Items.Add(resourceName);
+                }
+            }
+            CasterTemplates = temp;
+        }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
@@ -1327,6 +1344,21 @@ namespace SmashOverlayGeneratorMk2
             return null;
         }
         #endregion Threads
+
+        private void matchupPicListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void generateMatchupPicBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matchupPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }    
 }
