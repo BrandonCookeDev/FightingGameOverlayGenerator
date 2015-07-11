@@ -300,24 +300,6 @@ namespace SmashOverlayGeneratorMk2
             logToUser("Completed without error...", false);
         }
 
-        private int[] determineFontSize()
-        {
-            int[] fontSizeArr = new int[2];
-            int MAX = 20, MEDIUM = 17, SMALL = 15, SMALL_PLUS = 13;
-
-            if (Competitor1.Length >= 23) fontSizeArr[0] = SMALL_PLUS;
-            else if (Competitor1.Length >= 20) fontSizeArr[0] = SMALL;
-            else if (Competitor1.Length >= 17) fontSizeArr[0] = MEDIUM;
-            else fontSizeArr[0] = MAX;
-
-            if (Competitor2.Length >= 23) fontSizeArr[1] = SMALL_PLUS;
-            else if (Competitor2.Length >= 20) fontSizeArr[1] = SMALL;
-            else if (Competitor2.Length >= 17) fontSizeArr[1] = MEDIUM;
-            else fontSizeArr[1] = MAX;
-
-            return fontSizeArr;
-        }
-
         private void getCombatants(String gameType)
         {
             if (gameType.Equals("singles"))
@@ -357,16 +339,9 @@ namespace SmashOverlayGeneratorMk2
             TournamentName = tournamentNameTextbox.Text;
             TournamentRound = tournamentRoundCombobox.Text;
         }
-
-        private void createNewImageFile(string source, string destination)
-        {
-            //COPY IMAGE TO NEW FILE
-            System.IO.File.Copy(source, destination, true);
-        }
         #endregion GeneratePicture
 
-        #region FormOperations
-        
+        #region FormOperations        
         private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
@@ -652,8 +627,6 @@ namespace SmashOverlayGeneratorMk2
             {
             }
         }
-
-        
         #endregion FormOperations
 
         #region BackendOps
@@ -661,7 +634,6 @@ namespace SmashOverlayGeneratorMk2
         {
             try
             {
-
                 if (!dataFilledIn())
                     return;
 
@@ -775,6 +747,7 @@ namespace SmashOverlayGeneratorMk2
         #endregion BackendOps
 
         #region Listeners
+        #region Score Button Listeners
         private void incrementPlayer1Button_Click(object sender, EventArgs e)
         {
             incrementPlayer1();
@@ -807,7 +780,9 @@ namespace SmashOverlayGeneratorMk2
         {
             decrementTeam2();
         }
+        #endregion Score Button Listeners
 
+        #region Generate Button Listeners
         private void generateButton_Click(object sender, EventArgs e)
         {
             try
@@ -842,7 +817,9 @@ namespace SmashOverlayGeneratorMk2
                 logToUser(ex.Message.ToString(), true);
             }
         }
+        #endregion Generate Button Listeners
 
+        #region Clear Button Listeners
         private void singlesClearButton_Click_1(object sender, EventArgs e)
         {
             clearSinglesFields();
@@ -857,6 +834,31 @@ namespace SmashOverlayGeneratorMk2
         {
             clearTourneyFields();
         }
+
+        private void clearCasterButton_Click(object sender, EventArgs e)
+        {
+            caster1Textbox.Text = "";
+            caster2Textbox.Text = "";
+            caster1TwitterTextbox.Text = "";
+            caster2TwitterTextbox.Text = "";
+            casterTemplateListView.SelectedIndex = -1;
+            casterTemplatePictureBox.Image = null;
+
+            Caster1 = null;
+            Caster2 = null;
+            Caster1Twitter = null;
+            Caster2Twitter = null;
+            CasterTemplateFile = null;
+            CasterTemplateFileName = null;
+        }
+
+        private void clearImageSelection_Click(object sender, EventArgs e)
+        {
+            selectedFileLabel.Text = "";
+            TemplateFile = "";
+            NewTemplateFile = "";
+        }
+        #endregion Clear Button Listeners
 
         private void browseButton_Click(object sender, EventArgs e)
         {
@@ -907,14 +909,7 @@ namespace SmashOverlayGeneratorMk2
         {
             smashOverlayTabControl.SelectedTab = gameTypeTabTab;
         }
-
-        private void clearImageSelection_Click(object sender, EventArgs e)
-        {
-            selectedFileLabel.Text = "";
-            TemplateFile = "";
-            NewTemplateFile = "";
-        }
-
+        
         private void caster2Checkbox_CheckedChanged(object sender, EventArgs e)
         {
             greyOutCaster(2, !caster2Checkbox.Checked);
@@ -925,23 +920,7 @@ namespace SmashOverlayGeneratorMk2
             greyOutCaster(1, !caster1Checkbox.Checked);
         }
 
-        private void clearCasterButton_Click(object sender, EventArgs e)
-        {
-            caster1Textbox.Text = "";
-            caster2Textbox.Text = "";
-            caster1TwitterTextbox.Text = "";
-            caster2TwitterTextbox.Text = "";
-            casterTemplateListView.SelectedIndex = -1;
-            casterTemplatePictureBox.Image = null;
-
-            Caster1 = null;
-            Caster2 = null;
-            Caster1Twitter = null;
-            Caster2Twitter = null;
-            CasterTemplateFile = null;
-            CasterTemplateFileName = null;
-        }
-
+        #region Picture Preview 
         private void casterTemplatePictureBox_Click(object sender, EventArgs e)
         {
             try
@@ -989,6 +968,7 @@ namespace SmashOverlayGeneratorMk2
                 //Do nothing. User hit White Space.
             }
         }
+        #endregion Picture Preview
 
         //SHORTCUT FOR SCORE UP AND DOWN
         private void SmashOverlayGenerator_KeyDown(object sender, KeyEventArgs e)
@@ -1020,11 +1000,9 @@ namespace SmashOverlayGeneratorMk2
                 singlesP2Textbox.SelectAll();
             }
         }
-        
         #endregion Listeners             
 
         #region ErrorHandling
-
         private bool casterDataFilledIn()
         {
             try
@@ -1077,7 +1055,6 @@ namespace SmashOverlayGeneratorMk2
             }
             return true;
         }
-
         #endregion ErrorHandling
 
         #region DEBUG
@@ -1128,7 +1105,6 @@ namespace SmashOverlayGeneratorMk2
         #endregion DEBUG
         
         #region ServiceMethods
-
         /** THIS METHOD WILL NEED TO RUN AN ASYNC THREAD IN THE BG **/
         public void refresh(){
 
@@ -1233,7 +1209,6 @@ namespace SmashOverlayGeneratorMk2
             return null;
         }
         #endregion Threads
-
 
         private void logToUser(string msg, bool err)
         {
