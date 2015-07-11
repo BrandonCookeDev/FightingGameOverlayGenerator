@@ -5,19 +5,19 @@ using System.Text;
 
 namespace SmashOverlayGeneratorMk2.BMVersion
 {
-    class BMVersion
+    public class BMVersion
     {
         /** GLOBAL **/
-        public static bool _BMVersion = false;
+        public static bool _BMMode = false;
 
 
         /** GETTERS AND SETTERS **/
-        /*
-        public bool BMVersion
+        
+        public static bool BM
         {
-            get { return _BMVersion; }
-            set { _BMVersion = value; }
+            get { return _BMMode; }
+            set { _BMMode = value; }
         }
-         * */
+        
     }
 }

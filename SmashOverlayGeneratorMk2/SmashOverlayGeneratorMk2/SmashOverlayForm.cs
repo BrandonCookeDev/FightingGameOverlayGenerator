@@ -341,7 +341,7 @@ namespace SmashOverlayGeneratorMk2
         }
         #endregion GeneratePicture
 
-        #region FormOperations        
+        #region FormOperations
         private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
@@ -671,14 +671,17 @@ namespace SmashOverlayGeneratorMk2
         private void decrementPlayer1()
         {
             int score = Int32.Parse(singlesP1ScoreTextbox.Text);
-            if (score > 0)
-            {
-                if (dataFilledIn())
+            //if (!BMVersion.BMMode)
+            //{
+                if (score > 0)
                 {
-                    ScoreManager.decrementPlayer(score, singlesP1ScoreTextbox);
-                    generate();
+                    if (dataFilledIn())
+                    {
+                        ScoreManager.decrementPlayer(score, singlesP1ScoreTextbox);
+                        generate();
+                    }
                 }
-            }
+            //}
        }
         private void incrementPlayer2()
         {
