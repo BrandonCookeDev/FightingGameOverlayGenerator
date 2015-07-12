@@ -50,6 +50,8 @@ namespace SmashOverlayGeneratorMk2
         private string matchupPicFileName;
         private string matchupCompetitor1;
         private string matchupCompetitor2;
+        private string matchupCharacter1;
+        private string matchupCharacter2;
         private string resourceType;
         private bool isError;
         private bool isAutoUpdate;
@@ -219,6 +221,20 @@ namespace SmashOverlayGeneratorMk2
         }
 
         [DataMember]
+        public string MatchupCharacter1File
+        {
+            get { return this.matchupCharacter1; }
+            set { this.matchupCharacter1 = value; }
+        }
+
+        [DataMember]
+        public string MatchupCharacter2File
+        {
+            get { return this.matchupCharacter2; }
+            set { this.matchupCharacter2 = value; }
+        }
+
+        [DataMember]
         public string ResourceType
         {
             get { return this.resourceType; }
@@ -316,18 +332,21 @@ namespace SmashOverlayGeneratorMk2
             logToUser("Completed without error...", false);
         }
 
-        private void paintMatchupPicture(string filePath)
+        private void paintMatchupPicture(string filePath, 
+                                         string character1File,
+                                         string character2File)
         {
             logToUser("GENERATING...", false);
 
             Bitmap bMap = null;
             Stream imageStream = null;
 
-            myAssembly = Assembly.GetExecutingAssembly();
+            //Get Background
+            myAssembly = Assembly.GetExecutingAssembly();                                    
             imageStream = myAssembly.GetManifestResourceStream(filePath);
             bMap = new Bitmap(imageStream);
 
-
+            hardCodedMatchupPicture(filePath, character1File, character2File);
             logToUser("Completed without error...", false);
         }
 
@@ -371,9 +390,12 @@ namespace SmashOverlayGeneratorMk2
             TournamentRound = tournamentRoundCombobox.Text;
         }
 
-        private void getMatchupData()
+        private void getMatchupCompetitorData()
         {
-
+            MatchupCompetitor1 = matchupCompetitor1Textbox.Text;
+            //MatchupCharacter1File = matchupCharacter1Combobox.Text;
+            MatchupCompetitor2 = matchupCompetitor2Textbox.Text;
+            //MatchupCharacter2File = matchupCharacter2Combobox.Text;
         }
         #endregion GeneratePicture
 
@@ -648,6 +670,7 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
+
         private void matchupPicListView_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             try
@@ -661,6 +684,32 @@ namespace SmashOverlayGeneratorMk2
             }
             catch (Exception ex)
             {
+            }
+        }
+
+        private void matchupCharacter1Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string resource = (string)matchupCharacter1Combobox.Items[matchupCharacter1Combobox.SelectedIndex];
+                MatchupCharacter1File = ListBoxFcns.getImageResourcePath(this.ProductName, "character", resource);
+            }
+            catch (Exception ex)
+            {
+                logToUser("ERROR GETTING CHARACTER PIC....", true);
+            }
+        }
+
+        private void matchupCharacter2Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string resource = (string)matchupCharacter2Combobox.Items[matchupCharacter2Combobox.SelectedIndex];
+                MatchupCharacter2File = ListBoxFcns.getImageResourcePath(this.ProductName, "character", resource);
+            }
+            catch (Exception ex)
+            {
+                logToUser("ERROR GETTING CHARACTER PIC....", true);
             }
         }
         #endregion FormOperations
@@ -838,7 +887,19 @@ namespace SmashOverlayGeneratorMk2
 
         private void generateMatchupPicBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                //if(!matchupDataFilledIn())
+                //    return
 
+                getMatchupCompetitorData();
+                paintMatchupPicture(MatchupPicFile, MatchupCharacter1File, MatchupCharacter2File);
+
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message.ToString(), true);
+            }
         }
 
         private void generateCasterOverlayButton_Click(object sender, EventArgs e)
@@ -1142,6 +1203,24 @@ namespace SmashOverlayGeneratorMk2
             return cTemplate;
         }
 
+        private MatchupPictureTemplate hardCodedMatchupPicture(string fileName, 
+                                                               string character1File, string character2File)
+        {
+            CompetitorPoint matchupC1P = new CompetitorPoint(350, 900);
+            CompetitorPoint matchupC2P = new CompetitorPoint(1400, 900);
+            TournamentPoint tournamentP = new TournamentPoint(800, 500);
+            TournamentPoint tournamentRoundP = new TournamentPoint(800, 600);
+            CharacterPoint character1P = new CharacterPoint(350, 500);
+            CharacterPoint character2P = new CharacterPoint(1150, 500);
+
+            MatchupPictureTemplate mpTemplate = new MatchupPictureTemplate(fileName,
+                                        GameType, tournamentP, tournamentRoundP, matchupC1P, character1P,
+                                        matchupC2P, character2P);
+
+            Bitmap image = mpTemplate.drawTextOnImage(this);
+            mpTemplate.saveImage(image);
+            return mpTemplate;
+        }
         
         #endregion Hardcoded Generation
         
@@ -1271,5 +1350,7 @@ namespace SmashOverlayGeneratorMk2
                 logMessageLabel.Text = "..." + msg;
             }
         }
+
+        
     }    
 }

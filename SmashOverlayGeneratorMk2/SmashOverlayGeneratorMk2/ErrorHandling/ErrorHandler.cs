@@ -11,25 +11,6 @@ namespace SmashOverlayGeneratorMk2.ErrorHandling
     class ErrorHandler
     {
         #region ErrorHandling
-
-        /*
-        private bool dataFilledIn()
-        {
-            try
-            {
-                verifyTourneyDataFilled();
-                verifyCombatantsFilled();
-                verifyTournamentRoundFilled();
-            }
-            catch (Exception ex)
-            {
-                logToUser(ex.Message.ToString(), true);
-                return false;
-            }
-            return true;
-        }
-        */
-
         public static void verifyCombatantsFilled(string GameType,
                                             Label singlesP1Label, Label singlesP2Label,
                                             Label singlesP1ScoreLabel, Label singlesP2ScoreLabel,

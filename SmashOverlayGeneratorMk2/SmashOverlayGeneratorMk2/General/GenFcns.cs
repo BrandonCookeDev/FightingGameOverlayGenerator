@@ -11,6 +11,10 @@ namespace SmashOverlayGeneratorMk2.General
     class GenFcns
     {
         #region General
+        public static bool isNullOrEmpty(string s)
+        {
+            return s == null || s.Equals("");
+        }
 
         public static int[] determineFontSize(string Competitor1, string Competitor2)
         {

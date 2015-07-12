@@ -184,6 +184,21 @@ namespace SmashOverlayGeneratorMk2.Objects
         /* CONSTRUCTORS */
         public MatchupPictureTemplate(){}
 
+        public MatchupPictureTemplate(string filePath, string gametype,
+                                      TournamentPoint tournamentPoint, TournamentPoint tournamentRoundPoint,
+                                      CompetitorPoint competitor1Point, CharacterPoint character1Point,
+                                      CompetitorPoint competitor2Point, CharacterPoint character2Point)
+            : base(filePath)
+        {
+            this.tournamentPoint = tournamentPoint;
+            this.tournamentRoundPoint = tournamentRoundPoint;
+            this.competitor1Point = competitor1Point;
+            this.competitor2Point = competitor2Point;
+            this.character1Point = character1Point;
+            this.character2Point = character2Point;
+        }
+                                      
+        /*
         public MatchupPictureTemplate(string filePath, string gametype, string tournamentName,
                                       string competitor1, string character1, 
                                       string competitor2, string character2) : base(filePath)
@@ -245,6 +260,7 @@ namespace SmashOverlayGeneratorMk2.Objects
             this.character3 = character3;
             this.character4 = character4;
         }
+         * */
         #endregion CONSTRUCTORS
 
         #region ABSTRACTED METHODS
@@ -274,6 +290,11 @@ namespace SmashOverlayGeneratorMk2.Objects
             throw new NotImplementedException();
         }
         #endregion ABSTRACTED METHODS
+
+        public void drawCharactersOnImage(Assembly myAssembly, string character1, string character2)
+        {
+            
+        }
 
         public void setFontSizes(string resourceType,
                                  string competitor1, string competitor2)

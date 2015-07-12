@@ -35,20 +35,15 @@ namespace SmashOverlayGeneratorMk2.General
             //return this.ProductName + ".Images." + type + "." + resourceName;
 
             if (type.Equals("template"))
-            {
                 return productName + ".Images.Templates." + resourceName;
-            }
             else if (type.Equals("caster"))
-            {
                 return productName + ".Images.Caster." + resourceName;
-            }
             else if (type.Equals("matchup"))
-            {
                 return productName + ".Images.Matchup." + resourceName;
-            }
+            else if (type.Equals("character"))
+                return productName + ".Images.Characters." + resourceName + ".png";
             else
                 throw new Exception("String type agrument can only be 'template' or 'caster'");
-
         }
 
         public static void populateListView(Assembly myAssembly, ListBox listBox, string suffix)
