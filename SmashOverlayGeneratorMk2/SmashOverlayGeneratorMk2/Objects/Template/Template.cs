@@ -38,6 +38,17 @@ namespace SmashOverlayGeneratorMk2.Objects
             return image;
         }
 
+        public Bitmap getImage(string _filePath)
+        {
+            Assembly myAssembly = Assembly.GetExecutingAssembly();
+            Stream imageStream = myAssembly.GetManifestResourceStream(_filePath);
+            Bitmap image = new Bitmap(imageStream);
+
+            imageStream.Close();
+            return image;
+
+        }
+
         public abstract Bitmap drawTextOnImage(SmashOverlayGenerator form);
 
         public abstract void saveImage(Bitmap image);

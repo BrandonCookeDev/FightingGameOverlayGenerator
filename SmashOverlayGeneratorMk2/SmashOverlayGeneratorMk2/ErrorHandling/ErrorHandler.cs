@@ -11,7 +11,49 @@ namespace SmashOverlayGeneratorMk2.ErrorHandling
     class ErrorHandler
     {
         #region ErrorHandling
-        public static void verifyCombatantsFilled(string GameType,
+        public static void verifyMatchupDataFilled(string MatchupTemplateFile, ListBox matchupTemplatesList,
+                                                Label matchupCompetitor1Label, Label matchupCompetitor2Label,
+                                                TextBox matchupCompetitor1Textbox, ComboBox matchupCharacter1Combobox,                                                
+                                                TextBox matchupCompetitor2Textbox, ComboBox matchupCharacter2Combobox)
+        {
+            
+            matchupCompetitor1Label.ForeColor = Color.Black;
+            matchupCompetitor2Label.ForeColor = Color.Black;
+            matchupCharacter1Combobox.ForeColor = Color.Black;
+            matchupCharacter2Combobox.ForeColor = Color.Black;
+            matchupTemplatesList.ForeColor = Color.Black;
+
+            if (GenFcns.isEmpty(matchupCompetitor1Textbox))
+            {
+                matchupCompetitor1Label.ForeColor = Color.Red;
+                GenFcns.putCursorInBox(matchupCompetitor1Textbox);
+                throw new Exception("Competitor 1 must have a name");
+            }
+            else if (GenFcns.isEmpty(matchupCompetitor2Textbox))
+            {
+                matchupCompetitor2Label.ForeColor = Color.Red;
+                GenFcns.putCursorInBox(matchupCompetitor2Textbox);
+                throw new Exception("Competitor 2 must have a name");
+            }
+            else if (matchupCharacter1Combobox.SelectedIndex <= 0)
+            {
+                matchupCharacter1Combobox.ForeColor = Color.Red;
+                throw new Exception("Character 1 must be selected");
+            }
+            else if (matchupCharacter2Combobox.SelectedIndex <= 0)
+            {
+                matchupCharacter2Combobox.ForeColor = Color.Red;
+                throw new Exception("Character 2 must be selected");
+            }
+            else if (GenFcns.isNullOrEmpty(MatchupTemplateFile))
+            {
+                matchupTemplatesList.ForeColor = Color.Red;
+                throw new Exception("Matchup Template must be selected");
+            }
+        }
+
+        public static void verifyCombatantsFilled(
+                                            string GameType,
                                             Label singlesP1Label, Label singlesP2Label,
                                             Label singlesP1ScoreLabel, Label singlesP2ScoreLabel,
                                             TextBox singlesP1Textbox, TextBox singlesP2Textbox,

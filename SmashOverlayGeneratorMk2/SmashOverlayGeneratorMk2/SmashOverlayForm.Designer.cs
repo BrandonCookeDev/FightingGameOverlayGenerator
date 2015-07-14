@@ -1213,7 +1213,7 @@
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(37, 15);
             this.versionLabel.TabIndex = 14;
-            this.versionLabel.Text = "v 3.0";
+            this.versionLabel.Text = "v 3.4";
             // 
             // tournamentRoundCombobox
             // 

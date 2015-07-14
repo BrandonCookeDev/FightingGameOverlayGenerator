@@ -24,6 +24,8 @@ namespace SmashOverlayGeneratorMk2.Objects
         private string character2;
         private string character3;
         private string character4;
+        private string character1Path;
+        private string character2Path;
         private Font competitor1Font;
         private Font competitor2Font;
         private Font competitor3Font;
@@ -97,6 +99,16 @@ namespace SmashOverlayGeneratorMk2.Objects
         {
             get { return this.character4; }
             set { this.character4 = value; }
+        }
+        public string Character1Path
+        {
+            get { return this.character1Path; }
+            set { this.character1Path = value; }
+        }
+        public string Character2Path
+        {
+            get { return this.character2Path; }
+            set { this.character2Path = value; }
         }
         public Font Competitor1Font
         {
@@ -184,90 +196,30 @@ namespace SmashOverlayGeneratorMk2.Objects
         /* CONSTRUCTORS */
         public MatchupPictureTemplate(){}
 
-        public MatchupPictureTemplate(string filePath, string gametype,
+        public MatchupPictureTemplate(string filePath, string gametype, 
                                       TournamentPoint tournamentPoint, TournamentPoint tournamentRoundPoint,
-                                      CompetitorPoint competitor1Point, CharacterPoint character1Point,
-                                      CompetitorPoint competitor2Point, CharacterPoint character2Point)
+                                      string character1Path, CharacterPoint character1Point,
+                                      CompetitorPoint competitor1Point, 
+                                      string character2Path, CharacterPoint character2Point,
+                                      CompetitorPoint competitor2Point)
             : base(filePath)
         {
             this.tournamentPoint = tournamentPoint;
             this.tournamentRoundPoint = tournamentRoundPoint;
+            this.character1Path = character1Path;
+            this.character2Path = character2Path;
             this.competitor1Point = competitor1Point;
             this.competitor2Point = competitor2Point;
             this.character1Point = character1Point;
             this.character2Point = character2Point;
         }
-                                      
-        /*
-        public MatchupPictureTemplate(string filePath, string gametype, string tournamentName,
-                                      string competitor1, string character1, 
-                                      string competitor2, string character2) : base(filePath)
-        {
-            this.gametype = "singles";
-            
-            if(tournamentName == null || tournamentName.Equals(""))
-                throw new Exception("Matchup Picture: Tournament Name cannot be empty");
-            if(competitor1 == null || competitor1.Equals(""))
-                throw new Exception("Matchup Picture: Competitor 1 Name cannot be null");
-            if(competitor2 == null || competitor2.Equals(""))
-                throw new Exception("Matchup Picture: Competitor 2 Name cannot be null");
-            if(character1 == null || character1.Equals(""))
-                throw new Exception("Matchup Picture: Character 1 Name cannot be null");
-            if(character2 == null || character2.Equals(""))
-                throw new Exception("Matchup Picture: Character 2 Name cannot be null");
-
-            this.tournamentName = tournamentName;
-            this.competitor1 = competitor1;
-            this.competitor2 = competitor2;
-            this.character1 = character1;
-            this.character2 = character2;
-        }
-
-        public MatchupPictureTemplate(string filePath, string gametype, string tournamentName,
-                                      string competitor1, string character1,
-                                      string competitor2, string character2,
-                                      string competitor3, string character3, 
-                                      string competitor4, string character4) : base(filePath)
-        {
-            this.gametype = "doubles";
-            
-            if(tournamentName == null || tournamentName.Equals(""))
-                throw new Exception("Matchup Picture: Tournament Name cannot be empty");
-            if(competitor1 == null || competitor1.Equals(""))
-                throw new Exception("Matchup Picture: Competitor 1 Name cannot be null");
-            if(competitor2 == null || competitor2.Equals(""))
-                throw new Exception("Matchup Picture: Competitor 2 Name cannot be null");
-            if(character1 == null || character1.Equals(""))
-                throw new Exception("Matchup Picture: Character 1 Name cannot be null");
-            if(character2 == null || character2.Equals(""))
-                throw new Exception("Matchup Picture: Character 2 Name cannot be null");
-            if(competitor3 == null || competitor3.Equals(""))
-                throw new Exception("Matchup Picture: Competitor 3 Name cannot be null");
-            if(competitor4 == null || competitor4.Equals(""))
-                throw new Exception("Matchup Picture: Competitor 4 Name cannot be null");
-            if(character3 == null || character3.Equals(""))
-                throw new Exception("Matchup Picture: Character 3 Name cannot be null");
-            if(character4 == null || character4.Equals(""))
-                throw new Exception("Matchup Picture: Character 4 Name cannot be null");
-            
-            this.tournamentName = tournamentName;
-            this.competitor1 = competitor1;
-            this.competitor2 = competitor2;
-            this.competitor3 = competitor3;
-            this.competitor4 = competitor4;
-            this.character1 = character1;
-            this.character2 = character2;
-            this.character3 = character3;
-            this.character4 = character4;
-        }
-         * */
         #endregion CONSTRUCTORS
 
         #region ABSTRACTED METHODS
         public override System.Drawing.Bitmap drawTextOnImage(SmashOverlayGenerator form)
         {
-            setFontSizes(form.ResourceType, Competitor1, Competitor2);
-            if (Gametype.Equals("doubles"))
+            setFontSizes(form.ResourceType, form.MatchupCompetitor1, form.MatchupCompetitor2);
+            if (!GenFcns.isNullOrEmpty(Gametype) && Gametype.Equals("doubles"))
                 setFontSizes(form.ResourceType, Competitor3, Competitor4);
 
             StringFormat nameFormat = new StringFormat();
@@ -281,26 +233,63 @@ namespace SmashOverlayGeneratorMk2.Objects
             g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentPoint.getPoint(), tournamentFormat);
             g.DrawString(form.TournamentRound, TournamentRoundFont, Brushes.White, TournamentRoundPoint.getPoint(), tournamentFormat);
 
-            return null;
-            //throw new NotImplementedException();
+            drawCharactersOnImage(g, Character1Path, Character1Point, Character2Path, Character2Point);
+
+            return image;
         }
 
         public override void saveImage(System.Drawing.Bitmap image)
         {
-            throw new NotImplementedException();
+            String fileName = base.FilePath;
+            fileName = fileName.Substring(fileName.LastIndexOf(".Matchup.") + 9);
+            fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
+            image.Save(fileName);
         }
         #endregion ABSTRACTED METHODS
 
-        public void drawCharactersOnImage(Assembly myAssembly, string character1, string character2)
+        public void drawCharactersOnImage(Graphics g, string character1Path, CharacterPoint character1Point, 
+                                                      string character2Path, CharacterPoint character2Point)
         {
-            
+            g.DrawImage(base.getImage(character1Path), character1Point.getPoint());
+            g.DrawImage(base.getImage(character2Path), character2Point.getPoint());
         }
 
         public void setFontSizes(string resourceType,
-                                 string competitor1, string competitor2)
+                                 string _competitor1, string _competitor2,
+                                 string _competitor3, string _competitor4)
         {
-            int[] fontSize = GenFcns.determineFontSize(Competitor1, Competitor2);
+            int[] fontSize = GenFcns.determineFontSize(_competitor1, _competitor2);
             if (resourceType.Equals("file"))
+            {
+                Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
+                Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
+                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+            }
+            else
+            {
+                Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
+                Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
+                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+            }
+
+            fontSize = GenFcns.determineFontSize(_competitor3, _competitor4);
+            if (resourceType.Equals("file"))
+            {
+                Competitor3Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
+                Competitor4Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
+            }
+            else
+            {
+                Competitor3Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
+                Competitor4Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
+            }
+        }
+
+        public void setFontSizes(string resourceType,
+                                 string _competitor1, string _competitor2)
+        {
+            int[] fontSize = GenFcns.determineFontSize(_competitor1, _competitor2);
+            if (!GenFcns.isNullOrEmpty(resourceType) && resourceType.Equals("file"))
             {
                 Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
                 Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
@@ -311,21 +300,6 @@ namespace SmashOverlayGeneratorMk2.Objects
                 Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
                 Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);                
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
-            }
-
-            if (Gametype.Equals("doubles"))
-            {
-                fontSize = GenFcns.determineFontSize(Competitor3, Competitor4);
-                if (resourceType.Equals("file"))
-                {
-                    Competitor3Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
-                    Competitor4Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
-                }
-                else
-                {
-                    Competitor3Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
-                    Competitor4Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
-                }
             }
         }
     }

@@ -889,8 +889,8 @@ namespace SmashOverlayGeneratorMk2
         {
             try
             {
-                //if(!matchupDataFilledIn())
-                //    return
+                if (!matchupDataFilledIn())
+                    return;
 
                 getMatchupCompetitorData();
                 paintMatchupPicture(MatchupPicFile, MatchupCharacter1File, MatchupCharacter2File);
@@ -1103,6 +1103,24 @@ namespace SmashOverlayGeneratorMk2
         #endregion Listeners             
 
         #region ErrorHandling
+        private bool matchupDataFilledIn()
+        {
+            try
+            {
+                ErrorHandler.verifyMatchupDataFilled(
+                    MatchupPicFile, matchupPicListView, matchupCompetitor1Label,
+                    matchupCompetitor2Label, matchupCompetitor1Textbox,
+                    matchupCharacter1Combobox, matchupCompetitor2Textbox,
+                    matchupCharacter2Combobox);
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message.ToString(), true);
+                return false;
+            }
+            return true;
+        }
+
         private bool casterDataFilledIn()
         {
             try
@@ -1213,9 +1231,12 @@ namespace SmashOverlayGeneratorMk2
             CharacterPoint character1P = new CharacterPoint(350, 500);
             CharacterPoint character2P = new CharacterPoint(1150, 500);
 
-            MatchupPictureTemplate mpTemplate = new MatchupPictureTemplate(fileName,
-                                        GameType, tournamentP, tournamentRoundP, matchupC1P, character1P,
-                                        matchupC2P, character2P);
+            MatchupPictureTemplate mpTemplate = new MatchupPictureTemplate(fileName, GameType, 
+                                                                        tournamentP, tournamentRoundP,
+                                                                        MatchupCharacter1File, character1P, 
+                                                                        matchupC1P,
+                                                                        MatchupCharacter2File, character2P,
+                                                                        matchupC2P);
 
             Bitmap image = mpTemplate.drawTextOnImage(this);
             mpTemplate.saveImage(image);
