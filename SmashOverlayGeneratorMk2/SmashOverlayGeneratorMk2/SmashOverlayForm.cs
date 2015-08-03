@@ -59,6 +59,7 @@ namespace SmashOverlayGeneratorMk2
         private ArrayList templates;
         private ArrayList casterTemplates;
 
+        private string serviceUrl = "http://192.168.0.5:8081/SOGCS.svc";
         public string overlayDirectory = @"C:\\OverlayGenerator";
         private Resources _resources = new Resources();
         
@@ -333,7 +334,8 @@ namespace SmashOverlayGeneratorMk2
                         singlesP1Textbox.Text = Competitor1;
                         singlesP1ScoreTextbox.Text = Score1;
                         singlesP2Textbox.Text = Competitor2;
-                        singlesP2ScoreTextbox.Text = Score2; 
+                        singlesP2ScoreTextbox.Text = Score2;
+                        templateListView.SelectedItem = TemplateFileName;
                         switch (GameType)
                         {
                             case "singles":
@@ -357,18 +359,14 @@ namespace SmashOverlayGeneratorMk2
             {
                 Thread thread = new Thread(() =>
                 {
-                    EndpointAddress address = new EndpointAddress(new Uri("http://192.168.0.5:8081/SOGCS.svc"));
-                    //NetTcpBinding binding = new NetTcpBinding();
-                    //EndpointAddress address = new EndpointAddress(new Uri("net.tcp://192.168.0.5/SOGCS.svc"));
+                    EndpointAddress address = new EndpointAddress(new Uri(serviceUrl));
                     WSHttpBinding binding = new WSHttpBinding();
                     ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
 
                     service = fac.CreateChannel();
-                    //MessageBox.Show("Connection channel successfully made!");
-                    logToUser("Connection Channel successfully made!", false);
+                    logToUser("Channel successfully made!", false);
                     makeConnection();
-                }
-                );
+                });
                 thread.Start();
             }
             catch (Exception ex)
@@ -514,7 +512,6 @@ namespace SmashOverlayGeneratorMk2
         #endregion GeneratePicture
 
         #region FormOperations
-        
         private void clearSinglesFields()
         {
             singlesP1Textbox.Text = "";

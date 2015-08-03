@@ -25,6 +25,7 @@ namespace SmashOverlayGeneratorMk2.General
             sb.Append("|Competitor2:" + form.Competitor2);            
             sb.Append("|Score2:" + form.Score2);
             sb.Append("|NameSwap:" + form.NameSwap);
+            sb.Append("|TemplateFileName:" + form.TemplateFileName);
 
             if (!sb.ToString().Contains("null"))
             {
@@ -73,6 +74,9 @@ namespace SmashOverlayGeneratorMk2.General
                         break;
                     case "NameSwap":
                         form.NameSwap = Boolean.Parse(data[1]);
+                        break;
+                    case "TemplateFileName":
+                        form.TemplateFileName = data[1];
                         break;
                 }
             }
