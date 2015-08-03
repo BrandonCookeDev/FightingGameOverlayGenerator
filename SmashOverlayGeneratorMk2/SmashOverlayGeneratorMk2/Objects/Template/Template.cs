@@ -11,6 +11,8 @@ namespace SmashOverlayGeneratorMk2.Objects
 {
     abstract class Template
     {
+        private string parentPath = @"C:\\OverlayGenerator\\OverlayImages";
+
         private string filePath;
 
         public Template() { }
@@ -20,6 +22,12 @@ namespace SmashOverlayGeneratorMk2.Objects
                 throw new Exception("Template: File Path missing");
 
             this.filePath = filePath;
+        }
+
+        public string ParentPath
+        {
+            get { return this.parentPath; }
+            set { this.parentPath = value; }
         }
 
         public string FilePath

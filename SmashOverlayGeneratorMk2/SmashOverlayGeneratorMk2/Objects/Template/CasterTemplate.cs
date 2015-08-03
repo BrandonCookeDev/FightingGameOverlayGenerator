@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 using SmashOverlayGeneratorMk2.Objects.Points;
 using SmashOverlayGeneratorMk2.General;
 
@@ -127,10 +128,21 @@ namespace SmashOverlayGeneratorMk2.Objects
 
         public override void saveImage(Bitmap image)
         {
+            string targetPath = base.ParentPath + "\\Caster";
+
             String fileName = base.FilePath;
             fileName = fileName.Substring(fileName.LastIndexOf(".Caster.") + 8);
             fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
             image.Save(fileName);
+            
+            if(!Directory.Exists(base.ParentPath)){
+                Directory.CreateDirectory(base.ParentPath);
+            } 
+            if(!Directory.Exists(targetPath)){
+                Directory.CreateDirectory(targetPath);
+            }
+
+            image.Save(targetPath + "\\" + fileName);
         }
         #endregion ABSTRACTED METHODS
 

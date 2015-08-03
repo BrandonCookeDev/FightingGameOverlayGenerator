@@ -53,10 +53,13 @@ namespace SmashOverlayGeneratorMk2
         private string matchupCharacter1;
         private string matchupCharacter2;
         private string resourceType;
+        private bool nameSwap;
         private bool isError;
         private bool isAutoUpdate;
         private ArrayList templates;
         private ArrayList casterTemplates;
+
+        public string overlayDirectory = @"C:\\OverlayGenerator";
         private Resources _resources = new Resources();
         
         private ISOGControlService service = null;
@@ -248,6 +251,12 @@ namespace SmashOverlayGeneratorMk2
             set { this.isAutoUpdate = value;}
         }
 
+        public bool NameSwap
+        {
+            get { return this.nameSwap; }
+            set { this.nameSwap = value; }
+        }
+
         [DataMember]
         public ArrayList Templates
         {
@@ -287,8 +296,113 @@ namespace SmashOverlayGeneratorMk2
         #endregion Constructors
 
         /* METHODS */
+        #region LOADCLOSEFORM
+        private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+
+            greyOutDoubles(true);
+            greyOutSingles(true);
+            greyOutCaster(1, true);
+            greyOutCaster(2, true);
+
+            singlesP1ScoreTextbox.Text = 0.ToString();
+            singlesP2ScoreTextbox.Text = 0.ToString();
+            doublesT1ScoreTextbox.Text = 0.ToString();
+            doublesT2ScoreTextbox.Text = 0.ToString();
+
+            ListBoxFcns.populateListView(myAssembly, templateListView, "Templates");
+            ListBoxFcns.populateListView(myAssembly, casterTemplateListView, "Caster");
+            ListBoxFcns.populateListView(myAssembly, matchupPicListView, "Matchup");
+
+            //CHECK FOR TEMPORARY TOURNAMENT INFORMATION FILE
+            if (!Directory.Exists(overlayDirectory))
+            {
+                Directory.CreateDirectory(@"C:\\OverlayGenerator");
+            }
+
+            if (File.Exists(overlayDirectory + "\\overlay.temp"))
+            {
+                switch (MessageBox.Show(this, "Temp information file exists. Import data?", "Import", MessageBoxButtons.YesNo))
+                {
+                    case DialogResult.Yes:
+                        //LOAD FILE INFO INTO GENERATOR
+                        GenFcns.loadDataFile(this);
+                        tournamentNameTextbox.Text = TournamentName;
+                        tournamentRoundCombobox.SelectedItem = TournamentRound;
+                        singlesP1Textbox.Text = Competitor1;
+                        singlesP1ScoreTextbox.Text = Score1;
+                        singlesP2Textbox.Text = Competitor2;
+                        singlesP2ScoreTextbox.Text = Score2; 
+                        switch (GameType)
+                        {
+                            case "singles":
+                                greyOutSingles(false);
+                                greyOutDoubles(true);
+                                break;
+                            default:
+                                greyOutSingles(true);
+                                greyOutDoubles(false);
+                                break;
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //ATTEMPT TO CONNECT TO RUNNING SMASH OVERLAY GENERATOR WEB SERVICE
+            try
+            {
+                Thread thread = new Thread(() =>
+                {
+                    EndpointAddress address = new EndpointAddress(new Uri("http://192.168.0.5:8081/SOGCS.svc"));
+                    //NetTcpBinding binding = new NetTcpBinding();
+                    //EndpointAddress address = new EndpointAddress(new Uri("net.tcp://192.168.0.5/SOGCS.svc"));
+                    WSHttpBinding binding = new WSHttpBinding();
+                    ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
+
+                    service = fac.CreateChannel();
+                    //MessageBox.Show("Connection channel successfully made!");
+                    logToUser("Connection Channel successfully made!", false);
+                    makeConnection();
+                }
+                );
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Connection was not made");
+                logToUser("Connection was not made", true);
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+
+            // Confirm user wants to close
+            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.No:
+                    e.Cancel = true;
+                    break;
+                default:
+                    try
+                    {
+                        GenFcns.createDataFile(this);
+                    }
+                    catch (Exception ex) { }
+                    break;
+            }
+        }
+        #endregion LOADCLOSEFORM
+
         #region GeneratePicture
-        private void paintCompetitorText(string filePath, string resourceType)
+        private void paintCompetitorText(string filePath, string resourceType, bool nameSwap)
         {
             logToUser("GENERATING...", false);
 
@@ -311,8 +425,8 @@ namespace SmashOverlayGeneratorMk2
             }
 
             ResourceType = resourceType;
-
-            hardcodedCompetitorTemplate(resourceType, filePath);
+            
+            hardcodedCompetitorTemplate(resourceType, filePath, nameSwap);
             logToUser("Completed without error...", false);
         }
 
@@ -400,66 +514,7 @@ namespace SmashOverlayGeneratorMk2
         #endregion GeneratePicture
 
         #region FormOperations
-        private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
-        {
-            this.MaximizeBox = false;
-
-            greyOutDoubles(true);
-            greyOutSingles(true);
-            greyOutCaster(1, true);
-            greyOutCaster(2, true);
-
-            singlesP1ScoreTextbox.Text = 0.ToString();
-            singlesP2ScoreTextbox.Text = 0.ToString();
-            doublesT1ScoreTextbox.Text = 0.ToString();
-            doublesT2ScoreTextbox.Text = 0.ToString();
-
-            ListBoxFcns.populateListView(myAssembly, templateListView, "Templates");
-            ListBoxFcns.populateListView(myAssembly, casterTemplateListView, "Caster");
-            ListBoxFcns.populateListView(myAssembly, matchupPicListView, "Matchup");
-
-            try
-            {
-                Thread thread = new Thread(()=> {
-                        EndpointAddress address = new EndpointAddress(new Uri("http://192.168.0.5:8081/SOGCS.svc"));
-                        //NetTcpBinding binding = new NetTcpBinding();
-                        //EndpointAddress address = new EndpointAddress(new Uri("net.tcp://192.168.0.5/SOGCS.svc"));
-                        WSHttpBinding binding = new WSHttpBinding();
-                        ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
-
-                        service = fac.CreateChannel();
-                        //MessageBox.Show("Connection channel successfully made!");
-                        logToUser("Connection Channel successfully made!", false);
-                        makeConnection();
-                    }
-                );
-                thread.Start();
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("Connection was not made");
-                logToUser("Connection was not made", true);
-            }
-
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-
-            if (e.CloseReason == CloseReason.WindowsShutDown) return;
-
-            // Confirm user wants to close
-            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
-            {
-                case DialogResult.No:
-                    e.Cancel = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        
         private void clearSinglesFields()
         {
             singlesP1Textbox.Text = "";
@@ -732,7 +787,7 @@ namespace SmashOverlayGeneratorMk2
                 string resource = TemplateFile.Contains(".Images.Templates.") ? "resource" : "file";
 
                 //ALTER THE IMAGE WITH NEW INFORMATION
-                paintCompetitorText(TemplateFile, resource);
+                paintCompetitorText(TemplateFile, resource, NameSwap);
 
 
             }
@@ -916,6 +971,13 @@ namespace SmashOverlayGeneratorMk2
             {
                 logToUser(ex.Message.ToString(), true);
             }
+        }
+
+        private void swapNamesBtn_Click(object sender, EventArgs e)
+        {
+            if (NameSwap) NameSwap = false;
+            else NameSwap = true;
+            generate();
         }
         #endregion Generate Button Listeners
 
@@ -1198,7 +1260,7 @@ namespace SmashOverlayGeneratorMk2
         }
 
         private CompetitorTemplate hardcodedCompetitorTemplate(string resourceType, 
-                                                           string fileName)
+                                                           string fileName, bool nameSwap)
         {
             CompetitorPoint player1P = new CompetitorPoint(501, 1063);
             CompetitorPoint player1CamP = new CompetitorPoint(1686, 354);
@@ -1215,7 +1277,7 @@ namespace SmashOverlayGeneratorMk2
                 new CompetitorTemplate(fileName, player1P, player2P, 
                                 player1CamP, player2CamP, player1ScoreP, 
                                 player2ScoreP, tournamentP);
-            Bitmap image = cTemplate.drawTextOnImage(this);
+            Bitmap image = cTemplate.drawTextOnImage(this, nameSwap);
             cTemplate.saveImage(image);
 
             return cTemplate;
@@ -1252,7 +1314,7 @@ namespace SmashOverlayGeneratorMk2
             if (Conn != null)
             {
                 TourneyData td = service.getRecentTourneyData(Conn);
-                updateInfo(td);
+                //updateInfo(td);
             }
         }
 
@@ -1305,34 +1367,13 @@ namespace SmashOverlayGeneratorMk2
 
         }
 
-        public bool updateInfo(TourneyData td)
+        public bool transferData(string data)
         {
             if (Conn != null)
             {
                 try
                 {
-                    if (td.GameType.Equals("singles"))
-                    {
-                        TournamentRound = td.TourneyRound;
-                        Competitor1 = td.Player1Name;
-                        Competitor2 = td.Player2Name;
-                        Score1 = td.Score1;
-                        Score2 = td.Score2;
-
-                        generate();
-                    }
-                    else
-                    {
-                        TournamentRound = td.TourneyRound;
-                        Competitor1 = td.Player1Name + " & " + td.Player2Name;
-                        Competitor2 = td.Player3Name + " & " + td.Player4Name;
-                        Score1 = td.Score1;
-                        Score2 = td.Score2;
-
-                        generate();
-                    }
-
-                    return true;
+                    
                 }
                 catch (Exception ex)
                 {
@@ -1371,7 +1412,5 @@ namespace SmashOverlayGeneratorMk2
                 logMessageLabel.Text = "..." + msg;
             }
         }
-
-        
     }    
 }

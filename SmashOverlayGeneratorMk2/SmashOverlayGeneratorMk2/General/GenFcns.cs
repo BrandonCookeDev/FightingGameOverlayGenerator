@@ -5,12 +5,81 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Collections;
+using SmashOverlayGeneratorMk2;
+using System.IO;
 
 namespace SmashOverlayGeneratorMk2.General
 {
     class GenFcns
     {
         #region General
+        public static void createDataFile(SmashOverlayGenerator form)
+        {
+            string file = form.overlayDirectory + "\\overlay.temp";
+            StringBuilder sb = new StringBuilder(
+                "TournamentName:"+form.TournamentName);
+            sb.Append("|TournamentRound:" + form.TournamentRound);
+            sb.Append("|GameType:" + form.GameType);
+            sb.Append("|Competitor1:" + form.Competitor1);
+            sb.Append("|Score1:" + form.Score1);
+            sb.Append("|Competitor2:" + form.Competitor2);            
+            sb.Append("|Score2:" + form.Score2);
+            sb.Append("|NameSwap:" + form.NameSwap);
+
+            if (!sb.ToString().Contains("null"))
+            {
+                if (!File.Exists(file))
+                {
+                    File.Create(file);
+                }
+                File.WriteAllText(file, sb.ToString(), Encoding.Default);
+            }
+        }
+
+        public static bool loadDataFile(SmashOverlayGenerator form)
+        {
+            string file = form.overlayDirectory + "\\overlay.temp";
+            string content = "";
+            foreach (string s in (File.ReadAllLines(file)))
+            {
+                content += s;
+            }
+            string[] titles = content.Split('|');
+            foreach (string s in titles)
+            {
+                string[] data = s.Split(':');
+                switch (data[0])
+                {
+                    case "TournamentName":
+                        form.TournamentName = data[1];
+                        break;
+                    case "TournamentRound":
+                        form.TournamentRound = data[1];
+                        break;
+                    case "GameType":
+                        form.GameType = data[1];
+                        break;
+                    case "Competitor1":
+                        form.Competitor1 = data[1];
+                        break;
+                    case "Competitor2":
+                        form.Competitor2 = data[1];
+                        break;
+                    case "Score1":
+                        form.Score1 = data[1];
+                        break;
+                    case "Score2":
+                        form.Score2 = data[1];
+                        break;
+                    case "NameSwap":
+                        form.NameSwap = Boolean.Parse(data[1]);
+                        break;
+                }
+            }
+
+            return false;
+        }
+
         public static bool isNullOrEmpty(string s)
         {
             return s == null || s.Equals("");

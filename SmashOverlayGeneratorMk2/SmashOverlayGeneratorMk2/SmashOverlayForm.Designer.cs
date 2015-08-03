@@ -124,6 +124,7 @@
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
+            this.swapNamesBtn = new System.Windows.Forms.Button();
             this.competitorsTab.SuspendLayout();
             this.doublesPanel.SuspendLayout();
             this.singlesPanel.SuspendLayout();
@@ -375,6 +376,7 @@
             // 
             // singlesPanel
             // 
+            this.singlesPanel.Controls.Add(this.swapNamesBtn);
             this.singlesPanel.Controls.Add(this.decrementPlayer2Button);
             this.singlesPanel.Controls.Add(this.incrementPlayer2Button);
             this.singlesPanel.Controls.Add(this.decrementPlayer1Button);
@@ -1245,6 +1247,16 @@
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
             // 
+            // swapNamesBtn
+            // 
+            this.swapNamesBtn.Location = new System.Drawing.Point(21, 172);
+            this.swapNamesBtn.Name = "swapNamesBtn";
+            this.swapNamesBtn.Size = new System.Drawing.Size(127, 41);
+            this.swapNamesBtn.TabIndex = 27;
+            this.swapNamesBtn.Text = "Swap Name Locations On Overlay";
+            this.swapNamesBtn.UseVisualStyleBackColor = true;
+            this.swapNamesBtn.Click += new System.EventHandler(this.swapNamesBtn_Click);
+            // 
             // SmashOverlayGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1397,6 +1409,7 @@
         private System.Windows.Forms.ComboBox matchupCharacter2Combobox;
         private System.Windows.Forms.ComboBox matchupCharacter1Combobox;
         private System.Windows.Forms.ListBox matchupPicListView;
+        private System.Windows.Forms.Button swapNamesBtn;
 
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.IO;
 using SmashOverlayGeneratorMk2.Objects.Points;
 using SmashOverlayGeneratorMk2.General;
 
@@ -18,8 +19,7 @@ namespace SmashOverlayGeneratorMk2.Objects
         private ScorePoint score1Point;
         private ScorePoint score2Point;
         private TournamentPoint tournamentNameRoundPoint;
-
-
+        
         //DETERMINE FONT SIZE
         private Font name1Font;
         private Font name2Font;
@@ -158,7 +158,9 @@ namespace SmashOverlayGeneratorMk2.Objects
         #endregion GETTERS AND SETTERS
         
         #region ABSTRACTED METHODS
-        public override Bitmap drawTextOnImage(SmashOverlayGenerator form)
+        public override Bitmap drawTextOnImage(SmashOverlayGenerator form) { return null; }
+
+        public Bitmap drawTextOnImage(SmashOverlayGenerator form, bool swap)
         {
             setFontSizes(form.ResourceType, form.Competitor1, form.Competitor2);
 
@@ -173,12 +175,22 @@ namespace SmashOverlayGeneratorMk2.Objects
             Bitmap image = base.getImage();
             Graphics g = Graphics.FromImage(image);
 
-            g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
-            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
+            if (!swap)
+            {
+                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
+                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
+                g.DrawString(form.Score1, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
+                g.DrawString(form.Score2, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
+            }
+            else
+            {
+                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
+                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
+                g.DrawString(form.Score1, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
+                g.DrawString(form.Score2, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
+            }      
             g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), nameFormat);
-            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), nameFormat);
-            g.DrawString(form.Score1, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
-            g.DrawString(form.Score2, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
+            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), nameFormat);            
             g.DrawString(form.TournamentName + " | " + form.TournamentRound, 
                 TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), nameFormat);
 
@@ -187,10 +199,20 @@ namespace SmashOverlayGeneratorMk2.Objects
 
         public override void saveImage(Bitmap image)
         {
+            string targetPath = base.ParentPath + "\\Competitor";
+
             String fileName = base.FilePath;
             fileName = fileName.Substring(fileName.LastIndexOf(".Templates.") + 11);
             fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
-            image.Save(fileName);
+            
+            if(!Directory.Exists(base.ParentPath)){
+                Directory.CreateDirectory(base.ParentPath);
+            } 
+            if(!Directory.Exists(targetPath)){
+                Directory.CreateDirectory(targetPath);
+            }
+
+            image.Save(targetPath + "\\" + fileName);
         }
         #endregion ABSTRACTED METHODS
 
@@ -213,7 +235,5 @@ namespace SmashOverlayGeneratorMk2.Objects
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
             }
         }
-
-
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using System.IO;
 using SmashOverlayGeneratorMk2.General;
 using SmashOverlayGeneratorMk2.Objects.Points;
 
@@ -240,10 +241,23 @@ namespace SmashOverlayGeneratorMk2.Objects
 
         public override void saveImage(System.Drawing.Bitmap image)
         {
+            string targetPath = base.ParentPath + "\\Matchup";
+
             String fileName = base.FilePath;
             fileName = fileName.Substring(fileName.LastIndexOf(".Matchup.") + 9);
             fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
             image.Save(fileName);
+
+            if (!Directory.Exists(base.ParentPath))
+            {
+                Directory.CreateDirectory(base.ParentPath);
+            }
+            if (!Directory.Exists(targetPath))
+            {
+                Directory.CreateDirectory(targetPath);
+            }
+
+            image.Save(targetPath + "\\" + fileName);
         }
         #endregion ABSTRACTED METHODS
 
@@ -294,12 +308,14 @@ namespace SmashOverlayGeneratorMk2.Objects
                 Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
                 Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+                TournamentRoundFont = new Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold);
             }
             else
             {
                 Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
                 Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);                
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+                TournamentRoundFont = new Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold);
             }
         }
     }
