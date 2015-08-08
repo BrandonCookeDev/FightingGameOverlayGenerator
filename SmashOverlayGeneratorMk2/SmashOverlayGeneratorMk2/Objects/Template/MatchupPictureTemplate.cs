@@ -197,6 +197,7 @@ namespace SmashOverlayGeneratorMk2.Objects
         /* CONSTRUCTORS */
         public MatchupPictureTemplate(){}
 
+
         public MatchupPictureTemplate(string filePath, string gametype, 
                                       TournamentPoint tournamentPoint, TournamentPoint tournamentRoundPoint,
                                       string character1Path, CharacterPoint character1Point,
@@ -227,6 +228,7 @@ namespace SmashOverlayGeneratorMk2.Objects
             StringFormat tournamentFormat = new StringFormat();
 
             Bitmap image = base.getImage();
+            float scale = (float) Math.Min(image.Width * .6, image.Height * .6);
             Graphics g = Graphics.FromImage(image);
 
             g.DrawString(form.MatchupCompetitor1, Competitor1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);

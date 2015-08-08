@@ -63,10 +63,10 @@ namespace SmashOverlayGeneratorMk2
         public string overlayDirectory = @"C:\\OverlayGenerator";
         private Resources _resources = new Resources();
         
-        private ISOGControlService service = null;
+        //private ISOGControlService service = null;
 
         //This will define the connection to the service
-        private Connection conn = null;
+        //private Connection conn = null;
 
         delegate void SetTextCallback(string text, bool err);
 
@@ -77,175 +77,174 @@ namespace SmashOverlayGeneratorMk2
         /* GETTERS AND SETTERS */
         #region Getters and Setters
 
-        [DataMember]
         public bool IsError
         {
             get { return this.isError; }
             set { this.isError = value; }
         }
 
-        [DataMember]
+        
         public string TemplateFile
         {
             get{ return this.templateFile; }
             set{ this.templateFile = value; }
         }
 
-        [DataMember]
+        
         public string NewTemplateFile
         {
             get { return this.newTemplateFile; }
             set { this.newTemplateFile = value; }
         }
 
-        [DataMember]
+        
         public string Competitor1
         {
             get { return this.competitor1; }
             set { this.competitor1 = value; }
         }
 
-        [DataMember]
+        
         public string Competitor2
         {
             get { return this.competitor2; }
             set { this.competitor2 = value; }
         }
 
-        [DataMember]
+        
         public string Score1
         {
             get { return this.score1; }
             set { this.score1 = value; }
         }
 
-        [DataMember]
+        
         public string Score2
         {
             get { return this.score2; }
             set { this.score2 = value; }
         }
 
-        [DataMember]
+        
         public string Caster1
         {
             get { return this.caster1; }
             set { this.caster1 = value; } 
         }
 
-        [DataMember]
+        
         public string Caster2
         {
             get { return this.caster2; }
             set { this.caster2 = value; }
         }
 
-        [DataMember]
+        
         public string Caster1Twitter
         {
             get { return this.caster1Twitter; }
             set { this.caster1Twitter = value; }
         }
 
-        [DataMember]
+        
         public string Caster2Twitter
         {
             get { return this.caster2Twitter; }
             set { this.caster2Twitter = value; }             
         }
 
-        [DataMember]
+        
         public string CasterTemplateFile
         {
             get { return this.casterTemplateFile; }
             set { this.casterTemplateFile = value; }
         }
 
-        [DataMember]
+        
         public string CasterTemplateFileName
         {
             get { return this.casterTemplateFileName; }
             set { this.casterTemplateFileName = value; }
         }
 
-        [DataMember]
+        
         public string TournamentName
         {
             get { return this.tournamentName; }
             set { this.tournamentName = value; }
         }
 
-        [DataMember]
+        
         public string TournamentRound
         {
             get { return this.tournamentRound; }
             set { this.tournamentRound = value; }
         }
 
-        [DataMember]
+        
         public string GameType
         {
             get { return this.gameType; }
             set { this.gameType = value; }
         }
 
-        [DataMember]
+        
         public string TemplateFileName
         {
             get { return this.templateFileName; }
             set { this.templateFileName = value; } 
         }
 
-        [DataMember]
+        
         public string MatchupPicFile
         {
             get { return this.matchupPicFile; }
             set { this.matchupPicFile = value; }
         }
 
-        [DataMember]
+        
         public string MatchupPicFileName
         {
             get { return this.matchupPicFileName; }
             set { this.matchupPicFileName = value; }
         }
 
-        [DataMember]
+        
         public string MatchupCompetitor1
         {
             get { return this.matchupCompetitor1; }
             set { this.matchupCompetitor1 = value; }
         }
 
-        [DataMember]
+        
         public string MatchupCompetitor2
         {
             get { return this.matchupCompetitor2; }
             set { this.matchupCompetitor2 = value; }
         }
 
-        [DataMember]
+        
         public string MatchupCharacter1File
         {
             get { return this.matchupCharacter1; }
             set { this.matchupCharacter1 = value; }
         }
 
-        [DataMember]
+        
         public string MatchupCharacter2File
         {
             get { return this.matchupCharacter2; }
             set { this.matchupCharacter2 = value; }
         }
 
-        [DataMember]
+        
         public string ResourceType
         {
             get { return this.resourceType; }
             set { this.resourceType = value; }
         }
 
-        [DataMember]
+        
         public bool IsAutoUpdate
         {
             get { return this.isAutoUpdate; }
@@ -258,27 +257,19 @@ namespace SmashOverlayGeneratorMk2
             set { this.nameSwap = value; }
         }
 
-        [DataMember]
+        
         public ArrayList Templates
         {
             get { return this.templates; }
             set { this.templates = value; }
         }
 
-        [DataMember]
+        
         public ArrayList CasterTemplates
         {
             get { return this.casterTemplates; }
             set { this.casterTemplates = value; }
         }
-
-        [DataMember]
-        public Connection Conn
-        {
-            get { return this.conn; }
-            set { this.conn = value; }
-        }
-
         /*
         public Resources resources
         {
@@ -363,7 +354,7 @@ namespace SmashOverlayGeneratorMk2
                     WSHttpBinding binding = new WSHttpBinding();
                     ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
 
-                    service = fac.CreateChannel();
+                    //service = fac.CreateChannel();
                     logToUser("Channel successfully made!", false);
                     makeConnection();
                 });
@@ -1291,11 +1282,8 @@ namespace SmashOverlayGeneratorMk2
             CharacterPoint character2P = new CharacterPoint(1150, 500);
 
             MatchupPictureTemplate mpTemplate = new MatchupPictureTemplate(fileName, GameType, 
-                                                                        tournamentP, tournamentRoundP,
-                                                                        MatchupCharacter1File, character1P, 
-                                                                        matchupC1P,
-                                                                        MatchupCharacter2File, character2P,
-                                                                        matchupC2P);
+                   tournamentP, tournamentRoundP, MatchupCharacter1File, character1P, 
+                   matchupC1P, MatchupCharacter2File, character2P, matchupC2P);
 
             Bitmap image = mpTemplate.drawTextOnImage(this);
             mpTemplate.saveImage(image);
@@ -1307,12 +1295,13 @@ namespace SmashOverlayGeneratorMk2
         #region ServiceMethods
         /** THIS METHOD WILL NEED TO RUN AN ASYNC THREAD IN THE BG **/
         public void refresh(){
-
+            /*
             if (Conn != null)
             {
-                TourneyData td = service.getRecentTourneyData(Conn);
+                //TourneyData td = service.getRecentTourneyData(Conn);
                 //updateInfo(td);
             }
+             */
         }
 
         public void makeWindowTest()
@@ -1344,12 +1333,13 @@ namespace SmashOverlayGeneratorMk2
         {
             try
             {
-                int num = service.requestConnectionNumber();
-                Conn = new Connection(num, this);
-                bool success = service.addConnection(Conn);
+                //int num = service.requestConnectionNumber();
+                //Conn = new Connection(num, this);
+                //bool success = service.addConnection(Conn);
 
-                if (success) return true;
-                else return false;
+                //if (success) return true;
+                //else return false;
+                return true;
             }
             catch (Exception e)
             {
@@ -1366,6 +1356,7 @@ namespace SmashOverlayGeneratorMk2
 
         public bool transferData(string data)
         {
+            /*
             if (Conn != null)
             {
                 try
@@ -1377,6 +1368,8 @@ namespace SmashOverlayGeneratorMk2
                     return false;
                 }
             }
+            return false;
+             */
             return false;
         }
         #endregion ServiceMethods

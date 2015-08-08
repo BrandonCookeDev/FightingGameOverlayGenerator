@@ -166,6 +166,7 @@
     <EmbeddedResource Include="Images\Characters\Yoshi.png" />
     <EmbeddedResource Include="Images\Characters\YoungLink.png" />
     <EmbeddedResource Include="Images\Characters\Zelda.png" />
+    <EmbeddedResource Include="Images\Templates\FireOverlay.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>
