@@ -146,7 +146,6 @@
     <EmbeddedResource Include="Images\Characters\DrMario.png" />
     <EmbeddedResource Include="Images\Characters\Falco.png" />
     <EmbeddedResource Include="Images\Characters\Fox.png" />
-    <EmbeddedResource Include="Images\Characters\GameAndWatch.png" />
     <EmbeddedResource Include="Images\Characters\Ganon.png" />
     <EmbeddedResource Include="Images\Characters\IceClimbers.png" />
     <EmbeddedResource Include="Images\Characters\Jigglypuff.png" />
@@ -167,6 +166,7 @@
     <EmbeddedResource Include="Images\Characters\YoungLink.png" />
     <EmbeddedResource Include="Images\Characters\Zelda.png" />
     <EmbeddedResource Include="Images\Templates\FireOverlay.png" />
+    <EmbeddedResource Include="Images\Characters\MrGame&amp;Watch.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>

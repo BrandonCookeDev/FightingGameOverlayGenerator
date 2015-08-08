@@ -51,6 +51,7 @@
             this.doublesT1ScoreLabel = new System.Windows.Forms.Label();
             this.teamOneLabel = new System.Windows.Forms.Label();
             this.singlesPanel = new System.Windows.Forms.Panel();
+            this.swapNamesBtn = new System.Windows.Forms.Button();
             this.decrementPlayer2Button = new System.Windows.Forms.Button();
             this.incrementPlayer2Button = new System.Windows.Forms.Button();
             this.decrementPlayer1Button = new System.Windows.Forms.Button();
@@ -124,7 +125,6 @@
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
-            this.swapNamesBtn = new System.Windows.Forms.Button();
             this.competitorsTab.SuspendLayout();
             this.doublesPanel.SuspendLayout();
             this.singlesPanel.SuspendLayout();
@@ -395,6 +395,17 @@
             this.singlesPanel.Size = new System.Drawing.Size(237, 254);
             this.singlesPanel.TabIndex = 14;
             this.singlesPanel.UseWaitCursor = true;
+            // 
+            // swapNamesBtn
+            // 
+            this.swapNamesBtn.Location = new System.Drawing.Point(21, 172);
+            this.swapNamesBtn.Name = "swapNamesBtn";
+            this.swapNamesBtn.Size = new System.Drawing.Size(127, 41);
+            this.swapNamesBtn.TabIndex = 27;
+            this.swapNamesBtn.Text = "Swap Name Locations On Overlay";
+            this.swapNamesBtn.UseVisualStyleBackColor = true;
+            this.swapNamesBtn.UseWaitCursor = true;
+            this.swapNamesBtn.Click += new System.EventHandler(this.swapNamesBtn_Click);
             // 
             // decrementPlayer2Button
             // 
@@ -1014,14 +1025,14 @@
             "Ice Climbers",
             "Bowser",
             "Donkey Kong",
-            "Dr. Mario",
+            "Dr Mario",
             "Ganon",
             "Kirby",
             "Link",
             "Luigi",
             "Mario",
             "Mewtwo",
-            "Mr. Game & Watch",
+            "Mr Game & Watch",
             "Ness ",
             "Pichu",
             "Pikachu",
@@ -1051,14 +1062,14 @@
             "Ice Climbers",
             "Bowser",
             "Donkey Kong",
-            "Dr. Mario",
+            "Dr Mario",
             "Ganon",
             "Kirby",
             "Link",
             "Luigi",
             "Mario",
             "Mewtwo",
-            "Mr. Game & Watch",
+            "Mr Game & Watch",
             "Ness ",
             "Pichu",
             "Pikachu",
@@ -1246,16 +1257,6 @@
             this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
-            // 
-            // swapNamesBtn
-            // 
-            this.swapNamesBtn.Location = new System.Drawing.Point(21, 172);
-            this.swapNamesBtn.Name = "swapNamesBtn";
-            this.swapNamesBtn.Size = new System.Drawing.Size(127, 41);
-            this.swapNamesBtn.TabIndex = 27;
-            this.swapNamesBtn.Text = "Swap Name Locations On Overlay";
-            this.swapNamesBtn.UseVisualStyleBackColor = true;
-            this.swapNamesBtn.Click += new System.EventHandler(this.swapNamesBtn_Click);
             // 
             // SmashOverlayGenerator
             // 

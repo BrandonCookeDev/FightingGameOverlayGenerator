@@ -232,13 +232,19 @@ namespace SmashOverlayGeneratorMk2.Objects
 
             Graphics g = Graphics.FromImage(image);
 
+            //DRAW CHARACTERS
+            drawCharactersOnImage(g, Character1Path, Character1Point, Character2Path, Character2Point);
+
+            //DRAW BANNER
+            //g.DrawRectangle(new Pen(new Brush(
+
+            //DRAW STRINGS
             g.DrawString(form.MatchupCompetitor1, Competitor1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
             g.DrawString(form.MatchupCompetitor2, Competitor2Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
             g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentPoint.getPoint(), tournamentFormat);
             g.DrawString(form.TournamentRound, TournamentRoundFont, Brushes.White, TournamentRoundPoint.getPoint(), tournamentFormat);
 
-            drawCharactersOnImage(g, Character1Path, Character1Point, Character2Path, Character2Point);
-
+            
             Image img = (Image)image;
             Bitmap newImage = new Bitmap(img, new Size(640, 400));
 

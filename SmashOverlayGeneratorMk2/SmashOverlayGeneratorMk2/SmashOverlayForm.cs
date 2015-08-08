@@ -16,8 +16,8 @@ using SmashOverlayGeneratorMk2.BackendOps;
 using SmashOverlayGeneratorMk2.BMVersion;
 using SmashOverlayGeneratorMk2.Objects.Points;
 using SmashOverlayGeneratorMk2.Objects;
-using SmashOverlayGeneratorWebServiceLib;
-using SmashOverlayGeneratorWebServiceLib.Objects;
+//using SmashOverlayGeneratorWebServiceLib;
+//using SmashOverlayGeneratorWebServiceLib.Objects;
 using SmashOverlayGeneratorMk2.ErrorHandling;
 using SmashOverlayGeneratorMk2.General;
 using XSplit.Core.Properties;
@@ -375,7 +375,7 @@ namespace SmashOverlayGeneratorMk2
                 {
                     EndpointAddress address = new EndpointAddress(new Uri(serviceUrl));
                     WSHttpBinding binding = new WSHttpBinding();
-                    ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
+                    //ChannelFactory<ISOGControlService> fac = new ChannelFactory<ISOGControlService>(binding, address);
 
                     //service = fac.CreateChannel();
                     logToUser("Channel successfully made!", false);
