@@ -1278,8 +1278,8 @@ namespace SmashOverlayGeneratorMk2
             CompetitorPoint matchupC2P = new CompetitorPoint(1400, 900);
             TournamentPoint tournamentP = new TournamentPoint(800, 500);
             TournamentPoint tournamentRoundP = new TournamentPoint(800, 600);
-            CharacterPoint character1P = new CharacterPoint(350, 500);
-            CharacterPoint character2P = new CharacterPoint(1150, 500);
+            CharacterPoint character1P = new CharacterPoint(200, 350);
+            CharacterPoint character2P = new CharacterPoint(1450, 350);
 
             MatchupPictureTemplate mpTemplate = new MatchupPictureTemplate(fileName, GameType, 
                    tournamentP, tournamentRoundP, MatchupCharacter1File, character1P, 

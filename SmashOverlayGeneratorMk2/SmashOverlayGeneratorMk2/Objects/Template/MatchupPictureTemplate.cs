@@ -228,7 +228,8 @@ namespace SmashOverlayGeneratorMk2.Objects
             StringFormat tournamentFormat = new StringFormat();
 
             Bitmap image = base.getImage();
-            float scale = (float) Math.Min(image.Width * .6, image.Height * .6);
+            
+
             Graphics g = Graphics.FromImage(image);
 
             g.DrawString(form.MatchupCompetitor1, Competitor1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
@@ -238,7 +239,10 @@ namespace SmashOverlayGeneratorMk2.Objects
 
             drawCharactersOnImage(g, Character1Path, Character1Point, Character2Path, Character2Point);
 
-            return image;
+            Image img = (Image)image;
+            Bitmap newImage = new Bitmap(img, new Size(640, 400));
+
+            return newImage;
         }
 
         public override void saveImage(System.Drawing.Bitmap image)
