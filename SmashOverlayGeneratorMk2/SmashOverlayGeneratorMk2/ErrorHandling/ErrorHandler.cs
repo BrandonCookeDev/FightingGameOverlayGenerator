@@ -35,12 +35,12 @@ namespace SmashOverlayGeneratorMk2.ErrorHandling
                 GenFcns.putCursorInBox(matchupCompetitor2Textbox);
                 throw new Exception("Competitor 2 must have a name");
             }
-            else if (matchupCharacter1Combobox.SelectedIndex <= 0)
+            else if (matchupCharacter1Combobox.SelectedIndex < 0)
             {
                 matchupCharacter1Combobox.ForeColor = Color.Red;
                 throw new Exception("Character 1 must be selected");
             }
-            else if (matchupCharacter2Combobox.SelectedIndex <= 0)
+            else if (matchupCharacter2Combobox.SelectedIndex < 0)
             {
                 matchupCharacter2Combobox.ForeColor = Color.Red;
                 throw new Exception("Character 2 must be selected");

@@ -271,7 +271,10 @@ namespace SmashOverlayGeneratorMk2.Objects
                                                       string character2Path, CharacterPoint character2Point)
         {
             g.DrawImage(base.getImage(character1Path), character1Point.getPoint());
-            g.DrawImage(base.getImage(character2Path), character2Point.getPoint());
+
+            Image reverseChar2 = (Image)base.getImage(character2Path);
+            reverseChar2.RotateFlip(RotateFlipType.Rotate180FlipY);
+            g.DrawImage(reverseChar2, character2Point.getPoint());
         }
 
         public void setFontSizes(string resourceType,

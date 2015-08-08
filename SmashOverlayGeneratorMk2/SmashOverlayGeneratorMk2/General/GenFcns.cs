@@ -12,9 +12,14 @@ namespace SmashOverlayGeneratorMk2.General
 {
     class GenFcns
     {
+
+        private static bool debug = true;
+        
         #region General
         public static void createDataFile(SmashOverlayGenerator form)
         {
+            
+
             string file = form.overlayDirectory + "\\overlay.temp";
             StringBuilder sb = new StringBuilder(
                 "TournamentName:"+form.TournamentName);
@@ -26,6 +31,15 @@ namespace SmashOverlayGeneratorMk2.General
             sb.Append("|Score2:" + form.Score2);
             sb.Append("|NameSwap:" + form.NameSwap);
             sb.Append("|TemplateFileName:" + form.TemplateFileName);
+
+            if (debug)
+            {
+                sb.Append("|Matchup1:" + form.MatchupCompetitor1);
+                sb.Append("|MatchupChar1:" + form.MatchupCharacter1);
+                sb.Append("|Matchup2:" + form.MatchupCompetitor2);
+                sb.Append("|MatchupChar2:" + form.MatchupCharacter2);
+                sb.Append("|MatchupPic:" + form.MatchupPicFileName);
+            }
 
             if (!sb.ToString().Contains("null"))
             {
@@ -77,6 +91,21 @@ namespace SmashOverlayGeneratorMk2.General
                         break;
                     case "TemplateFileName":
                         form.TemplateFileName = data[1];
+                        break;
+                    case "Matchup1":
+                        form.MatchupCompetitor1 = data[1];
+                        break;
+                    case "Matchup2":
+                        form.MatchupCompetitor2 = data[1];
+                        break;
+                    case "MatchupChar1":
+                        form.MatchupCharacter1File = data[1];
+                        break;
+                    case "MatchupChar2":
+                        form.MatchupCharacter2File = data[1];
+                        break;
+                    case "MatchupPic":
+                        form.MatchupPicFileName = data[1];
                         break;
                 }
             }

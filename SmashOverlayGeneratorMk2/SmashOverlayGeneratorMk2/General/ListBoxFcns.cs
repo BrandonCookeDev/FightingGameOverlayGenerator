@@ -41,7 +41,7 @@ namespace SmashOverlayGeneratorMk2.General
             else if (type.Equals("matchup"))
                 return productName + ".Images.Matchup." + resourceName;
             else if (type.Equals("character"))
-                return productName + ".Images.Characters." + resourceName + ".png";
+                return productName + ".Images.Characters." + resourceName.Replace(" ", "") + ".png";
             else
                 throw new Exception("String type agrument can only be 'template' or 'caster'");
         }

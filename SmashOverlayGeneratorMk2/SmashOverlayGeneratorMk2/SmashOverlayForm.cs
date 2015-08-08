@@ -50,6 +50,8 @@ namespace SmashOverlayGeneratorMk2
         private string matchupPicFileName;
         private string matchupCompetitor1;
         private string matchupCompetitor2;
+        private string matchupCharacter1File;
+        private string matchupCharacter2File;
         private string matchupCharacter1;
         private string matchupCharacter2;
         private string resourceType;
@@ -226,18 +228,29 @@ namespace SmashOverlayGeneratorMk2
         
         public string MatchupCharacter1File
         {
-            get { return this.matchupCharacter1; }
-            set { this.matchupCharacter1 = value; }
+            get { return this.matchupCharacter1File; }
+            set { this.matchupCharacter1File = value; }
         }
 
         
         public string MatchupCharacter2File
         {
+            get { return this.matchupCharacter2File; }
+            set { this.matchupCharacter2File = value; }
+        }
+
+        public string MatchupCharacter1
+        {
+            get { return this.matchupCharacter1; }
+            set { this.matchupCharacter1 = value; }
+        }
+
+        public string MatchupCharacter2
+        {
             get { return this.matchupCharacter2; }
             set { this.matchupCharacter2 = value; }
         }
 
-        
         public string ResourceType
         {
             get { return this.resourceType; }
@@ -315,7 +328,8 @@ namespace SmashOverlayGeneratorMk2
 
             if (File.Exists(overlayDirectory + "\\overlay.temp"))
             {
-                switch (MessageBox.Show(this, "Temp information file exists. Import data?", "Import", MessageBoxButtons.YesNo))
+                bool debug = true;
+                switch (MessageBox.Show(this, "Previous Tournament Info Exists! Import data?", "Import", MessageBoxButtons.YesNo))
                 {
                     case DialogResult.Yes:
                         //LOAD FILE INFO INTO GENERATOR
@@ -337,6 +351,15 @@ namespace SmashOverlayGeneratorMk2
                                 greyOutSingles(true);
                                 greyOutDoubles(false);
                                 break;
+                        }
+
+                        if (debug)
+                        {
+                            matchupCompetitor1Textbox.Text = MatchupCompetitor1;
+                            matchupCompetitor2Textbox.Text = MatchupCompetitor2;
+                            matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
+                            matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
+                            matchupPicListView.SelectedItem = MatchupPicFileName;
                         }
 
                         break;
@@ -736,6 +759,7 @@ namespace SmashOverlayGeneratorMk2
             {
                 string resource = (string)matchupCharacter1Combobox.Items[matchupCharacter1Combobox.SelectedIndex];
                 MatchupCharacter1File = ListBoxFcns.getImageResourcePath(this.ProductName, "character", resource);
+                MatchupCharacter1 = resource;
             }
             catch (Exception ex)
             {
@@ -749,6 +773,7 @@ namespace SmashOverlayGeneratorMk2
             {
                 string resource = (string)matchupCharacter2Combobox.Items[matchupCharacter2Combobox.SelectedIndex];
                 MatchupCharacter2File = ListBoxFcns.getImageResourcePath(this.ProductName, "character", resource);
+                MatchupCharacter2 = resource;
             }
             catch (Exception ex)
             {
@@ -1278,8 +1303,8 @@ namespace SmashOverlayGeneratorMk2
             CompetitorPoint matchupC2P = new CompetitorPoint(1400, 900);
             TournamentPoint tournamentP = new TournamentPoint(800, 500);
             TournamentPoint tournamentRoundP = new TournamentPoint(800, 600);
-            CharacterPoint character1P = new CharacterPoint(200, 350);
-            CharacterPoint character2P = new CharacterPoint(1450, 350);
+            CharacterPoint character1P = new CharacterPoint(75, 75);
+            CharacterPoint character2P = new CharacterPoint(1250, 75);
 
             MatchupPictureTemplate mpTemplate = new MatchupPictureTemplate(fileName, GameType, 
                    tournamentP, tournamentRoundP, MatchupCharacter1File, character1P, 
