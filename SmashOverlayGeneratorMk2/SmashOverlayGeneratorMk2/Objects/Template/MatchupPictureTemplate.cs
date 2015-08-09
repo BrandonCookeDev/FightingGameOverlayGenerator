@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using SmashOverlayGeneratorMk2.General;
 using SmashOverlayGeneratorMk2.Objects.Points;
 
@@ -44,6 +46,8 @@ namespace SmashOverlayGeneratorMk2.Objects
         private CharacterPoint character4Point;
         private TournamentPoint tournamentPoint;
         private TournamentPoint tournamentRoundPoint;
+
+        public PrivateFontCollection pfc = new PrivateFontCollection();
         #endregion GLOBAL VARIABLES
 
         #region GETTERS AND SETTERS
@@ -229,10 +233,13 @@ namespace SmashOverlayGeneratorMk2.Objects
         {
             //IF FONT IS NOT INSTALLED WE INSTALL IT
 
-            fontsInstalled(form, "EARTHQUAKE");
-            fontsInstalled(form, "FLAPHEAD");
-            fontsInstalled(form, "ZEKTON RG");
+            GenFcns.installFonts(form, "EARTHQUAKE.TTF", pfc);
+            GenFcns.installFonts(form, "FLAPHEAD.TTF", pfc);
 
+            //fontsInstalled(form, "EARTHQUAKE");
+            //fontsInstalled(form, "FLAPHEAD");
+            //fontsInstalled(form, "zekton rg");
+                       
             setFontSizes(form.ResourceType, form.MatchupCompetitor1, form.MatchupCompetitor2);
             if (!GenFcns.isNullOrEmpty(Gametype) && Gametype.Equals("doubles"))
                 setFontSizes(form.ResourceType, Competitor3, Competitor4);
@@ -264,9 +271,15 @@ namespace SmashOverlayGeneratorMk2.Objects
             g.FillRectangle(bBorder, rBorder);
             g.FillRectangle(b, r);
 
+            FontFamily earthquakeFamily = pfc.Families[0];
+            FontFamily flapheadFamily = pfc.Families[1];
+            Font earthquake = new Font(earthquakeFamily, 120);
+            Font flaphead = new Font(flapheadFamily, 120);
+
             //DRAW COMPETITOR INFORMATION
-            g.DrawString(form.MatchupCompetitor1, Competitor1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
-            g.DrawString(form.MatchupCompetitor2, Competitor2Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
+            g.DrawString(form.MatchupCompetitor1, earthquake, Brushes.White, Competitor1Point.getPoint(), nameFormat);
+            g.DrawString(form.MatchupCompetitor2, earthquake, Brushes.White, Competitor2Point.getPoint(), nameFormat);
+            //g.DrawString("THIS IS A TEST", f1, Brushes.Yellow, new Point(0, 0), nameFormat);
             //g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentPoint.getPoint(), tournamentFormat);
             
             
@@ -274,7 +287,7 @@ namespace SmashOverlayGeneratorMk2.Objects
             string tournamentLogoPath = ListBoxFcns.getResourcePath(form.ProductName, "tournament", "S@CsLogo.png");
             Image logoImage = base.getImage(tournamentLogoPath);
             g.DrawImage(logoImage, TournamentPoint.getPoint());
-            g.DrawString(form.TournamentRound, TournamentRoundFont, Brushes.White, TournamentRoundPoint.getPoint(), tournamentFormat);
+            g.DrawString(form.TournamentRound, flaphead, Brushes.White, TournamentRoundPoint.getPoint(), tournamentFormat);
 
             
             Image img = (Image)image;
@@ -385,7 +398,7 @@ namespace SmashOverlayGeneratorMk2.Objects
                     }
                     else
                     {
-                        GenFcns.installFonts(form, fontName);
+                        GenFcns.installFonts(form, fontName, pfc);
                     }
                 }
             }
@@ -394,6 +407,25 @@ namespace SmashOverlayGeneratorMk2.Objects
                 throw new Exception(ex.Message);
             }
 
+        }
+
+        public static void doFontCrap(){
+            /*
+            // This should be probably a field of some class
+            PrivateFontCollection pfc = new PrivateFontCollection();
+
+            // allocate memory and copy byte[] to the location
+            IntPtr data = Marshal.AllocCoTaskMem(yourByteArray.Length);
+            Marshal.Copy(yourFontArray, 0, data, yourFontArray.Length);
+
+            // pass the font to the font collection
+            pfc.AddMemoryFont(data, fontStream.Length)
+
+            // Free the unsafe memory
+            Marshal.FreeCoTaskMem(data)
+             */
+
+            
         }
     }
 }

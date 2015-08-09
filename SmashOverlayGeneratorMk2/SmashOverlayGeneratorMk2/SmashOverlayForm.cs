@@ -73,7 +73,7 @@ namespace SmashOverlayGeneratorMk2
 
         delegate void SetTextCallback(string text, bool err);
 
-        Assembly myAssembly = Assembly.GetExecutingAssembly();  
+        public Assembly myAssembly = Assembly.GetExecutingAssembly();  
         
         #endregion Data Fields
 
