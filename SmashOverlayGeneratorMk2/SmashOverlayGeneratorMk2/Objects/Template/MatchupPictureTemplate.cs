@@ -227,6 +227,12 @@ namespace SmashOverlayGeneratorMk2.Objects
         #region ABSTRACTED METHODS
         public override System.Drawing.Bitmap drawTextOnImage(SmashOverlayGenerator form)
         {
+            //IF FONT IS NOT INSTALLED WE INSTALL IT
+
+            fontsInstalled(form, "EARTHQUAKE");
+            fontsInstalled(form, "FLAPHEAD");
+            fontsInstalled(form, "ZEKTON RG");
+
             setFontSizes(form.ResourceType, form.MatchupCompetitor1, form.MatchupCompetitor2);
             if (!GenFcns.isNullOrEmpty(Gametype) && Gametype.Equals("doubles"))
                 setFontSizes(form.ResourceType, Competitor3, Competitor4);
@@ -265,7 +271,7 @@ namespace SmashOverlayGeneratorMk2.Objects
             
             
             //DRAW TOURNAMENT STUFFS
-            string tournamentLogoPath = ListBoxFcns.getImageResourcePath(form.ProductName, "tournament", "S@CsLogo.png");
+            string tournamentLogoPath = ListBoxFcns.getResourcePath(form.ProductName, "tournament", "S@CsLogo.png");
             Image logoImage = base.getImage(tournamentLogoPath);
             g.DrawImage(logoImage, TournamentPoint.getPoint());
             g.DrawString(form.TournamentRound, TournamentRoundFont, Brushes.White, TournamentRoundPoint.getPoint(), tournamentFormat);
@@ -359,6 +365,35 @@ namespace SmashOverlayGeneratorMk2.Objects
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 70, FontStyle.Bold);
                 TournamentRoundFont = new Font("FLAPHEAD", 115, FontStyle.Bold);
             }
+        }
+
+        public void fontsInstalled(SmashOverlayGenerator form, string fontName)
+        {
+            try
+            {
+                float fontSize = 12;
+
+                using (Font fontTester = new Font(
+                        fontName,
+                        fontSize,
+                        FontStyle.Regular,
+                        GraphicsUnit.Pixel))
+                {
+                    if (String.Equals(fontTester.Name, fontName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Font exists
+                    }
+                    else
+                    {
+                        GenFcns.installFonts(form, fontName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

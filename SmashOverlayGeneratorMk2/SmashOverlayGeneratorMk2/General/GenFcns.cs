@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Collections;
+using System.Runtime.InteropServices;
 using SmashOverlayGeneratorMk2;
 using System.IO;
 
@@ -162,6 +163,22 @@ namespace SmashOverlayGeneratorMk2.General
             }
 
             return true;
+        }
+
+        [DllImport("gdi32.dll", EntryPoint = "AddFontResourceW", SetLastError = true)]
+        public static extern int AddFontResource([In][MarshalAs(UnmanagedType.LPWStr)] string lpFileName);
+
+        public static void installFonts(SmashOverlayGenerator form, string fontName)
+        {
+            // Try install the font
+            string fontPath = ListBoxFcns.getResourcePath(form.ProductName, "font", fontName+".TTF".ToUpper());
+
+            var result = AddFontResource(fontPath);
+            var error = Marshal.GetLastWin32Error();
+            if (error != 0)
+            {
+                throw new Exception(error.ToString());
+            }
         }
         #endregion General 
     }

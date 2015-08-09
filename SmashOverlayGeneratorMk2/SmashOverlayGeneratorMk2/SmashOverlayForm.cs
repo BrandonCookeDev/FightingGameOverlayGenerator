@@ -714,7 +714,7 @@ namespace SmashOverlayGeneratorMk2
                 if (!selectedFileLabel.Text.Equals("")) { selectedFileLabel.Text = ""; }
 
                 string resource = (string)templateListView.Items[templateListView.SelectedIndex];
-                TemplateFile = ListBoxFcns.getImageResourcePath(this.ProductName, "template", resource);
+                TemplateFile = ListBoxFcns.getResourcePath(this.ProductName, "template", resource);
                 TemplateFileName = resource;
 
                 string imageFilePath = TemplateFile;
@@ -731,7 +731,7 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 string resource = (string)casterTemplateListView.Items[casterTemplateListView.SelectedIndex];
-                CasterTemplateFile = ListBoxFcns.getImageResourcePath(this.ProductName, "caster", resource);
+                CasterTemplateFile = ListBoxFcns.getResourcePath(this.ProductName, "caster", resource);
                 CasterTemplateFileName = resource;
 
                 string imageFilePath = CasterTemplateFile;
@@ -749,7 +749,7 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 string resource = (string)matchupPicListView.Items[matchupPicListView.SelectedIndex];
-                MatchupPicFile = ListBoxFcns.getImageResourcePath(this.ProductName, "matchup", resource);
+                MatchupPicFile = ListBoxFcns.getResourcePath(this.ProductName, "matchup", resource);
                 MatchupPicFileName = resource;
 
                 string imageFilePath = MatchupPicFile;
@@ -765,7 +765,7 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 string resource = (string)matchupCharacter1Combobox.Items[matchupCharacter1Combobox.SelectedIndex];
-                MatchupCharacter1File = ListBoxFcns.getImageResourcePath(this.ProductName, "character", resource);
+                MatchupCharacter1File = ListBoxFcns.getResourcePath(this.ProductName, "character", resource);
                 MatchupCharacter1 = resource;
             }
             catch (Exception ex)
@@ -779,7 +779,7 @@ namespace SmashOverlayGeneratorMk2
             try
             {
                 string resource = (string)matchupCharacter2Combobox.Items[matchupCharacter2Combobox.SelectedIndex];
-                MatchupCharacter2File = ListBoxFcns.getImageResourcePath(this.ProductName, "character", resource);
+                MatchupCharacter2File = ListBoxFcns.getResourcePath(this.ProductName, "character", resource);
                 MatchupCharacter2 = resource;
             }
             catch (Exception ex)

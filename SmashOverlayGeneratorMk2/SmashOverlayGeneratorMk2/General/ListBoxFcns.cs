@@ -30,7 +30,7 @@ namespace SmashOverlayGeneratorMk2.General
             imageStream.Close();
         }
 
-        public static string getImageResourcePath(string productName, string type, string resourceName)
+        public static string getResourcePath(string productName, string type, string resourceName)
         {
             //return this.ProductName + ".Images." + type + "." + resourceName;
 
@@ -44,6 +44,8 @@ namespace SmashOverlayGeneratorMk2.General
                 return productName + ".Images.Characters.SmashRenders." + resourceName.Replace(" ", "") + ".png";
             else if (type.Equals("tournament"))
                 return productName + ".Images.Tournament." + resourceName;
+            else if (type.Equals("font"))
+                return productName + ".Fonts." + resourceName;
             else
                 throw new Exception("String type agrument can only be 'template' or 'caster'");
         }
