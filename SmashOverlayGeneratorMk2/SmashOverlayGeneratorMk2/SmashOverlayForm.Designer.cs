@@ -125,6 +125,9 @@
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
+            this.matchupBGPictureBrowseBtn = new System.Windows.Forms.Button();
+            this.matchupTournamentLogoBrowse = new System.Windows.Forms.Button();
+            this.selectedMatchupFileLabel = new System.Windows.Forms.Label();
             this.competitorsTab.SuspendLayout();
             this.doublesPanel.SuspendLayout();
             this.singlesPanel.SuspendLayout();
@@ -749,7 +752,7 @@
             // 
             this.templatePreviewLabel.AutoSize = true;
             this.templatePreviewLabel.Font = new System.Drawing.Font("Constantia", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.templatePreviewLabel.Location = new System.Drawing.Point(4, 135);
+            this.templatePreviewLabel.Location = new System.Drawing.Point(5, 145);
             this.templatePreviewLabel.Name = "templatePreviewLabel";
             this.templatePreviewLabel.Size = new System.Drawing.Size(145, 14);
             this.templatePreviewLabel.TabIndex = 4;
@@ -757,9 +760,9 @@
             // 
             // templatePictureBox
             // 
-            this.templatePictureBox.Location = new System.Drawing.Point(4, 150);
+            this.templatePictureBox.Location = new System.Drawing.Point(8, 162);
             this.templatePictureBox.Name = "templatePictureBox";
-            this.templatePictureBox.Size = new System.Drawing.Size(233, 114);
+            this.templatePictureBox.Size = new System.Drawing.Size(229, 102);
             this.templatePictureBox.TabIndex = 3;
             this.templatePictureBox.TabStop = false;
             this.templatePictureBox.Click += new System.EventHandler(this.templatePictureBox_Click);
@@ -1004,6 +1007,9 @@
             // 
             // splitContainer3.Panel2
             // 
+            this.splitContainer3.Panel2.Controls.Add(this.selectedMatchupFileLabel);
+            this.splitContainer3.Panel2.Controls.Add(this.matchupTournamentLogoBrowse);
+            this.splitContainer3.Panel2.Controls.Add(this.matchupBGPictureBrowseBtn);
             this.splitContainer3.Panel2.Controls.Add(this.matchupPicListView);
             this.splitContainer3.Panel2.Controls.Add(this.matchupPicPreviewLabel);
             this.splitContainer3.Panel2.Controls.Add(this.matchupPictureBox);
@@ -1093,6 +1099,7 @@
             this.clearMatchupDataBtn.TabIndex = 6;
             this.clearMatchupDataBtn.Text = "Clear Picture Data";
             this.clearMatchupDataBtn.UseVisualStyleBackColor = true;
+            this.clearMatchupDataBtn.Click += new System.EventHandler(this.clearMatchupDataBtn_Click);
             // 
             // generateMatchupPicBtn
             // 
@@ -1153,7 +1160,7 @@
             this.matchupPicListView.FormattingEnabled = true;
             this.matchupPicListView.Location = new System.Drawing.Point(14, 3);
             this.matchupPicListView.Name = "matchupPicListView";
-            this.matchupPicListView.Size = new System.Drawing.Size(246, 121);
+            this.matchupPicListView.Size = new System.Drawing.Size(246, 95);
             this.matchupPicListView.TabIndex = 3;
             this.matchupPicListView.SelectedIndexChanged += new System.EventHandler(this.matchupPicListView_SelectedIndexChanged_1);
             // 
@@ -1246,6 +1253,7 @@
             this.tournamentRoundCombobox.Name = "tournamentRoundCombobox";
             this.tournamentRoundCombobox.Size = new System.Drawing.Size(178, 21);
             this.tournamentRoundCombobox.TabIndex = 18;
+            this.tournamentRoundCombobox.SelectedIndexChanged += new System.EventHandler(this.tournamentRoundCombobox_SelectedIndexChanged);
             // 
             // logMessageLabel
             // 
@@ -1257,6 +1265,34 @@
             this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
+            // 
+            // matchupBGPictureBrowseBtn
+            // 
+            this.matchupBGPictureBrowseBtn.Location = new System.Drawing.Point(14, 105);
+            this.matchupBGPictureBrowseBtn.Name = "matchupBGPictureBrowseBtn";
+            this.matchupBGPictureBrowseBtn.Size = new System.Drawing.Size(104, 23);
+            this.matchupBGPictureBrowseBtn.TabIndex = 4;
+            this.matchupBGPictureBrowseBtn.Text = "BG Picture Browse";
+            this.matchupBGPictureBrowseBtn.UseVisualStyleBackColor = true;
+            this.matchupBGPictureBrowseBtn.Click += new System.EventHandler(this.matchupBGPictureBrowseBtn_Click);
+            // 
+            // matchupTournamentLogoBrowse
+            // 
+            this.matchupTournamentLogoBrowse.Location = new System.Drawing.Point(124, 105);
+            this.matchupTournamentLogoBrowse.Name = "matchupTournamentLogoBrowse";
+            this.matchupTournamentLogoBrowse.Size = new System.Drawing.Size(104, 23);
+            this.matchupTournamentLogoBrowse.TabIndex = 5;
+            this.matchupTournamentLogoBrowse.Text = "Tournament Logo";
+            this.matchupTournamentLogoBrowse.UseVisualStyleBackColor = true;
+            this.matchupTournamentLogoBrowse.Click += new System.EventHandler(this.matchupTournamentLogoBrowse_Click);
+            // 
+            // selectedMatchupFileLabel
+            // 
+            this.selectedMatchupFileLabel.AutoSize = true;
+            this.selectedMatchupFileLabel.Location = new System.Drawing.Point(14, 132);
+            this.selectedMatchupFileLabel.Name = "selectedMatchupFileLabel";
+            this.selectedMatchupFileLabel.Size = new System.Drawing.Size(0, 13);
+            this.selectedMatchupFileLabel.TabIndex = 6;
             // 
             // SmashOverlayGenerator
             // 
@@ -1411,6 +1447,9 @@
         private System.Windows.Forms.ComboBox matchupCharacter1Combobox;
         private System.Windows.Forms.ListBox matchupPicListView;
         private System.Windows.Forms.Button swapNamesBtn;
+        private System.Windows.Forms.Button matchupTournamentLogoBrowse;
+        private System.Windows.Forms.Button matchupBGPictureBrowseBtn;
+        private System.Windows.Forms.Label selectedMatchupFileLabel;
 
 
     }

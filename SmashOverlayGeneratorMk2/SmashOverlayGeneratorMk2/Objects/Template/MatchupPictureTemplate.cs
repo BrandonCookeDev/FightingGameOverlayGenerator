@@ -27,6 +27,7 @@ namespace SmashOverlayGeneratorMk2.Objects
         private string character4;
         private string character1Path;
         private string character2Path;
+        private string tournamentRound;
         private Font competitor1Font;
         private Font competitor2Font;
         private Font competitor3Font;
@@ -46,6 +47,12 @@ namespace SmashOverlayGeneratorMk2.Objects
         #endregion GLOBAL VARIABLES
 
         #region GETTERS AND SETTERS
+        public string TournamentRound
+        {
+            get { return this.tournamentRound; }
+            set { this.tournamentRound = value; }
+        }
+
         public string Gametype
         {
             get{ return this.gametype; }
@@ -224,24 +231,43 @@ namespace SmashOverlayGeneratorMk2.Objects
             if (!GenFcns.isNullOrEmpty(Gametype) && Gametype.Equals("doubles"))
                 setFontSizes(form.ResourceType, Competitor3, Competitor4);
 
+            TournamentName = form.TournamentName;
+            TournamentRound = form.TournamentRound;
+            Competitor1 = form.MatchupCompetitor1;
+            Competitor2 = form.MatchupCompetitor2;
+
             StringFormat nameFormat = new StringFormat();
             StringFormat tournamentFormat = new StringFormat();
-
-            Bitmap image = base.getImage();
-            
-
+            Bitmap image = base.getImage();            
             Graphics g = Graphics.FromImage(image);
+
+            nameFormat.LineAlignment = StringAlignment.Center;
+            nameFormat.Alignment = StringAlignment.Center;
+            tournamentFormat.Alignment = StringAlignment.Center;
 
             //DRAW CHARACTERS
             drawCharactersOnImage(g, Character1Path, Character1Point, Character2Path, Character2Point);
 
-            //DRAW BANNER
-            //g.DrawRectangle(new Pen(new Brush(
 
-            //DRAW STRINGS
+            //DRAW BANNER
+            Pen p =new Pen(Color.LightCyan, (float)50.0);
+            SolidBrush b = new SolidBrush(Color.MediumPurple);
+            SolidBrush bBorder = new SolidBrush(Color.White);
+            Rectangle r = new Rectangle(new Point(0, 800), new Size(1920, 200));
+            Rectangle rBorder = new Rectangle(new Point(0, 780), new Size(1920, 240));
+            g.FillRectangle(bBorder, rBorder);
+            g.FillRectangle(b, r);
+
+            //DRAW COMPETITOR INFORMATION
             g.DrawString(form.MatchupCompetitor1, Competitor1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
             g.DrawString(form.MatchupCompetitor2, Competitor2Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
-            g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentPoint.getPoint(), tournamentFormat);
+            //g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentPoint.getPoint(), tournamentFormat);
+            
+            
+            //DRAW TOURNAMENT STUFFS
+            string tournamentLogoPath = ListBoxFcns.getImageResourcePath(form.ProductName, "tournament", "S@CsLogo.png");
+            Image logoImage = base.getImage(tournamentLogoPath);
+            g.DrawImage(logoImage, TournamentPoint.getPoint());
             g.DrawString(form.TournamentRound, TournamentRoundFont, Brushes.White, TournamentRoundPoint.getPoint(), tournamentFormat);
 
             
@@ -257,7 +283,7 @@ namespace SmashOverlayGeneratorMk2.Objects
 
             String fileName = base.FilePath;
             fileName = fileName.Substring(fileName.LastIndexOf(".Matchup.") + 9);
-            fileName = fileName.Substring(0, fileName.Length - 4) + "_official.png";
+            fileName = fileName.Substring(0, fileName.Length - 4) + "_official_" + TournamentName + "_" + TournamentRound + "_" + Competitor1 + "vs" + Competitor2+".png";
             image.Save(fileName);
 
             if (!Directory.Exists(base.ParentPath))
@@ -290,7 +316,7 @@ namespace SmashOverlayGeneratorMk2.Objects
             int[] fontSize = GenFcns.determineFontSize(_competitor1, _competitor2);
             if (resourceType.Equals("file"))
             {
-                Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
+                Competitor1Font = new Font(FontFamily.GenericSansSerif, /*fontSize[0]*/ 42, FontStyle.Bold);
                 Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
             }
@@ -318,19 +344,20 @@ namespace SmashOverlayGeneratorMk2.Objects
                                  string _competitor1, string _competitor2)
         {
             int[] fontSize = GenFcns.determineFontSize(_competitor1, _competitor2);
+            Font f = new Font("EARTHQUAKE", 62, FontStyle.Bold);
             if (!GenFcns.isNullOrEmpty(resourceType) && resourceType.Equals("file"))
             {
-                Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
-                Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
+                Competitor1Font = new Font(FontFamily.GenericSansSerif, 42, FontStyle.Bold);
+                Competitor2Font = new Font(FontFamily.GenericSansSerif, 42, FontStyle.Bold);
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
                 TournamentRoundFont = new Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold);
             }
             else
             {
-                Competitor1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
-                Competitor2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);                
-                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
-                TournamentRoundFont = new Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold);
+                Competitor1Font = new Font("EARTHQUAKE", 120, FontStyle.Bold);
+                Competitor2Font = new Font("EARTHQUAKE", 120, FontStyle.Bold);                
+                TournamentFont = new Font(FontFamily.GenericSansSerif, 70, FontStyle.Bold);
+                TournamentRoundFont = new Font("FLAPHEAD", 115, FontStyle.Bold);
             }
         }
     }

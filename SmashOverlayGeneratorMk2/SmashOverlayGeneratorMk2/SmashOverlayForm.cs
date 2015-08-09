@@ -54,6 +54,7 @@ namespace SmashOverlayGeneratorMk2
         private string matchupCharacter2File;
         private string matchupCharacter1;
         private string matchupCharacter2;
+        private string tournamentLogoFile;
         private string resourceType;
         private bool nameSwap;
         private bool isError;
@@ -249,6 +250,12 @@ namespace SmashOverlayGeneratorMk2
         {
             get { return this.matchupCharacter2; }
             set { this.matchupCharacter2 = value; }
+        }
+
+        public string TournamentLogoFile
+        {
+            get { return this.tournamentLogoFile; }
+            set { this.tournamentLogoFile = value; }
         }
 
         public string ResourceType
@@ -1299,10 +1306,10 @@ namespace SmashOverlayGeneratorMk2
         private MatchupPictureTemplate hardCodedMatchupPicture(string fileName, 
                                                                string character1File, string character2File)
         {
-            CompetitorPoint matchupC1P = new CompetitorPoint(350, 900);
-            CompetitorPoint matchupC2P = new CompetitorPoint(1400, 900);
-            TournamentPoint tournamentP = new TournamentPoint(800, 500);
-            TournamentPoint tournamentRoundP = new TournamentPoint(800, 600);
+            CompetitorPoint matchupC1P = new CompetitorPoint(1920/4, 920);
+            CompetitorPoint matchupC2P = new CompetitorPoint(1920/4*3, 920);
+            TournamentPoint tournamentP = new TournamentPoint(700, 150);
+            TournamentPoint tournamentRoundP = new TournamentPoint(1920/2, 600);
             CharacterPoint character1P = new CharacterPoint(75, 75);
             CharacterPoint character2P = new CharacterPoint(1250, 75);
 
@@ -1426,6 +1433,70 @@ namespace SmashOverlayGeneratorMk2
             {
                 logMessageLabel.Text = "..." + msg;
             }
+        }
+
+        private void matchupBGPictureBrowseBtn_Click(object sender, EventArgs e)
+        {
+            
+            if (matchupPicListView.SelectedIndex != -1)
+            {
+                MatchupPicFile = null;
+                matchupPicListView.ClearSelected();
+                matchupPictureBox.Image = null;
+            }
+
+            var FD = new System.Windows.Forms.OpenFileDialog();
+            if (FD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileToOpen = FD.FileName;
+                System.IO.FileInfo File = new System.IO.FileInfo(FD.FileName);
+
+                //Show the file name in the program window
+                selectedMatchupFileLabel.Text = File.Name;
+
+                //DEFINE GLOBAL VARIABLE FOR TEMPLATE
+                MatchupPicFile = @File.FullName;
+                //DEFINE THE NEW PATH
+                string newName = File.DirectoryName + "\\" + tournamentNameTextbox.Text + "_matchup" + File.Name;
+                //DEFINE THE GLOBAL VARIBLE FOR NEW TEMPLATE
+                NewTemplateFile = @newName;
+            }
+        }
+
+        private void matchupTournamentLogoBrowse_Click(object sender, EventArgs e)
+        {
+            var FD = new System.Windows.Forms.OpenFileDialog();
+            if (FD.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileToOpen = FD.FileName;
+                System.IO.FileInfo File = new System.IO.FileInfo(FD.FileName);
+                
+                //DEFINE GLOBAL VARIABLE FOR TEMPLATE
+                TournamentLogoFile = @File.FullName;
+            }
+        }
+
+        private void clearMatchupDataBtn_Click(object sender, EventArgs e)
+        {
+            matchupCompetitor1Textbox.Text = "";
+            MatchupCompetitor1 = "";
+            matchupCharacter1Combobox.SelectedItem = -1;
+            MatchupCharacter1 = "";
+            MatchupCharacter1File = "";
+
+            matchupCompetitor2Textbox.Text = "";
+            MatchupCompetitor2 = "";
+            matchupCharacter2Combobox.SelectedItem = -1;
+            MatchupCharacter2 = "";
+            MatchupCharacter2File = "";
+
+            matchupPicListView.SelectedItem = -1;
+            MatchupPicFile = "";
+        }
+
+        private void tournamentRoundCombobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getTournamentData();
         }
     }    
 }
