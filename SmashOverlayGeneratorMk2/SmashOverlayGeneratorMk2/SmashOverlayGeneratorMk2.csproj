@@ -140,8 +140,10 @@
     <EmbeddedResource Include="Images\Templates\CrudeCityOverlay.png" />
     <EmbeddedResource Include="Images\Templates\SpaceWarOverlay.png" />
     <EmbeddedResource Include="Images\Templates\SpaceSunriseOverlay.png" />
-    <EmbeddedResource Include="Images\Templates\GreenOverlay.png" />
-    <EmbeddedResource Include="Images\Templates\PurpleOverlay.png" />
+    <Content Include="Images\Templates\FlashbackOverlayPOC.png" />
+    <Content Include="Images\Templates\FlashbackOverlayPOCExtra.png" />
+    <Content Include="Images\Templates\GreenOverlay.png" />
+    <Content Include="Images\Templates\PurpleOverlay.png" />
     <EmbeddedResource Include="Images\Matchup\PurpleNeb.jpg" />
     <EmbeddedResource Include="Images\Characters\SmashRenders\Bowser.png" />
     <EmbeddedResource Include="Images\Characters\SmashRenders\CaptainFalcon.png" />
@@ -168,9 +170,12 @@
     <EmbeddedResource Include="Images\Characters\SmashRenders\Yoshi.png" />
     <EmbeddedResource Include="Images\Characters\SmashRenders\YoungLink.png" />
     <EmbeddedResource Include="Images\Characters\SmashRenders\Zelda.png" />
-    <EmbeddedResource Include="Images\Templates\FireOverlay.png" />
+    <Content Include="Images\Templates\FireOverlay.png" />
     <EmbeddedResource Include="Images\Characters\SmashRenders\MrGame&amp;Watch.png" />
     <EmbeddedResource Include="Images\Tournament\S%40CsLogo.png" />
+    <EmbeddedResource Include="Images\Templates\FireOverlayNew.png" />
+    <EmbeddedResource Include="Images\Templates\GreenOverlayNew.png" />
+    <EmbeddedResource Include="Images\Templates\PurpleOverlayNew.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>

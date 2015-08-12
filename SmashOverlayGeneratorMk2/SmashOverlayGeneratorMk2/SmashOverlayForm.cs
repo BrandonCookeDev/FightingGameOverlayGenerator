@@ -1282,17 +1282,38 @@ namespace SmashOverlayGeneratorMk2
         private CompetitorTemplate hardcodedCompetitorTemplate(string resourceType, 
                                                            string fileName, bool nameSwap)
         {
-            CompetitorPoint player1P = new CompetitorPoint(501, 1063);
-            CompetitorPoint player1CamP = new CompetitorPoint(1686, 354);
+            CompetitorPoint player1P = null;
+            CompetitorPoint player1CamP = null;
+            CompetitorPoint player2P = null;
+            CompetitorPoint player2CamP = null;
+            ScorePoint player1ScoreP = null;
+            ScorePoint player2ScoreP = null;
+            TournamentPoint tournamentP = null;
 
-            CompetitorPoint player2P = new CompetitorPoint(976, 1063);
-            CompetitorPoint player2CamP = new CompetitorPoint(1686, 720);
+            if(TemplateFileName.Equals("FireOverlayNew.png")){
+                player1P = new CompetitorPoint(501, 1063);
+                player1CamP = new CompetitorPoint(1686, 364);
 
-            ScorePoint player1ScoreP = new ScorePoint(680, 1030);
-            ScorePoint player2ScoreP = new ScorePoint(800, 1030);
+                player2P = new CompetitorPoint(976, 1063);
+                player2CamP = new CompetitorPoint(1686, 730);
 
-            TournamentPoint tournamentP = new TournamentPoint(900, 25);
+                player1ScoreP = new ScorePoint(680, 1030);
+                player2ScoreP = new ScorePoint(800, 1030);
 
+                tournamentP = new TournamentPoint(900, 25);
+            }
+            else{
+                player1P = new CompetitorPoint(501, 1063);
+                player1CamP = new CompetitorPoint(1686, 354);
+
+                player2P = new CompetitorPoint(976, 1063);
+                player2CamP = new CompetitorPoint(1686, 720);
+
+                player1ScoreP = new ScorePoint(680, 1030);
+                player2ScoreP = new ScorePoint(800, 1030);
+
+                tournamentP = new TournamentPoint(900, 25);
+            }
             CompetitorTemplate cTemplate =
                 new CompetitorTemplate(fileName, player1P, player2P, 
                                 player1CamP, player2CamP, player1ScoreP, 
