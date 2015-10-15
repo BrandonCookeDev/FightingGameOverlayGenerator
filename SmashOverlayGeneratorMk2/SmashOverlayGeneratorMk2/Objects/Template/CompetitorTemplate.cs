@@ -18,12 +18,14 @@ namespace SmashOverlayGeneratorMk2.Objects
         private CompetitorPoint competitor2WebcamPoint;
         private ScorePoint score1Point;
         private ScorePoint score2Point;
+        private RoundPoint roundPoint;
         private TournamentPoint tournamentNameRoundPoint;
         
         //DETERMINE FONT SIZE
         private Font name1Font;
         private Font name2Font;
         private Font scoreFont;
+        private Font roundFont;
         private Font tournmentFont;
         #endregion GLOBAL VARIABLES
 
@@ -87,6 +89,43 @@ namespace SmashOverlayGeneratorMk2.Objects
             this.score2Point = score2;
             this.tournamentNameRoundPoint = tournamentNameRound;
         }
+
+        public CompetitorTemplate(string filePath,
+                                 CompetitorPoint competitor1,
+                                 CompetitorPoint competitor2,
+                                 CompetitorPoint competitor1Webcam,
+                                 CompetitorPoint competitor2Webcam,
+                                 ScorePoint score1, ScorePoint score2,
+                                 RoundPoint round,
+                                 TournamentPoint tournamentNameRound)
+            : base(filePath)
+        {
+            if (competitor1 == null)
+                throw new Exception("Competitor Template: Competitor 1 must have a point on template");
+            if (competitor2 == null)
+                throw new Exception("Competitor Template: Competitor 2 must have a point on template");
+            if (competitor1Webcam == null)
+                throw new Exception("Competitor Template: Competitor 1's Webcam must have a point on template");
+            if (competitor2Webcam == null)
+                throw new Exception("Competitor Template: Competitor 2's Webcam must have a point on template");
+            if (score1 == null)
+                throw new Exception("Competitor Template: Score 1 must have a point on template");
+            if (score2 == null)
+                throw new Exception("Competitor Template: Score 2 must have a point on template");
+            if (round == null)
+                throw new Exception("Competitor Template: Round must have a point on template");                
+            if (tournamentNameRound == null)
+                throw new Exception("Competitor Template: Tournament Name must have a point on template");
+
+            this.competitor1Point = competitor1;
+            this.competitor2Point = competitor2;
+            this.competitor1WebcamPoint = competitor1Webcam;
+            this.competitor2WebcamPoint = competitor2Webcam;
+            this.score1Point = score1;
+            this.score2Point = score2;
+            this.roundPoint = round;
+            this.tournamentNameRoundPoint = tournamentNameRound;
+        }
         #endregion CONSTRUCTORS
 
         #region GETTERS AND SETTERS
@@ -126,6 +165,12 @@ namespace SmashOverlayGeneratorMk2.Objects
             set { this.score2Point = value; }
         }
 
+        public RoundPoint RoundPoint
+        {
+            get { return this.roundPoint; }
+            set { this.roundPoint = value; }
+        }
+
         public TournamentPoint TournamentNameRoundPoint
         {
             get { return this.tournamentNameRoundPoint; }
@@ -150,6 +195,12 @@ namespace SmashOverlayGeneratorMk2.Objects
             set { this.scoreFont = value; }
         }
 
+        public Font RoundFont
+        {
+            get { return this.roundFont; }
+            set { this.roundFont = value; }
+        }
+
         public Font TournamentFont
         {
             get { return this.tournmentFont; }
@@ -167,32 +218,47 @@ namespace SmashOverlayGeneratorMk2.Objects
             //CENTER NAME TEXT
             StringFormat nameFormat = new StringFormat();
             StringFormat scoreFormat = new StringFormat();
+            StringFormat roundFormat = new StringFormat();
+            StringFormat player1Format = new StringFormat();
+            StringFormat player2Format = new StringFormat();
 
             nameFormat.LineAlignment = StringAlignment.Center;
             nameFormat.Alignment = StringAlignment.Center;
             scoreFormat.Alignment = StringAlignment.Center;
+            player1Format.Alignment = StringAlignment.Near;
+            player2Format.Alignment = StringAlignment.Far;
+            
 
             Bitmap image = base.getImage();
             Graphics g = Graphics.FromImage(image);
 
             if (!swap)
             {
-                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
-                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
+                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), player1Format);
+                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2Point.getPoint(), player2Format);
                 g.DrawString(form.Score1, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
                 g.DrawString(form.Score2, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
             }
             else
             {
-                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor2Point.getPoint(), nameFormat);
-                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor1Point.getPoint(), nameFormat);
+                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor2Point.getPoint(), player2Format);
+                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor1Point.getPoint(), player1Format);
                 g.DrawString(form.Score1, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
                 g.DrawString(form.Score2, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
             }      
             g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), nameFormat);
-            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), nameFormat);            
-            g.DrawString(form.TournamentName + " | " + form.TournamentRound, 
-                TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), nameFormat);
+            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), nameFormat);
+
+            if (RoundPoint == null)
+            {
+                g.DrawString(form.TournamentName + " | " + form.TournamentRound,
+                    TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), nameFormat);
+            }
+            else
+            {
+                g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), nameFormat);
+                g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), nameFormat);
+            }
 
             return image;
         }
@@ -225,6 +291,7 @@ namespace SmashOverlayGeneratorMk2.Objects
                 Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0], FontStyle.Bold);
                 Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1], FontStyle.Bold);
                 ScoreFont = new Font(FontFamily.GenericSansSerif, 45, FontStyle.Bold);
+                RoundFont = new Font(FontFamily.GenericSerif, 25, FontStyle.Bold);
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
             }
             else
@@ -232,6 +299,7 @@ namespace SmashOverlayGeneratorMk2.Objects
                 Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
                 Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
                 ScoreFont = new Font(FontFamily.GenericSansSerif, 35, FontStyle.Bold);
+                RoundFont = new Font(FontFamily.GenericSerif, 25, FontStyle.Bold);
                 TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
             }
         }

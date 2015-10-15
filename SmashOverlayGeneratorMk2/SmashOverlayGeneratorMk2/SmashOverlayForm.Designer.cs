@@ -1242,13 +1242,12 @@
             "Friendlies",
             "Pools",
             "Winners\' Bracket",
-            "Winners\' Semi Finals",
+            "Winners\' Semi\'s",
             "Winners\' Finals",
             "Losers\' Bracket",
-            "Losers\' Semi Finals",
+            "Losers\' Semi\'s",
             "Losers\' Finals",
-            "Grand Finals",
-            "Grand Finals (L)"});
+            "Grand Finals"});
             this.tournamentRoundCombobox.Location = new System.Drawing.Point(238, 318);
             this.tournamentRoundCombobox.Name = "tournamentRoundCombobox";
             this.tournamentRoundCombobox.Size = new System.Drawing.Size(178, 21);

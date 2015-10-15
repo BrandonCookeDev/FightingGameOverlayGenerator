@@ -28,7 +28,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\OverlayGenerator\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,6 +71,7 @@
     <Compile Include="Objects\Points\CasterPoint.cs" />
     <Compile Include="Objects\Points\CharacterPoint.cs" />
     <Compile Include="Objects\Points\CompetitorPoint.cs" />
+    <Compile Include="Objects\Points\RoundPoint.cs" />
     <Compile Include="Objects\Points\ScorePoint.cs" />
     <Compile Include="Objects\Points\TemplatePoint.cs" />
     <Compile Include="Objects\Points\TournamentPoint.cs" />
@@ -137,11 +138,12 @@
     <None Include="Resources\3d_landscape_1551920x1080.jpg" />
     <None Include="Resources\fantasy-landscape-3d-wallpaper-9018-hd-widescreen-wallpapers.jpg" />
     <None Include="Resources\future-city.jpg" />
-    <EmbeddedResource Include="Images\Templates\CrudeCityOverlay.png" />
-    <EmbeddedResource Include="Images\Templates\SpaceWarOverlay.png" />
-    <EmbeddedResource Include="Images\Templates\SpaceSunriseOverlay.png" />
+    <Content Include="Images\Templates\CrudeCityOverlay.png" />
+    <Content Include="Images\Templates\SpaceWarOverlay.png" />
+    <Content Include="Images\Templates\SpaceSunriseOverlay.png" />
     <Content Include="Images\Templates\FlashbackOverlayPOC.png" />
     <Content Include="Images\Templates\FlashbackOverlayPOCExtra.png" />
+    <EmbeddedResource Include="Images\Templates\FlashbackOverlayRedux.png" />
     <Content Include="Images\Templates\GreenOverlay.png" />
     <Content Include="Images\Templates\PurpleOverlay.png" />
     <EmbeddedResource Include="Images\Matchup\PurpleNeb.jpg" />
@@ -174,8 +176,8 @@
     <EmbeddedResource Include="Images\Characters\SmashRenders\MrGame&amp;Watch.png" />
     <EmbeddedResource Include="Images\Tournament\S%40CsLogo.png" />
     <EmbeddedResource Include="Images\Templates\FireOverlayNew.png" />
-    <EmbeddedResource Include="Images\Templates\GreenOverlayNew.png" />
-    <EmbeddedResource Include="Images\Templates\PurpleOverlayNew.png" />
+    <Content Include="Images\Templates\GreenOverlayNew.png" />
+    <Content Include="Images\Templates\PurpleOverlayNew.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>
