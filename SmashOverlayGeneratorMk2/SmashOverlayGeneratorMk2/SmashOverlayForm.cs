@@ -1544,5 +1544,14 @@ namespace SmashOverlayGeneratorMk2
         {
             getTournamentData();
         }
+
+        private void clearSinglesScoresBtn_Click(object sender, EventArgs e)
+        {
+            Score1 = "0";
+            Score2 = "0";
+            singlesP1ScoreTextbox.Text = Score1;
+            singlesP2ScoreTextbox.Text = Score2;
+            generate();
+        }
     }    
 }

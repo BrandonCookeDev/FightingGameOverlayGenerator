@@ -115,6 +115,9 @@
             this.matchupCompetitor1Label = new System.Windows.Forms.Label();
             this.matchupCompetitor2Textbox = new System.Windows.Forms.TextBox();
             this.matchupCompetitor1Textbox = new System.Windows.Forms.TextBox();
+            this.selectedMatchupFileLabel = new System.Windows.Forms.Label();
+            this.matchupTournamentLogoBrowse = new System.Windows.Forms.Button();
+            this.matchupBGPictureBrowseBtn = new System.Windows.Forms.Button();
             this.matchupPicListView = new System.Windows.Forms.ListBox();
             this.matchupPicPreviewLabel = new System.Windows.Forms.Label();
             this.matchupPictureBox = new System.Windows.Forms.PictureBox();
@@ -125,9 +128,7 @@
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
-            this.matchupBGPictureBrowseBtn = new System.Windows.Forms.Button();
-            this.matchupTournamentLogoBrowse = new System.Windows.Forms.Button();
-            this.selectedMatchupFileLabel = new System.Windows.Forms.Label();
+            this.clearSinglesScoresBtn = new System.Windows.Forms.Button();
             this.competitorsTab.SuspendLayout();
             this.doublesPanel.SuspendLayout();
             this.singlesPanel.SuspendLayout();
@@ -379,6 +380,7 @@
             // 
             // singlesPanel
             // 
+            this.singlesPanel.Controls.Add(this.clearSinglesScoresBtn);
             this.singlesPanel.Controls.Add(this.swapNamesBtn);
             this.singlesPanel.Controls.Add(this.decrementPlayer2Button);
             this.singlesPanel.Controls.Add(this.incrementPlayer2Button);
@@ -401,9 +403,9 @@
             // 
             // swapNamesBtn
             // 
-            this.swapNamesBtn.Location = new System.Drawing.Point(21, 172);
+            this.swapNamesBtn.Location = new System.Drawing.Point(100, 199);
             this.swapNamesBtn.Name = "swapNamesBtn";
-            this.swapNamesBtn.Size = new System.Drawing.Size(127, 41);
+            this.swapNamesBtn.Size = new System.Drawing.Size(127, 52);
             this.swapNamesBtn.TabIndex = 27;
             this.swapNamesBtn.Text = "Swap Name Locations On Overlay";
             this.swapNamesBtn.UseVisualStyleBackColor = true;
@@ -456,11 +458,11 @@
             // 
             // singlesClearButton
             // 
-            this.singlesClearButton.Location = new System.Drawing.Point(41, 228);
+            this.singlesClearButton.Location = new System.Drawing.Point(3, 228);
             this.singlesClearButton.Name = "singlesClearButton";
             this.singlesClearButton.Size = new System.Drawing.Size(91, 23);
             this.singlesClearButton.TabIndex = 22;
-            this.singlesClearButton.Text = "Clear Singles";
+            this.singlesClearButton.Text = "Clear All";
             this.singlesClearButton.UseVisualStyleBackColor = true;
             this.singlesClearButton.UseWaitCursor = true;
             this.singlesClearButton.Click += new System.EventHandler(this.singlesClearButton_Click_1);
@@ -1155,6 +1157,34 @@
             this.matchupCompetitor1Textbox.Size = new System.Drawing.Size(161, 20);
             this.matchupCompetitor1Textbox.TabIndex = 0;
             // 
+            // selectedMatchupFileLabel
+            // 
+            this.selectedMatchupFileLabel.AutoSize = true;
+            this.selectedMatchupFileLabel.Location = new System.Drawing.Point(14, 132);
+            this.selectedMatchupFileLabel.Name = "selectedMatchupFileLabel";
+            this.selectedMatchupFileLabel.Size = new System.Drawing.Size(0, 13);
+            this.selectedMatchupFileLabel.TabIndex = 6;
+            // 
+            // matchupTournamentLogoBrowse
+            // 
+            this.matchupTournamentLogoBrowse.Location = new System.Drawing.Point(124, 105);
+            this.matchupTournamentLogoBrowse.Name = "matchupTournamentLogoBrowse";
+            this.matchupTournamentLogoBrowse.Size = new System.Drawing.Size(104, 23);
+            this.matchupTournamentLogoBrowse.TabIndex = 5;
+            this.matchupTournamentLogoBrowse.Text = "Tournament Logo";
+            this.matchupTournamentLogoBrowse.UseVisualStyleBackColor = true;
+            this.matchupTournamentLogoBrowse.Click += new System.EventHandler(this.matchupTournamentLogoBrowse_Click);
+            // 
+            // matchupBGPictureBrowseBtn
+            // 
+            this.matchupBGPictureBrowseBtn.Location = new System.Drawing.Point(14, 105);
+            this.matchupBGPictureBrowseBtn.Name = "matchupBGPictureBrowseBtn";
+            this.matchupBGPictureBrowseBtn.Size = new System.Drawing.Size(104, 23);
+            this.matchupBGPictureBrowseBtn.TabIndex = 4;
+            this.matchupBGPictureBrowseBtn.Text = "BG Picture Browse";
+            this.matchupBGPictureBrowseBtn.UseVisualStyleBackColor = true;
+            this.matchupBGPictureBrowseBtn.Click += new System.EventHandler(this.matchupBGPictureBrowseBtn_Click);
+            // 
             // matchupPicListView
             // 
             this.matchupPicListView.FormattingEnabled = true;
@@ -1265,33 +1295,16 @@
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
             // 
-            // matchupBGPictureBrowseBtn
+            // clearSinglesScoresBtn
             // 
-            this.matchupBGPictureBrowseBtn.Location = new System.Drawing.Point(14, 105);
-            this.matchupBGPictureBrowseBtn.Name = "matchupBGPictureBrowseBtn";
-            this.matchupBGPictureBrowseBtn.Size = new System.Drawing.Size(104, 23);
-            this.matchupBGPictureBrowseBtn.TabIndex = 4;
-            this.matchupBGPictureBrowseBtn.Text = "BG Picture Browse";
-            this.matchupBGPictureBrowseBtn.UseVisualStyleBackColor = true;
-            this.matchupBGPictureBrowseBtn.Click += new System.EventHandler(this.matchupBGPictureBrowseBtn_Click);
-            // 
-            // matchupTournamentLogoBrowse
-            // 
-            this.matchupTournamentLogoBrowse.Location = new System.Drawing.Point(124, 105);
-            this.matchupTournamentLogoBrowse.Name = "matchupTournamentLogoBrowse";
-            this.matchupTournamentLogoBrowse.Size = new System.Drawing.Size(104, 23);
-            this.matchupTournamentLogoBrowse.TabIndex = 5;
-            this.matchupTournamentLogoBrowse.Text = "Tournament Logo";
-            this.matchupTournamentLogoBrowse.UseVisualStyleBackColor = true;
-            this.matchupTournamentLogoBrowse.Click += new System.EventHandler(this.matchupTournamentLogoBrowse_Click);
-            // 
-            // selectedMatchupFileLabel
-            // 
-            this.selectedMatchupFileLabel.AutoSize = true;
-            this.selectedMatchupFileLabel.Location = new System.Drawing.Point(14, 132);
-            this.selectedMatchupFileLabel.Name = "selectedMatchupFileLabel";
-            this.selectedMatchupFileLabel.Size = new System.Drawing.Size(0, 13);
-            this.selectedMatchupFileLabel.TabIndex = 6;
+            this.clearSinglesScoresBtn.Location = new System.Drawing.Point(6, 199);
+            this.clearSinglesScoresBtn.Name = "clearSinglesScoresBtn";
+            this.clearSinglesScoresBtn.Size = new System.Drawing.Size(88, 23);
+            this.clearSinglesScoresBtn.TabIndex = 28;
+            this.clearSinglesScoresBtn.Text = "Clear Scores";
+            this.clearSinglesScoresBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.clearSinglesScoresBtn.UseVisualStyleBackColor = true;
+            this.clearSinglesScoresBtn.Click += new System.EventHandler(this.clearSinglesScoresBtn_Click);
             // 
             // SmashOverlayGenerator
             // 
@@ -1449,6 +1462,7 @@
         private System.Windows.Forms.Button matchupTournamentLogoBrowse;
         private System.Windows.Forms.Button matchupBGPictureBrowseBtn;
         private System.Windows.Forms.Label selectedMatchupFileLabel;
+        private System.Windows.Forms.Button clearSinglesScoresBtn;
 
 
     }
