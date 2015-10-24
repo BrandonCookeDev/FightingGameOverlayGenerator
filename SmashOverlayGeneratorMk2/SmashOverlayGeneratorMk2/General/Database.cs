@@ -60,7 +60,8 @@ namespace SmashOverlayGeneratorMk2.General
                 "Player1CamPointX int, Player1CamPointY int," +
                 "Player2CamPointX int, Player2CamPointY int," +
                 "Player1ScorePointX int, Player1ScorePointY int," +
-                "Player2ScorePointX int, Player2ScorePointY int)";
+                "Player2ScorePointX int, Player2ScorePointY int," +
+                "DatePointX int, DatePointY int, Options varchar(400))";
             SQLiteCommand cmd = new SQLiteCommand(createCompTblQry, conn);
             try
             {
@@ -82,29 +83,42 @@ namespace SmashOverlayGeneratorMk2.General
                 "INSERT INTO tbl_CompetitorTemplates " +
                 "(FileName,TournamentPointX,TournamentPointY,RoundPointX,RoundPointY,Player1PointX,Player1PointY,"+
                 "Player2PointX, Player2PointY, Player1CamPointX, Player1CamPointY, Player2CamPointX, Player2CamPointY,"+
-                "Player1ScorePointX, Player1ScorePointY, Player2ScorePointX, Player2ScorePointY)";
+                "Player1ScorePointX, Player1ScorePointY, Player2ScorePointX, Player2ScorePointY, DatePointX, DatePointY)";
 
             string initialFillQry1 =
                 competitorInsert + " VALUES " +
-                "('FireOverlayNew.png',900,25,0,0,501,1063,976,1063,1686,364,1686,730,680,1030,800,1030);";
+                "('FireOverlayNew.png',900,25,0,0,501,1063,976,1063,1686,364,1686,730,680,1030,800,1030, 0, 0);";
             string initialFillQry2 = 
                 competitorInsert + " VALUES "+
-                "('FlashbackOverlayRedux.png',1000,1050,685,75,100,35,1270,35,1635,280,1635,585,580,45,790,45);";
+                "('FlashbackOverlayRedux.png',1340,1033,685,75,100,35,1270,35,1635,280,1635,585,580,45,790,45,30,1033);";
+            string initialFillQry3 =
+                competitorInsert + " VALUES " +
+                "('FlashbackOverlayRedux2.png',1340,1033,685,75,100,35,1270,35,1635,280,1635,585,580,45,790,45,30,1033);";
             SQLiteCommand cmd1 = new SQLiteCommand(initialFillQry1, conn);
             SQLiteCommand cmd2 = new SQLiteCommand(initialFillQry2, conn);
+            SQLiteCommand cmd3 = new SQLiteCommand(initialFillQry3, conn);
+            
+            DBOpen();
             try
             {
-                DBOpen();
                 cmd1.ExecuteNonQuery();
-                cmd2.ExecuteNonQuery();
-                DBClose();
-                return true;
             }
-            catch (Exception ex)
+            catch {}
+            
+            try
             {
-                DBClose();
-                return false;
+                cmd2.ExecuteNonQuery();
             }
+            catch {}
+            
+            try
+            {
+                cmd3.ExecuteNonQuery();
+            } 
+            catch {}
+            DBClose();
+            return true;
+            
 
         }
 
@@ -176,6 +190,8 @@ namespace SmashOverlayGeneratorMk2.General
                     int p1spy = cur.GetInt32(14);
                     int p2spx = cur.GetInt32(15);
                     int p2spy = cur.GetInt32(16);
+                    int dpx = cur.GetInt32(17);
+                    int dpy = cur.GetInt32(18);
 
                     CompetitorPoint player1pt = new CompetitorPoint(p1px, p1py);
                     CompetitorPoint player2pt = new CompetitorPoint(p2px, p2py);
@@ -185,10 +201,10 @@ namespace SmashOverlayGeneratorMk2.General
                     ScorePoint score2pt = new ScorePoint(p2spx, p2spy);
                     RoundPoint roundpt =  new RoundPoint(rpx, rpy);
                     TournamentPoint tourneypt = new TournamentPoint(tpx,tpy);
-
+                    DatePoint datePoint = new DatePoint(dpx, dpy);
 
                     DBClose();
-                    return new CompetitorTemplate(name, player1pt, player2pt, player1CamPt, player2CamPt, score1pt, score2pt, roundpt, tourneypt);
+                    return new CompetitorTemplate(name, player1pt, player2pt, player1CamPt, player2CamPt, score1pt, score2pt, roundpt, tourneypt, datePoint);
                 }
                 return null;
 

@@ -20,6 +20,7 @@ namespace SmashOverlayGeneratorMk2.Objects
         private ScorePoint score2Point;
         private RoundPoint roundPoint;
         private TournamentPoint tournamentNameRoundPoint;
+        private DatePoint datePoint;
         
         //DETERMINE FONT SIZE
         private Font name1Font;
@@ -126,6 +127,47 @@ namespace SmashOverlayGeneratorMk2.Objects
             this.roundPoint = round;
             this.tournamentNameRoundPoint = tournamentNameRound;
         }
+
+        public CompetitorTemplate(string filePath,
+                                 CompetitorPoint competitor1,
+                                 CompetitorPoint competitor2,
+                                 CompetitorPoint competitor1Webcam,
+                                 CompetitorPoint competitor2Webcam,
+                                 ScorePoint score1, ScorePoint score2,
+                                 RoundPoint round,
+                                 TournamentPoint tournamentNameRound,
+                                 DatePoint datePoint)
+            : base(filePath)
+        {
+            if (competitor1 == null)
+                throw new Exception("Competitor Template: Competitor 1 must have a point on template");
+            if (competitor2 == null)
+                throw new Exception("Competitor Template: Competitor 2 must have a point on template");
+            if (competitor1Webcam == null)
+                throw new Exception("Competitor Template: Competitor 1's Webcam must have a point on template");
+            if (competitor2Webcam == null)
+                throw new Exception("Competitor Template: Competitor 2's Webcam must have a point on template");
+            if (score1 == null)
+                throw new Exception("Competitor Template: Score 1 must have a point on template");
+            if (score2 == null)
+                throw new Exception("Competitor Template: Score 2 must have a point on template");
+            if (round == null)
+                throw new Exception("Competitor Template: Round must have a point on template");
+            if (tournamentNameRound == null)
+                throw new Exception("Competitor Template: Tournament Name must have a point on template");
+            if (datePoint == null)
+                throw new Exception("Competitor Template: Date must have a point on template");
+
+            this.competitor1Point = competitor1;
+            this.competitor2Point = competitor2;
+            this.competitor1WebcamPoint = competitor1Webcam;
+            this.competitor2WebcamPoint = competitor2Webcam;
+            this.score1Point = score1;
+            this.score2Point = score2;
+            this.roundPoint = round;
+            this.tournamentNameRoundPoint = tournamentNameRound;
+            this.datePoint = datePoint;
+        }
         #endregion CONSTRUCTORS
 
         #region GETTERS AND SETTERS
@@ -177,6 +219,12 @@ namespace SmashOverlayGeneratorMk2.Objects
             set { this.tournamentNameRoundPoint = value; }
         }
 
+        public DatePoint DatePoint
+        {
+            get { return this.datePoint; }
+            set { this.datePoint = value; }
+        }
+
         public Font Name1Font
         {
             get { return this.name1Font; }
@@ -221,12 +269,16 @@ namespace SmashOverlayGeneratorMk2.Objects
             StringFormat roundFormat = new StringFormat();
             StringFormat player1Format = new StringFormat();
             StringFormat player2Format = new StringFormat();
+            StringFormat tourneyFormat = new StringFormat();
+            StringFormat dateFormat = new StringFormat();
 
             nameFormat.LineAlignment = StringAlignment.Center;
             nameFormat.Alignment = StringAlignment.Center;
             scoreFormat.Alignment = StringAlignment.Center;
             player1Format.Alignment = StringAlignment.Near;
             player2Format.Alignment = StringAlignment.Far;
+            tourneyFormat.Alignment = StringAlignment.Far;
+            dateFormat.Alignment = StringAlignment.Near;
 
             Bitmap image = base.getImage();
             Graphics g = Graphics.FromImage(image);
@@ -255,9 +307,12 @@ namespace SmashOverlayGeneratorMk2.Objects
             }
             else
             {
-                g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), nameFormat);
+                g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), tourneyFormat);
                 g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), nameFormat);
             }
+
+            if (DatePoint != null)
+                g.DrawString(form.CurrentDateTime.ToString("MMMM dd, yyyy"), TournamentFont, Brushes.White, DatePoint.getPoint(), dateFormat);
 
             return image;
         }

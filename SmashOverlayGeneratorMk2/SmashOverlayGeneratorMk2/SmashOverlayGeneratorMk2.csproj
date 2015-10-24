@@ -69,12 +69,14 @@
     <Compile Include="BackendOps\ScoreManager.cs" />
     <Compile Include="BMVersion\BMVersion.cs" />
     <Compile Include="ErrorHandling\ErrorHandler.cs" />
+    <Compile Include="General\Accessor.cs" />
     <Compile Include="General\Database.cs" />
     <Compile Include="General\GenFcns.cs" />
     <Compile Include="General\ListBoxFcns.cs" />
     <Compile Include="Objects\Points\CasterPoint.cs" />
     <Compile Include="Objects\Points\CharacterPoint.cs" />
     <Compile Include="Objects\Points\CompetitorPoint.cs" />
+    <Compile Include="Objects\Points\DatePoint.cs" />
     <Compile Include="Objects\Points\RoundPoint.cs" />
     <Compile Include="Objects\Points\ScorePoint.cs" />
     <Compile Include="Objects\Points\TemplatePoint.cs" />
@@ -143,6 +145,7 @@
     <None Include="Resources\fantasy-landscape-3d-wallpaper-9018-hd-widescreen-wallpapers.jpg" />
     <None Include="Resources\future-city.jpg" />
     <Content Include="Images\Templates\CrudeCityOverlay.png" />
+    <EmbeddedResource Include="Images\Templates\FlashbackOverlayRedux2.png" />
     <Content Include="Images\Templates\SpaceWarOverlay.png" />
     <Content Include="Images\Templates\SpaceSunriseOverlay.png" />
     <Content Include="Images\Templates\FlashbackOverlayPOC.png" />

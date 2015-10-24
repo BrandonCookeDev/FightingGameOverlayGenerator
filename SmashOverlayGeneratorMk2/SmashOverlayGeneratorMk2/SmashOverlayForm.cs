@@ -61,6 +61,7 @@ namespace SmashOverlayGeneratorMk2
         private bool isAutoUpdate;
         private ArrayList templates;
         private ArrayList casterTemplates;
+        private DateTime currentDateTime;
         private CompetitorTemplate selectedCompetitorTemplate;
 
         private string serviceUrl = "http://192.168.0.5:8081/SOGCS.svc";
@@ -85,6 +86,12 @@ namespace SmashOverlayGeneratorMk2
         {
             get { return this.selectedCompetitorTemplate; }
             set { this.selectedCompetitorTemplate = value; }
+        }
+
+        public DateTime CurrentDateTime
+        {
+            get { return this.currentDateTime; }
+            set { this.currentDateTime = value; }
         }
 
         public bool IsError
@@ -319,6 +326,7 @@ namespace SmashOverlayGeneratorMk2
         private void SmashOverlayGeneratorMk2_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
+            CurrentDateTime = DateTime.Now;
 
             greyOutDoubles(true);
             greyOutSingles(true);
@@ -403,6 +411,9 @@ namespace SmashOverlayGeneratorMk2
                 //MessageBox.Show("Connection was not made");
                 logToUser("Connection was not made", true);
             }
+
+            //SET THE ACCESSOR FOR THIS FORM
+            //accessor = new Accessor(this);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -1010,6 +1021,15 @@ namespace SmashOverlayGeneratorMk2
         #endregion Generate Button Listeners
 
         #region Clear Button Listeners
+        private void clearSinglesScoresBtn_Click(object sender, EventArgs e)
+        {
+            Score1 = "0";
+            Score2 = "0";
+            singlesP1ScoreTextbox.Text = Score1;
+            singlesP2ScoreTextbox.Text = Score2;
+            generate();
+        }
+
         private void singlesClearButton_Click_1(object sender, EventArgs e)
         {
             clearSinglesFields();
@@ -1319,28 +1339,10 @@ namespace SmashOverlayGeneratorMk2
                                 player1CamP, player2CamP, player1ScoreP,
                                 player2ScoreP, tournamentP);
             }
-            else if(TemplateFileName.Equals("FlashbackOverlayRedux.png"))
-            {
+            else{
                 cTemplate = SelectedCompetitorTemplate;
                 cTemplate.FilePath =
                     ListBoxFcns.getResourcePath(this.ProductName, "template", TemplateFileName);
-            }
-            else{
-                player1P = new CompetitorPoint(501, 1063);
-                player1CamP = new CompetitorPoint(1686, 354);
-
-                player2P = new CompetitorPoint(976, 1063);
-                player2CamP = new CompetitorPoint(1686, 720);
-
-                player1ScoreP = new ScorePoint(680, 1030);
-                player2ScoreP = new ScorePoint(800, 1030);
-
-                tournamentP = new TournamentPoint(900, 25);
-
-                cTemplate =
-                new CompetitorTemplate(fileName, player1P, player2P,
-                                player1CamP, player2CamP, player1ScoreP,
-                                player2ScoreP, tournamentP);
             }
             
             Bitmap image = cTemplate.drawTextOnImage(this, nameSwap);
@@ -1545,13 +1547,6 @@ namespace SmashOverlayGeneratorMk2
             getTournamentData();
         }
 
-        private void clearSinglesScoresBtn_Click(object sender, EventArgs e)
-        {
-            Score1 = "0";
-            Score2 = "0";
-            singlesP1ScoreTextbox.Text = Score1;
-            singlesP2ScoreTextbox.Text = Score2;
-            generate();
-        }
+        
     }    
 }
