@@ -227,7 +227,6 @@ namespace SmashOverlayGeneratorMk2.Objects
             scoreFormat.Alignment = StringAlignment.Center;
             player1Format.Alignment = StringAlignment.Near;
             player2Format.Alignment = StringAlignment.Far;
-            
 
             Bitmap image = base.getImage();
             Graphics g = Graphics.FromImage(image);

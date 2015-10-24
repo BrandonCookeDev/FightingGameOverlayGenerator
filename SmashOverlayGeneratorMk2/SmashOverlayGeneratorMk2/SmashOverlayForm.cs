@@ -61,6 +61,7 @@ namespace SmashOverlayGeneratorMk2
         private bool isAutoUpdate;
         private ArrayList templates;
         private ArrayList casterTemplates;
+        private CompetitorTemplate selectedCompetitorTemplate;
 
         private string serviceUrl = "http://192.168.0.5:8081/SOGCS.svc";
         public string overlayDirectory = @"C:\\OverlayGenerator";
@@ -79,6 +80,12 @@ namespace SmashOverlayGeneratorMk2
 
         /* GETTERS AND SETTERS */
         #region Getters and Setters
+
+        private CompetitorTemplate SelectedCompetitorTemplate
+        {
+            get { return this.selectedCompetitorTemplate; }
+            set { this.selectedCompetitorTemplate = value; }
+        }
 
         public bool IsError
         {
@@ -333,47 +340,48 @@ namespace SmashOverlayGeneratorMk2
                 Directory.CreateDirectory(@"C:\\OverlayGenerator");
             }
 
+            //DATABASE CREATION AND INITIALIZATION
+            try
+            {
+                string ret = Database.CreateDatabase();
+                logToUser(ret, false);
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
+
             if (File.Exists(overlayDirectory + "\\overlay.temp"))
             {
-                bool debug = true;
-                switch (MessageBox.Show(this, "Previous Tournament Info Exists! Import data?", "Import", MessageBoxButtons.YesNo))
+                //LOAD FILE INFO INTO GENERATOR
+                GenFcns.loadDataFile(this);
+                tournamentNameTextbox.Text = TournamentName;
+                tournamentRoundCombobox.SelectedItem = TournamentRound;
+                singlesP1Textbox.Text = Competitor1;
+                singlesP1ScoreTextbox.Text = Score1;
+                singlesP2Textbox.Text = Competitor2;
+                singlesP2ScoreTextbox.Text = Score2;
+                templateListView.SelectedItem = TemplateFileName;
+                switch (GameType)
                 {
-                    case DialogResult.Yes:
-                        //LOAD FILE INFO INTO GENERATOR
-                        GenFcns.loadDataFile(this);
-                        tournamentNameTextbox.Text = TournamentName;
-                        tournamentRoundCombobox.SelectedItem = TournamentRound;
-                        singlesP1Textbox.Text = Competitor1;
-                        singlesP1ScoreTextbox.Text = Score1;
-                        singlesP2Textbox.Text = Competitor2;
-                        singlesP2ScoreTextbox.Text = Score2;
-                        templateListView.SelectedItem = TemplateFileName;
-                        switch (GameType)
-                        {
-                            case "singles":
-                                greyOutSingles(false);
-                                greyOutDoubles(true);
-                                break;
-                            default:
-                                greyOutSingles(true);
-                                greyOutDoubles(false);
-                                break;
-                        }
-
-                        if (debug)
-                        {
-                            matchupCompetitor1Textbox.Text = MatchupCompetitor1;
-                            matchupCompetitor2Textbox.Text = MatchupCompetitor2;
-                            matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
-                            matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
-                            matchupPicListView.SelectedItem = MatchupPicFileName;
-                        }
-
+                    case "singles":
+                        greyOutSingles(false);
+                        greyOutDoubles(true);
                         break;
                     default:
+                        greyOutSingles(true);
+                        greyOutDoubles(false);
                         break;
                 }
+
+                matchupCompetitor1Textbox.Text = MatchupCompetitor1;
+                matchupCompetitor2Textbox.Text = MatchupCompetitor2;
+                matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
+                matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
+                matchupPicListView.SelectedItem = MatchupPicFileName;
             }
+
+            
 
             //ATTEMPT TO CONNECT TO RUNNING SMASH OVERLAY GENERATOR WEB SERVICE
             try
@@ -445,7 +453,7 @@ namespace SmashOverlayGeneratorMk2
 
             ResourceType = resourceType;
             
-            hardcodedCompetitorTemplate(resourceType, filePath, nameSwap);
+            generateCompetitorTemplate(resourceType, filePath, nameSwap);
             logToUser("Completed without error...", false);
         }
 
@@ -719,6 +727,8 @@ namespace SmashOverlayGeneratorMk2
 
                 string imageFilePath = TemplateFile;
                 ListBoxFcns.changePictureInBox(myAssembly, templatePictureBox, imageFilePath);
+
+                SelectedCompetitorTemplate = Database.GetCompTemplate(TemplateFileName);
             }
             catch (Exception ex)
             {
@@ -816,8 +826,6 @@ namespace SmashOverlayGeneratorMk2
                 logToUser(ex.Message.ToString(), true);
             }
         }
-
-        
 
         #region Score Management
         private void incrementPlayer1()
@@ -1279,9 +1287,11 @@ namespace SmashOverlayGeneratorMk2
             return cTemplate;
         }
 
-        private CompetitorTemplate hardcodedCompetitorTemplate(string resourceType, 
+        private CompetitorTemplate generateCompetitorTemplate(string resourceType, 
                                                            string fileName, bool nameSwap)
         {
+
+
             CompetitorPoint player1P = null;
             CompetitorPoint player1CamP = null;
             CompetitorPoint player2P = null;
@@ -1311,23 +1321,9 @@ namespace SmashOverlayGeneratorMk2
             }
             else if(TemplateFileName.Equals("FlashbackOverlayRedux.png"))
             {
-                int yFixed = 40;
-
-                player1P = new CompetitorPoint(100, yFixed-5);
-                player2P = new CompetitorPoint(1270, yFixed-5);
-
-                player1CamP = new CompetitorPoint(1635, 280);
-                player2CamP = new CompetitorPoint(1625, 585);
-
-                player1ScoreP = new ScorePoint(580, yFixed+5);
-                player2ScoreP = new ScorePoint(790, yFixed+5);
-
-                roundP = new RoundPoint(685, yFixed+35);
-                tournamentP = new TournamentPoint(1000, 1050);
-                cTemplate =
-                new CompetitorTemplate(fileName, player1P, player2P,
-                                player1CamP, player2CamP, player1ScoreP,
-                                player2ScoreP, roundP, tournamentP);
+                cTemplate = SelectedCompetitorTemplate;
+                cTemplate.FilePath =
+                    ListBoxFcns.getResourcePath(this.ProductName, "template", TemplateFileName);
             }
             else{
                 player1P = new CompetitorPoint(501, 1063);
