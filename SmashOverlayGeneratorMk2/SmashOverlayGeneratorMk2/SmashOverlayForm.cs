@@ -351,7 +351,7 @@ namespace SmashOverlayGeneratorMk2
             //DATABASE CREATION AND INITIALIZATION
             try
             {
-                string ret = Database.CreateDatabase();
+                string ret = Database.CreateDatabase(this.ProductName);
                 logToUser(ret, false);
             }
             catch (Exception ex)
@@ -436,6 +436,8 @@ namespace SmashOverlayGeneratorMk2
                     catch (Exception ex) { }
                     break;
             }
+
+            Database.CopyDBToProjDir();
         }
         #endregion LOADCLOSEFORM
 

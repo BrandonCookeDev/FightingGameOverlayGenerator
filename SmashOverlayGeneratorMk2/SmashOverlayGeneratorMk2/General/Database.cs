@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Data.SQLite;
+using System.Reflection;
+using SmashOverlayGeneratorMk2.General;
 using SmashOverlayGeneratorMk2.Objects;
 using SmashOverlayGeneratorMk2.Objects.Points;
 
@@ -15,10 +17,10 @@ namespace SmashOverlayGeneratorMk2.General
         private static string dbPath;
         private static SQLiteConnection conn;
 
-        public static string CreateDatabase()
+        public static string CreateDatabase(string productName)
         {
             string retStr = "";
-            dataDir = @"C:\OverlayGenerator\Data";
+            dataDir = @"C:\OverlayGenerator\Data"; 
             dbPath  = @"C:\OverlayGenerator\Data\Generator.sqlite";
 
             if(!Directory.Exists(dataDir))
@@ -27,24 +29,32 @@ namespace SmashOverlayGeneratorMk2.General
             }
             if (!File.Exists(dbPath))
             {
-                SQLiteConnection.CreateFile(dbPath);
-                if(conn == null)
-                    GetConnection();
-                
+                string dbFile = ListBoxFcns.getResourcePath(productName, "database", "Generator.sqlite");
+                if (dbFile != null)
+                {
+                    Stream dbStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(dbFile);
+                    FileStream outStream = new FileStream(@"C:\OverlayGenerator\Data\Generator.sqlite", FileMode.Create);
+                    for (int i = 0; i < dbStream.Length; i++)
+                    {
+                        outStream.WriteByte((byte)dbStream .ReadByte());
+                    }
+                }
+                else
+                {
+                    SQLiteConnection.CreateFile(dbPath);
+                    if (conn == null)
+                        GetConnection();
+                    bool create = CreateTables();
+                    if (create) retStr += "DB Successfully Created\r\n";
+                    else retStr += "DB Creation Failed\r\n";
+                    bool initialInsert = InitialFillData();
+                    if (initialInsert) retStr += "DB Successfully Filled\r\n";
+                    else retStr += "DB Failed Initial Data Fill\r\n";              
+                }                
             }
             
             if(conn == null)
                 GetConnection();
-
-            bool create = CreateTables();
-            if (create) retStr += "DB Successfully Created\r\n";
-            else retStr += "DB Creation Failed\r\n";
-              
-            bool initialInsert = InitialFillData();
-
-            if (initialInsert) retStr += "DB Successfully Filled\r\n";
-            else retStr += "DB Failed Initial Data Fill\r\n";
-
             return retStr;
         }
 
@@ -247,6 +257,19 @@ namespace SmashOverlayGeneratorMk2.General
         public static void DBClose()
         {
             conn.Close();
+        }
+
+        public static void CopyDBToProjDir()
+        {
+            bool debug = true;
+            if (debug)
+            {
+                if (Directory.Exists(dataDir))
+                {
+                    if (File.Exists(dbPath))
+                        File.Copy(dbPath, @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite", true);
+                }
+            }
         }
     }
 }
