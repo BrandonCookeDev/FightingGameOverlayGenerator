@@ -11,7 +11,8 @@
     <RootNamespace>SmashOverlayGeneratorMk2</RootNamespace>
     <AssemblyName>SmashOverlayGeneratorMk2</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -123,6 +124,7 @@
     <EmbeddedResource Include="Fonts\EARTHQUAKE.TTF" />
     <EmbeddedResource Include="Fonts\FLAPHEAD.TTF" />
     <EmbeddedResource Include="Fonts\zekton rg.ttf" />
+    <None Include="app.config" />
     <None Include="Images\Characters\SmashRenders\Thumbs.db" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

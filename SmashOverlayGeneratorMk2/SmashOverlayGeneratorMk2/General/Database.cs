@@ -83,17 +83,34 @@ namespace SmashOverlayGeneratorMk2.General
                 "INSERT INTO tbl_CompetitorTemplates " +
                 "(FileName,TournamentPointX,TournamentPointY,RoundPointX,RoundPointY,Player1PointX,Player1PointY,"+
                 "Player2PointX, Player2PointY, Player1CamPointX, Player1CamPointY, Player2CamPointX, Player2CamPointY,"+
-                "Player1ScorePointX, Player1ScorePointY, Player2ScorePointX, Player2ScorePointY, DatePointX, DatePointY)";
+                "Player1ScorePointX, Player1ScorePointY, Player2ScorePointX, Player2ScorePointY, DatePointX, DatePointY, Options)";
+            string opt1 = "'nameFormat:Center," +
+                    "scoreFormat:Center," +
+                    "roundFormat:Center," +
+                    "player1Format:Near," +
+                    "player2Format:Far," +
+                    "tourneyFormat:Far," +
+                    "dateFormat:Near," +
+                    "Color:White,'";
+            string opt2 = "'nameFormat:Center," +
+                    "scoreFormat:Center," +
+                    "roundFormat:Center," +
+                    "player1Format:Center," +
+                    "player2Format:Center," +
+                    "tourneyFormat:Center," +
+                    "dateFormat:Center," +
+                    "Color:White,'";
+
 
             string initialFillQry1 =
                 competitorInsert + " VALUES " +
-                "('FireOverlayNew.png',900,25,0,0,501,1063,976,1063,1686,364,1686,730,680,1030,800,1030, 0, 0);";
+                "('FireOverlayNew.png',900,25,0,0,501,1063,976,1063,1686,364,1686,730,680,1030,800,1030, 0, 0, "+opt2+");";
             string initialFillQry2 = 
                 competitorInsert + " VALUES "+
-                "('FlashbackOverlayRedux.png',1340,1033,685,75,100,35,1270,35,1635,280,1635,585,580,45,790,45,30,1033);";
+                "('FlashbackOverlayRedux.png',1340,1033,685,45,100,35,1270,35,1635,265,1635,568,580,45,790,45,30,1033,"+opt1+");";
             string initialFillQry3 =
                 competitorInsert + " VALUES " +
-                "('FlashbackOverlayRedux2.png',1340,1033,685,75,100,35,1270,35,1635,280,1635,585,580,45,790,45,30,1033);";
+                "('FlashbackOverlayRedux2.png',1340,1033,685,45,100,35,1270,35,1635,265,1635,568,580,45,790,45,30,1033,"+opt1+");";
             SQLiteCommand cmd1 = new SQLiteCommand(initialFillQry1, conn);
             SQLiteCommand cmd2 = new SQLiteCommand(initialFillQry2, conn);
             SQLiteCommand cmd3 = new SQLiteCommand(initialFillQry3, conn);
@@ -103,19 +120,19 @@ namespace SmashOverlayGeneratorMk2.General
             {
                 cmd1.ExecuteNonQuery();
             }
-            catch {}
+            catch (Exception e) { string msg = e.Message; }
             
             try
             {
                 cmd2.ExecuteNonQuery();
             }
-            catch {}
+            catch (Exception e) { string msg = e.Message; }
             
             try
             {
                 cmd3.ExecuteNonQuery();
-            } 
-            catch {}
+            }
+            catch (Exception e) { string msg = e.Message; }
             DBClose();
             return true;
             
@@ -192,6 +209,7 @@ namespace SmashOverlayGeneratorMk2.General
                     int p2spy = cur.GetInt32(16);
                     int dpx = cur.GetInt32(17);
                     int dpy = cur.GetInt32(18);
+                    string opt = cur.GetString(19);
 
                     CompetitorPoint player1pt = new CompetitorPoint(p1px, p1py);
                     CompetitorPoint player2pt = new CompetitorPoint(p2px, p2py);
@@ -204,7 +222,7 @@ namespace SmashOverlayGeneratorMk2.General
                     DatePoint datePoint = new DatePoint(dpx, dpy);
 
                     DBClose();
-                    return new CompetitorTemplate(name, player1pt, player2pt, player1CamPt, player2CamPt, score1pt, score2pt, roundpt, tourneypt, datePoint);
+                    return new CompetitorTemplate(name, player1pt, player2pt, player1CamPt, player2CamPt, score1pt, score2pt, roundpt, tourneypt, datePoint, opt);
                 }
                 return null;
 

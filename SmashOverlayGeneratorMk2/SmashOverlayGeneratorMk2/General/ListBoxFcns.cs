@@ -16,7 +16,7 @@ namespace SmashOverlayGeneratorMk2.General
         public static void showPicturePreviewForm(Image image)
         {
             PicturePreviewForm picturePreviewForm = new PicturePreviewForm(image);
-            picturePreviewForm.Location = new Point(500, 100);
+            picturePreviewForm.Location = new Point(1000, 100);
             picturePreviewForm.Show();
         }
 

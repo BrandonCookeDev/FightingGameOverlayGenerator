@@ -48,3 +48,5 @@ C:\OverlayGenerator\SmashOverlayGeneratorMk2.exe
 C:\OverlayGenerator\SmashOverlayGeneratorMk2.pdb
 C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.exe
 C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.pdb
+C:\OverlayGenerator\SmashOverlayGeneratorMk2.exe.config
+C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\SmashOverlayGeneratorMk2\obj\x86\Release\SmashOverlayGeneratorMk2.csprojResolveAssemblyReference.cache

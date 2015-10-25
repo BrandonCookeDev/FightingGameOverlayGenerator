@@ -740,6 +740,55 @@ namespace SmashOverlayGeneratorMk2
                 ListBoxFcns.changePictureInBox(myAssembly, templatePictureBox, imageFilePath);
 
                 SelectedCompetitorTemplate = Database.GetCompTemplate(TemplateFileName);
+                string[] opts = SelectedCompetitorTemplate.Options.Split(',');
+                foreach (string s in opts)
+                {
+                    if (!GenFcns.isNullOrEmpty(s))
+                    {
+                        StringFormat format = new StringFormat();
+                        string[] current = s.Split(':');
+                        switch (current[1])
+                        {
+                            case "Center":
+                                format.Alignment = StringAlignment.Center;
+                                break;
+                            case "Near":
+                                format.Alignment = StringAlignment.Near;
+                                break;
+                            case "Far":
+                                format.Alignment = StringAlignment.Far;
+                                break;
+                            default:
+                                continue;
+                        };
+                        switch (current[0])
+                        {
+                            case "nameFormat":
+                                SelectedCompetitorTemplate.NameFormat = format;
+                                break;
+                            case "scoreFormat":
+                                SelectedCompetitorTemplate.ScoreFormat = format;
+                                break;
+                            case "roundFormat":
+                                SelectedCompetitorTemplate.RoundFormat = format;
+                                break;
+                            case "player1Format":
+                                SelectedCompetitorTemplate.Player1Format = format;
+                                break;
+                            case "player2Format":
+                                SelectedCompetitorTemplate.Player2Format = format;
+                                break;
+                            case "tourneyFormat":
+                                SelectedCompetitorTemplate.TourneyFormat = format;
+                                break;
+                            case "dateFormat":
+                                SelectedCompetitorTemplate.DateFormat = format;
+                                break;
+                            default:
+                                continue; 
+                        };
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1310,40 +1359,20 @@ namespace SmashOverlayGeneratorMk2
         private CompetitorTemplate generateCompetitorTemplate(string resourceType, 
                                                            string fileName, bool nameSwap)
         {
-
-
-            CompetitorPoint player1P = null;
-            CompetitorPoint player1CamP = null;
-            CompetitorPoint player2P = null;
-            CompetitorPoint player2CamP = null;
-            ScorePoint player1ScoreP = null;
-            ScorePoint player2ScoreP = null;
-            RoundPoint roundP = null;
-            TournamentPoint tournamentP = null;
+            StringFormat nameFormat = new StringFormat();
+            StringFormat scoreFormat = new StringFormat();
+            StringFormat roundFormat = new StringFormat();
+            StringFormat player1Format = new StringFormat();
+            StringFormat player2Format = new StringFormat();
+            StringFormat tourneyFormat = new StringFormat();
+            StringFormat dateFormat = new StringFormat();
 
             CompetitorTemplate cTemplate;
+            cTemplate = SelectedCompetitorTemplate;
+            cTemplate.FilePath =
+                ListBoxFcns.getResourcePath(this.ProductName, "template", TemplateFileName);
 
-            if(TemplateFileName.Equals("FireOverlayNew.png")){
-                player1P = new CompetitorPoint(501, 1063);
-                player1CamP = new CompetitorPoint(1686, 364);
-
-                player2P = new CompetitorPoint(976, 1063);
-                player2CamP = new CompetitorPoint(1686, 730);
-
-                player1ScoreP = new ScorePoint(680, 1030);
-                player2ScoreP = new ScorePoint(800, 1030);
-
-                tournamentP = new TournamentPoint(900, 25);
-                cTemplate =
-                new CompetitorTemplate(fileName, player1P, player2P,
-                                player1CamP, player2CamP, player1ScoreP,
-                                player2ScoreP, tournamentP);
-            }
-            else{
-                cTemplate = SelectedCompetitorTemplate;
-                cTemplate.FilePath =
-                    ListBoxFcns.getResourcePath(this.ProductName, "template", TemplateFileName);
-            }
+            
             
             Bitmap image = cTemplate.drawTextOnImage(this, nameSwap);
             cTemplate.saveImage(image);

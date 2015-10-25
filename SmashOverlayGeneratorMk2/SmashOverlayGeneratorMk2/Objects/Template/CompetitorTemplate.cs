@@ -12,6 +12,7 @@ namespace SmashOverlayGeneratorMk2.Objects
     class CompetitorTemplate : Template
     {
         #region GLOBAL VARIABLES
+        
         private CompetitorPoint competitor1Point;
         private CompetitorPoint competitor2Point;
         private CompetitorPoint competitor1WebcamPoint;
@@ -21,6 +22,7 @@ namespace SmashOverlayGeneratorMk2.Objects
         private RoundPoint roundPoint;
         private TournamentPoint tournamentNameRoundPoint;
         private DatePoint datePoint;
+        private string options;
         
         //DETERMINE FONT SIZE
         private Font name1Font;
@@ -28,6 +30,13 @@ namespace SmashOverlayGeneratorMk2.Objects
         private Font scoreFont;
         private Font roundFont;
         private Font tournmentFont;
+        private StringFormat nameFormat = new StringFormat();
+        private StringFormat scoreFormat = new StringFormat();
+        private StringFormat roundFormat = new StringFormat();
+        private StringFormat player1Format = new StringFormat();
+        private StringFormat player2Format = new StringFormat();
+        private StringFormat tourneyFormat = new StringFormat();
+        private StringFormat dateFormat = new StringFormat();
         #endregion GLOBAL VARIABLES
 
         #region CONSTRUCTORS
@@ -168,9 +177,96 @@ namespace SmashOverlayGeneratorMk2.Objects
             this.tournamentNameRoundPoint = tournamentNameRound;
             this.datePoint = datePoint;
         }
+
+        public CompetitorTemplate(string filePath,
+                                 CompetitorPoint competitor1,
+                                 CompetitorPoint competitor2,
+                                 CompetitorPoint competitor1Webcam,
+                                 CompetitorPoint competitor2Webcam,
+                                 ScorePoint score1, ScorePoint score2,
+                                 RoundPoint round,
+                                 TournamentPoint tournamentNameRound,
+                                 DatePoint datePoint,
+                                 string options)
+            : base(filePath)
+        {
+            if (competitor1 == null)
+                throw new Exception("Competitor Template: Competitor 1 must have a point on template");
+            if (competitor2 == null)
+                throw new Exception("Competitor Template: Competitor 2 must have a point on template");
+            if (competitor1Webcam == null)
+                throw new Exception("Competitor Template: Competitor 1's Webcam must have a point on template");
+            if (competitor2Webcam == null)
+                throw new Exception("Competitor Template: Competitor 2's Webcam must have a point on template");
+            if (score1 == null)
+                throw new Exception("Competitor Template: Score 1 must have a point on template");
+            if (score2 == null)
+                throw new Exception("Competitor Template: Score 2 must have a point on template");
+            if (round == null)
+                throw new Exception("Competitor Template: Round must have a point on template");
+            if (tournamentNameRound == null)
+                throw new Exception("Competitor Template: Tournament Name must have a point on template");
+            if (datePoint == null)
+                throw new Exception("Competitor Template: Date must have a point on template");
+            if (GenFcns.isNullOrEmpty(options))
+                throw new Exception("Options cannot be empty");
+
+            this.competitor1Point = competitor1;
+            this.competitor2Point = competitor2;
+            this.competitor1WebcamPoint = competitor1Webcam;
+            this.competitor2WebcamPoint = competitor2Webcam;
+            this.score1Point = score1;
+            this.score2Point = score2;
+            this.roundPoint = round;
+            this.tournamentNameRoundPoint = tournamentNameRound;
+            this.datePoint = datePoint;
+            this.options = options;
+        }
         #endregion CONSTRUCTORS
 
         #region GETTERS AND SETTERS
+        public StringFormat NameFormat
+        {
+            get { return this.nameFormat; }
+            set { this.nameFormat = value; }
+        }
+
+        public StringFormat ScoreFormat
+        {
+            get { return this.scoreFormat; }
+            set { this.scoreFormat = value; }
+        }
+
+        public StringFormat RoundFormat
+        {
+            get { return this.roundFormat; }
+            set { this.roundFormat = value; }
+        }
+
+        public StringFormat Player1Format
+        {
+            get { return this.player1Format; }
+            set { this.player1Format = value; }
+        }
+
+        public StringFormat Player2Format
+        {
+            get { return this.player2Format; }
+            set { this.player2Format = value; }
+        }
+
+        public StringFormat TourneyFormat
+        {
+            get { return this.tourneyFormat; }
+            set { this.tourneyFormat = value; }
+        }
+
+        public StringFormat DateFormat
+        {
+            get { return this.dateFormat; }
+            set { this.dateFormat = value; }
+        }
+
         public CompetitorPoint Competitor1Point
         {
             get { return this.competitor1Point; }
@@ -219,6 +315,12 @@ namespace SmashOverlayGeneratorMk2.Objects
             set { this.tournamentNameRoundPoint = value; }
         }
 
+        public string Options
+        {
+            get { return this.options; }
+            set { this.options = value; }
+        }
+
         public DatePoint DatePoint
         {
             get { return this.datePoint; }
@@ -261,58 +363,41 @@ namespace SmashOverlayGeneratorMk2.Objects
 
         public Bitmap drawTextOnImage(SmashOverlayGenerator form, bool swap)
         {
-            setFontSizes(form.ResourceType, form.Competitor1, form.Competitor2);
-
-            //CENTER NAME TEXT
-            StringFormat nameFormat = new StringFormat();
-            StringFormat scoreFormat = new StringFormat();
-            StringFormat roundFormat = new StringFormat();
-            StringFormat player1Format = new StringFormat();
-            StringFormat player2Format = new StringFormat();
-            StringFormat tourneyFormat = new StringFormat();
-            StringFormat dateFormat = new StringFormat();
-
-            nameFormat.LineAlignment = StringAlignment.Center;
-            nameFormat.Alignment = StringAlignment.Center;
-            scoreFormat.Alignment = StringAlignment.Center;
-            player1Format.Alignment = StringAlignment.Near;
-            player2Format.Alignment = StringAlignment.Far;
-            tourneyFormat.Alignment = StringAlignment.Far;
-            dateFormat.Alignment = StringAlignment.Near;
+            setFontSizes(form.ResourceType, form.Competitor1, form.Competitor2);            
 
             Bitmap image = base.getImage();
             Graphics g = Graphics.FromImage(image);
 
             if (!swap)
             {
-                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), player1Format);
-                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2Point.getPoint(), player2Format);
-                g.DrawString(form.Score1, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
-                g.DrawString(form.Score2, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
+                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), Player1Format);
+                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2Point.getPoint(), Player2Format);
+                g.DrawString(form.Score1, ScoreFont, Brushes.White, Score1Point.getPoint(), ScoreFormat);
+                g.DrawString(form.Score2, ScoreFont, Brushes.White, Score2Point.getPoint(), ScoreFormat);
             }
             else
             {
-                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor2Point.getPoint(), player2Format);
-                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor1Point.getPoint(), player1Format);
-                g.DrawString(form.Score1, ScoreFont, Brushes.White, Score2Point.getPoint(), scoreFormat);
-                g.DrawString(form.Score2, ScoreFont, Brushes.White, Score1Point.getPoint(), scoreFormat);
+                g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor2Point.getPoint(), Player2Format);
+                g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor1Point.getPoint(), Player1Format);
+                g.DrawString(form.Score1, ScoreFont, Brushes.White, Score2Point.getPoint(), ScoreFormat);
+                g.DrawString(form.Score2, ScoreFont, Brushes.White, Score1Point.getPoint(), ScoreFormat);
             }      
-            g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), nameFormat);
-            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), nameFormat);
+            g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), NameFormat);
+            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), NameFormat);
 
             if (RoundPoint == null)
             {
                 g.DrawString(form.TournamentName + " | " + form.TournamentRound,
-                    TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), nameFormat);
+                    TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), NameFormat);
             }
             else
             {
-                g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), tourneyFormat);
-                g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), nameFormat);
+                g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), TourneyFormat);
+                g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), NameFormat);
             }
 
             if (DatePoint != null)
-                g.DrawString(form.CurrentDateTime.ToString("MMMM dd, yyyy"), TournamentFont, Brushes.White, DatePoint.getPoint(), dateFormat);
+                g.DrawString(form.CurrentDateTime.ToString("MMMM dd, yyyy"), TournamentFont, Brushes.White, DatePoint.getPoint(), DateFormat);
 
             return image;
         }
