@@ -58,96 +58,7 @@ namespace SmashOverlayGeneratorMk2.General
             return retStr;
         }
 
-        public static bool CreateTables()
-        {
-            string createCompTblQry =
-                "CREATE TABLE IF NOT EXISTS tbl_CompetitorTemplates(" +
-                "FileName varchar(400) PRIMARY KEY," +
-                "TournamentPointX int, TournamentPointY int," +
-                "RoundPointX int, RoundPointY int," +
-                "Player1PointX int, Player1PointY int," +
-                "Player2PointX int, Player2PointY int," +
-                "Player1CamPointX int, Player1CamPointY int," +
-                "Player2CamPointX int, Player2CamPointY int," +
-                "Player1ScorePointX int, Player1ScorePointY int," +
-                "Player2ScorePointX int, Player2ScorePointY int," +
-                "DatePointX int, DatePointY int, Options varchar(400))";
-            SQLiteCommand cmd = new SQLiteCommand(createCompTblQry, conn);
-            try
-            {
-                DBOpen();
-                cmd.ExecuteNonQuery();
-                DBClose();
-                return true;
-            }
-            catch (Exception e)
-            {
-                DBClose();
-                return false;
-            }
-        }
-
-        public static bool InitialFillData()
-        {
-            string competitorInsert =
-                "INSERT INTO tbl_CompetitorTemplates " +
-                "(FileName,TournamentPointX,TournamentPointY,RoundPointX,RoundPointY,Player1PointX,Player1PointY,"+
-                "Player2PointX, Player2PointY, Player1CamPointX, Player1CamPointY, Player2CamPointX, Player2CamPointY,"+
-                "Player1ScorePointX, Player1ScorePointY, Player2ScorePointX, Player2ScorePointY, DatePointX, DatePointY, Options)";
-            string opt1 = "'nameFormat:Center," +
-                    "scoreFormat:Center," +
-                    "roundFormat:Center," +
-                    "player1Format:Near," +
-                    "player2Format:Far," +
-                    "tourneyFormat:Far," +
-                    "dateFormat:Near," +
-                    "Color:White,'";
-            string opt2 = "'nameFormat:Center," +
-                    "scoreFormat:Center," +
-                    "roundFormat:Center," +
-                    "player1Format:Center," +
-                    "player2Format:Center," +
-                    "tourneyFormat:Center," +
-                    "dateFormat:Center," +
-                    "Color:White,'";
-
-
-            string initialFillQry1 =
-                competitorInsert + " VALUES " +
-                "('FireOverlayNew.png',900,25,0,0,501,1063,976,1063,1686,364,1686,730,680,1030,800,1030, 0, 0, "+opt2+");";
-            string initialFillQry2 = 
-                competitorInsert + " VALUES "+
-                "('FlashbackOverlayRedux.png',1340,1033,685,45,100,35,1270,35,1635,265,1635,568,580,45,790,45,30,1033,"+opt1+");";
-            string initialFillQry3 =
-                competitorInsert + " VALUES " +
-                "('FlashbackOverlayRedux2.png',1340,1033,685,45,100,35,1270,35,1635,265,1635,568,580,45,790,45,30,1033,"+opt1+");";
-            SQLiteCommand cmd1 = new SQLiteCommand(initialFillQry1, conn);
-            SQLiteCommand cmd2 = new SQLiteCommand(initialFillQry2, conn);
-            SQLiteCommand cmd3 = new SQLiteCommand(initialFillQry3, conn);
-            
-            DBOpen();
-            try
-            {
-                cmd1.ExecuteNonQuery();
-            }
-            catch (Exception e) { string msg = e.Message; }
-            
-            try
-            {
-                cmd2.ExecuteNonQuery();
-            }
-            catch (Exception e) { string msg = e.Message; }
-            
-            try
-            {
-                cmd3.ExecuteNonQuery();
-            }
-            catch (Exception e) { string msg = e.Message; }
-            DBClose();
-            return true;
-            
-
-        }
+        
 
         public static bool DeleteTableData()
         {
@@ -259,9 +170,20 @@ namespace SmashOverlayGeneratorMk2.General
             conn.Close();
         }
 
-        public static void CopyDBToProjDir()
+        public static void CopyDBToProjDir(string productName)
         {
-            bool debug = true;
+            string dbFile = ListBoxFcns.getResourcePath(productName, "database", "Generator.sqlite");
+            if (dbFile != null)
+            {
+                Stream outStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(dbFile);
+                FileStream dbStream = new FileStream(@"C:\OverlayGenerator\Data\Generator.sqlite", FileMode.Open);
+                for (int i = 0; i < dbStream.Length; i++)
+                {
+                    outStream.WriteByte((byte)dbStream.ReadByte());
+                }
+            }
+
+            bool debug = false;
             if (debug)
             {
                 if (Directory.Exists(dataDir))
@@ -271,5 +193,96 @@ namespace SmashOverlayGeneratorMk2.General
                 }
             }
         }
+
+        #region HardcodedGeneration
+        public static bool InitialFillData()
+        {
+            string competitorInsert =
+                "INSERT INTO tbl_CompetitorTemplates " +
+                "(FileName,TournamentPointX,TournamentPointY,RoundPointX,RoundPointY,Player1PointX,Player1PointY," +
+                "Player2PointX, Player2PointY, Player1CamPointX, Player1CamPointY, Player2CamPointX, Player2CamPointY," +
+                "Player1ScorePointX, Player1ScorePointY, Player2ScorePointX, Player2ScorePointY, DatePointX, DatePointY, Options)";
+            string opt1 = "'nameFormat:Center," +
+                    "scoreFormat:Center," +
+                    "roundFormat:Center," +
+                    "player1Format:Near," +
+                    "player2Format:Far," +
+                    "tourneyFormat:Far," +
+                    "dateFormat:Near," +
+                    "Color:White,'";
+            string opt2 = "'nameFormat:Center," +
+                    "scoreFormat:Center," +
+                    "roundFormat:Center," +
+                    "player1Format:Center," +
+                    "player2Format:Center," +
+                    "tourneyFormat:Center," +
+                    "dateFormat:Center," +
+                    "Color:White,'";
+
+
+            string initialFillQry1 =
+                competitorInsert + " VALUES " +
+                "('FireOverlayNew.png',900,25,0,0,501,1063,976,1063,1686,364,1686,730,680,1030,800,1030, 0, 0, " + opt2 + ");";
+            string initialFillQry2 =
+                competitorInsert + " VALUES " +
+                "('FlashbackOverlayRedux.png',1340,1033,685,45,100,35,1270,35,1635,265,1635,568,580,45,790,45,30,1033," + opt1 + ");";
+            string initialFillQry3 =
+                competitorInsert + " VALUES " +
+                "('FlashbackOverlayRedux2.png',1340,1033,685,45,100,35,1270,35,1635,265,1635,568,580,45,790,45,30,1033," + opt1 + ");";
+            SQLiteCommand cmd1 = new SQLiteCommand(initialFillQry1, conn);
+            SQLiteCommand cmd2 = new SQLiteCommand(initialFillQry2, conn);
+            SQLiteCommand cmd3 = new SQLiteCommand(initialFillQry3, conn);
+
+            DBOpen();
+            try
+            {
+                cmd1.ExecuteNonQuery();
+            }
+            catch (Exception e) { string msg = e.Message; }
+
+            try
+            {
+                cmd2.ExecuteNonQuery();
+            }
+            catch (Exception e) { string msg = e.Message; }
+
+            try
+            {
+                cmd3.ExecuteNonQuery();
+            }
+            catch (Exception e) { string msg = e.Message; }
+            DBClose();
+            return true;
+        }
+
+        public static bool CreateTables()
+        {
+            string createCompTblQry =
+                "CREATE TABLE IF NOT EXISTS tbl_CompetitorTemplates(" +
+                "FileName varchar(400) PRIMARY KEY," +
+                "TournamentPointX int, TournamentPointY int," +
+                "RoundPointX int, RoundPointY int," +
+                "Player1PointX int, Player1PointY int," +
+                "Player2PointX int, Player2PointY int," +
+                "Player1CamPointX int, Player1CamPointY int," +
+                "Player2CamPointX int, Player2CamPointY int," +
+                "Player1ScorePointX int, Player1ScorePointY int," +
+                "Player2ScorePointX int, Player2ScorePointY int," +
+                "DatePointX int, DatePointY int, Options varchar(400))";
+            SQLiteCommand cmd = new SQLiteCommand(createCompTblQry, conn);
+            try
+            {
+                DBOpen();
+                cmd.ExecuteNonQuery();
+                DBClose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                DBClose();
+                return false;
+            }
+        }
+        #endregion HardcodedGeneration
     }
 }
