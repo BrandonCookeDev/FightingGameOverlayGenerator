@@ -22,7 +22,7 @@ namespace SmashOverlayGeneratorMk2.General
         {
             
 
-            string file = form.overlayDirectory + "\\overlay.temp";
+            string file = form.tempData;
             StringBuilder sb = new StringBuilder(
                 "TournamentName:"+form.TournamentName);
             sb.Append("|TournamentRound:" + form.TournamentRound);
@@ -55,64 +55,66 @@ namespace SmashOverlayGeneratorMk2.General
 
         public static bool loadDataFile(SmashOverlayGenerator form)
         {
-            string file = form.overlayDirectory + "\\overlay.temp";
-            string content = "";
-            foreach (string s in (File.ReadAllLines(file)))
-            {
-                content += s;
-            }
-            string[] titles = content.Split('|');
-            foreach (string s in titles)
-            {
-                string[] data = s.Split(':');
-                switch (data[0])
+            string file = form.tempData;
+            if(File.Exists(file)){                
+                string content = "";
+                foreach (string s in (File.ReadAllLines(file)))
                 {
-                    case "TournamentName":
-                        form.TournamentName = data[1];
-                        break;
-                    case "TournamentRound":
-                        form.TournamentRound = data[1];
-                        break;
-                    case "GameType":
-                        form.GameType = data[1];
-                        break;
-                    case "Competitor1":
-                        form.Competitor1 = data[1];
-                        break;
-                    case "Competitor2":
-                        form.Competitor2 = data[1];
-                        break;
-                    case "Score1":
-                        form.Score1 = data[1];
-                        break;
-                    case "Score2":
-                        form.Score2 = data[1];
-                        break;
-                    case "NameSwap":
-                        form.NameSwap = Boolean.Parse(data[1]);
-                        break;
-                    case "TemplateFileName":
-                        form.TemplateFileName = data[1];
-                        break;
-                    case "Matchup1":
-                        form.MatchupCompetitor1 = data[1];
-                        break;
-                    case "Matchup2":
-                        form.MatchupCompetitor2 = data[1];
-                        break;
-                    case "MatchupChar1":
-                        form.MatchupCharacter1File = data[1];
-                        break;
-                    case "MatchupChar2":
-                        form.MatchupCharacter2File = data[1];
-                        break;
-                    case "MatchupPic":
-                        form.MatchupPicFileName = data[1];
-                        break;
+                    content += s;
                 }
+                string[] titles = content.Split('|');
+                foreach (string s in titles)
+                {
+                    string[] data = s.Split(':');
+                    switch (data[0])
+                    {
+                        case "TournamentName":
+                            form.TournamentName = data[1];
+                            break;
+                        case "TournamentRound":
+                            form.TournamentRound = data[1];
+                            break;
+                        case "GameType":
+                            form.GameType = data[1];
+                            break;
+                        case "Competitor1":
+                            form.Competitor1 = data[1];
+                            break;
+                        case "Competitor2":
+                            form.Competitor2 = data[1];
+                            break;
+                        case "Score1":
+                            form.Score1 = data[1];
+                            break;
+                        case "Score2":
+                            form.Score2 = data[1];
+                            break;
+                        case "NameSwap":
+                            form.NameSwap = Boolean.Parse(data[1]);
+                            break;
+                        case "TemplateFileName":
+                            form.TemplateFileName = data[1];
+                            break;
+                        case "Matchup1":
+                            form.MatchupCompetitor1 = data[1];
+                            break;
+                        case "Matchup2":
+                            form.MatchupCompetitor2 = data[1];
+                            break;
+                        case "MatchupChar1":
+                            form.MatchupCharacter1File = data[1];
+                            break;
+                        case "MatchupChar2":
+                            form.MatchupCharacter2File = data[1];
+                            break;
+                        case "MatchupPic":
+                            form.MatchupPicFileName = data[1];
+                            break;
+                    }
+                }
+                return true;
             }
-
-            return false;
+            else return false;
         }
 
         public static bool isNullOrEmpty(string s)

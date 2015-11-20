@@ -176,8 +176,13 @@ namespace SmashOverlayGeneratorMk2.General
         {
             FileStream outStream = null;
             FileStream dbStream = null;
-            if (filePath == null) 
-                if(debug) filePath = @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite";
+            if (filePath == null)
+            {
+                if (debug) filePath = @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite";
+                else return;
+            }
+            else return;
+
             try{
                 string dbFile = ListBoxFcns.getResourcePath(productName, "database", "Generator.sqlite");
                 if (dbFile != null)

@@ -67,6 +67,7 @@ namespace SmashOverlayGeneratorMk2
         private string serviceUrl = "http://192.168.0.5:8081/SOGCS.svc";
         public string overlayDirectory = @"C:\\OverlayGenerator";
         private Resources _resources = new Resources();
+        public string tempData =  @"C:\\OverlayGenerator" + "\\Data\\overlay.temp";
         
         //private ISOGControlService service = null;
 
@@ -359,34 +360,37 @@ namespace SmashOverlayGeneratorMk2
                 logToUser(ex.Message, true);
             }
 
-            if (File.Exists(overlayDirectory + "\\overlay.temp"))
+            if (File.Exists(tempData))
             {
                 //LOAD FILE INFO INTO GENERATOR
-                GenFcns.loadDataFile(this);
-                tournamentNameTextbox.Text = TournamentName;
-                tournamentRoundCombobox.SelectedItem = TournamentRound;
-                singlesP1Textbox.Text = Competitor1;
-                singlesP1ScoreTextbox.Text = Score1;
-                singlesP2Textbox.Text = Competitor2;
-                singlesP2ScoreTextbox.Text = Score2;
-                templateListView.SelectedItem = TemplateFileName;
-                switch (GameType)
+                bool isLoaded = GenFcns.loadDataFile(this);
+                if (isLoaded)
                 {
-                    case "singles":
-                        greyOutSingles(false);
-                        greyOutDoubles(true);
-                        break;
-                    default:
-                        greyOutSingles(true);
-                        greyOutDoubles(false);
-                        break;
-                }
+                    tournamentNameTextbox.Text = TournamentName;
+                    tournamentRoundCombobox.SelectedItem = TournamentRound;
+                    singlesP1Textbox.Text = Competitor1;
+                    singlesP1ScoreTextbox.Text = Score1;
+                    singlesP2Textbox.Text = Competitor2;
+                    singlesP2ScoreTextbox.Text = Score2;
+                    templateListView.SelectedItem = TemplateFileName;
+                    switch (GameType)
+                    {
+                        case "singles":
+                            greyOutSingles(false);
+                            greyOutDoubles(true);
+                            break;
+                        default:
+                            greyOutSingles(true);
+                            greyOutDoubles(false);
+                            break;
+                    }
 
-                matchupCompetitor1Textbox.Text = MatchupCompetitor1;
-                matchupCompetitor2Textbox.Text = MatchupCompetitor2;
-                matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
-                matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
-                matchupPicListView.SelectedItem = MatchupPicFileName;
+                    matchupCompetitor1Textbox.Text = MatchupCompetitor1;
+                    matchupCompetitor2Textbox.Text = MatchupCompetitor2;
+                    matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
+                    matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
+                    matchupPicListView.SelectedItem = MatchupPicFileName;
+                }
             }
 
             
