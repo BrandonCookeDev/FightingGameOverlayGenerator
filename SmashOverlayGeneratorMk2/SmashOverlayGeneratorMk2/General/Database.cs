@@ -17,6 +17,8 @@ namespace SmashOverlayGeneratorMk2.General
         private static string dbPath;
         private static SQLiteConnection conn;
 
+        private static bool debug = false;
+
         public static string CreateDatabase(string productName)
         {
             string retStr = "";
@@ -170,29 +172,21 @@ namespace SmashOverlayGeneratorMk2.General
             conn.Close();
         }
 
-        public static void CopyDBToProjDir(string productName)
+        public static void CopyDBToProjDir(string productName, string filePath)
         {
-            Stream outStream = null;
+            FileStream outStream = null;
             FileStream dbStream = null;
+            if (filePath == null) 
+                if(debug) filePath = @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite";
             try{
                 string dbFile = ListBoxFcns.getResourcePath(productName, "database", "Generator.sqlite");
                 if (dbFile != null)
                 {
-                    outStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(dbFile);
+                    outStream = new FileStream(@filePath, FileMode.Open);
                     dbStream = new FileStream(@"C:\OverlayGenerator\Data\Generator.sqlite", FileMode.Open);
                     for (int i = 0; i < dbStream.Length; i++)
                     {
                         outStream.WriteByte((byte)dbStream.ReadByte());
-                    }
-                }
-
-                bool debug = false;
-                if (debug)
-                {
-                    if (Directory.Exists(dataDir))
-                    {
-                        if (File.Exists(dbPath))
-                            File.Copy(dbPath, @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite", true);
                     }
                 }
             }catch{

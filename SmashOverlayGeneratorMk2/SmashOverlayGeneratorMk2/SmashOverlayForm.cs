@@ -437,7 +437,7 @@ namespace SmashOverlayGeneratorMk2
                     break;
             }
 
-            Database.CopyDBToProjDir(this.ProductName);
+            Database.CopyDBToProjDir(this.ProductName, null);
         }
         #endregion LOADCLOSEFORM
 
