@@ -393,7 +393,18 @@ namespace SmashOverlayGeneratorMk2.Objects
             else
             {
                 g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), TourneyFormat);
-                g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), NameFormat);
+
+
+                if (form.TournamentRound.Equals("Pools") || form.TournamentRound.Equals("Friendlies"))
+                {
+                    RoundFont = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold);
+                    g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, new Point(RoundPoint.X, RoundPoint.Y + 10), NameFormat);
+                }
+                else
+                {
+                    RoundFont = new Font(FontFamily.GenericSerif, 25, FontStyle.Bold);
+                    g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), NameFormat);
+                }
             }
 
             if (DatePoint != null)
