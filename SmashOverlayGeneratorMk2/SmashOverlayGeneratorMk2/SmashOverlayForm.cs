@@ -387,8 +387,11 @@ namespace SmashOverlayGeneratorMk2
 
                     matchupCompetitor1Textbox.Text = MatchupCompetitor1;
                     matchupCompetitor2Textbox.Text = MatchupCompetitor2;
-                    matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
-                    matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
+                    if (MatchupCharacter1File != null)
+                        matchupCharacter1Combobox.SelectedItem = MatchupCharacter1File.Replace(".png", "");
+                    if(MatchupCharacter2File != null)    
+                        matchupCharacter2Combobox.SelectedItem = MatchupCharacter2File.Replace(".png", "");
+                    
                     matchupPicListView.SelectedItem = MatchupPicFileName;
                 }
             }
