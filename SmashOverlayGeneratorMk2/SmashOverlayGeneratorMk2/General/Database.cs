@@ -172,26 +172,41 @@ namespace SmashOverlayGeneratorMk2.General
 
         public static void CopyDBToProjDir(string productName)
         {
-            string dbFile = ListBoxFcns.getResourcePath(productName, "database", "Generator.sqlite");
-            if (dbFile != null)
-            {
-                Stream outStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(dbFile);
-                FileStream dbStream = new FileStream(@"C:\OverlayGenerator\Data\Generator.sqlite", FileMode.Open);
-                for (int i = 0; i < dbStream.Length; i++)
+            Stream outStream = null;
+            FileStream dbStream = null;
+            try{
+                string dbFile = ListBoxFcns.getResourcePath(productName, "database", "Generator.sqlite");
+                if (dbFile != null)
                 {
-                    outStream.WriteByte((byte)dbStream.ReadByte());
+                    outStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(dbFile);
+                    dbStream = new FileStream(@"C:\OverlayGenerator\Data\Generator.sqlite", FileMode.Open);
+                    for (int i = 0; i < dbStream.Length; i++)
+                    {
+                        outStream.WriteByte((byte)dbStream.ReadByte());
+                    }
                 }
+
+                bool debug = false;
+                if (debug)
+                {
+                    if (Directory.Exists(dataDir))
+                    {
+                        if (File.Exists(dbPath))
+                            File.Copy(dbPath, @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite", true);
+                    }
+                }
+            }catch{
+                if(outStream != null) outStream.Close();
+                if(dbStream != null) dbStream.Close();
+                deleteDB();
             }
 
-            bool debug = false;
-            if (debug)
-            {
-                if (Directory.Exists(dataDir))
-                {
-                    if (File.Exists(dbPath))
-                        File.Copy(dbPath, @"C:\Users\BrandonADMIN\Documents\FightingGameOverlayGenerator\SmashOverlayGeneratorMk2\Generator.sqlite", true);
-                }
-            }
+        }
+
+        public static void deleteDB()
+        {
+            if (File.Exists(@"C:\OverlayGenerator\Data\Generator.sqlite"))
+                File.Delete(@"C:\OverlayGenerator\Data\Generator.sqlite");
         }
 
         #region HardcodedGeneration
