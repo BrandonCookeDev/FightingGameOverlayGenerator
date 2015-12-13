@@ -70,20 +70,20 @@ namespace SmashOverlayGeneratorMk2.General
                 else
                 {
                     form.Competitor1 = lose + " " + form.Competitor1;
-                    form.Competitor2 = form.Competitor2 + " " + lose;
+                    form.Competitor2 = form.Competitor2 + " " + win;
                 }
             }
             else if (box2.Checked)
             {
                 if (!nameSwap)
                 {
-                    form.Competitor2 = form.Competitor2 + " " + lose;
-                    form.Competitor1 = win + " " + form.Competitor1;
+                    form.Competitor1 = form.Competitor1 + " " + win;
+                    form.Competitor2 = lose + " " + form.Competitor2;
                 }
                 else
                 {
-                    form.Competitor2 = lose + " " + form.Competitor2;
-                    form.Competitor1 = form.Competitor1 + " " + lose;
+                    form.Competitor1 = win + " " + form.Competitor1;
+                    form.Competitor2 = form.Competitor2 + " " + lose;
                 }
             }
 

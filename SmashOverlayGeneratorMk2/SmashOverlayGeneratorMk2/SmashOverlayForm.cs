@@ -1086,6 +1086,12 @@ namespace SmashOverlayGeneratorMk2
         {
             if (NameSwap) NameSwap = false;
             else NameSwap = true;
+            if (player1LoserCheckbox.Checked ||
+                player2LoserCheckbox.Checked)
+                GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
+            else if (team1LoserCheckbox.Checked ||
+                team2LoserCheckbox.Checked)
+                GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
             generate();
         }
         #endregion Generate Button Listeners
