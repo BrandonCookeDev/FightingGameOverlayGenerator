@@ -363,6 +363,9 @@ namespace SmashOverlayGeneratorMk2.Objects
 
         public Bitmap drawTextOnImage(SmashOverlayGenerator form, bool swap)
         {
+            string cam1 = GenFcns.removeWinLoseTags(form.Competitor1);
+            string cam2 = GenFcns.removeWinLoseTags(form.Competitor2);
+
             setFontSizes(form.ResourceType, form.Competitor1, form.Competitor2);            
 
             Bitmap image = base.getImage();
@@ -382,8 +385,8 @@ namespace SmashOverlayGeneratorMk2.Objects
                 g.DrawString(form.Score1, ScoreFont, Brushes.White, Score2Point.getPoint(), ScoreFormat);
                 g.DrawString(form.Score2, ScoreFont, Brushes.White, Score1Point.getPoint(), ScoreFormat);
             }      
-            g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), NameFormat);
-            g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), NameFormat);
+            g.DrawString(cam1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), NameFormat);
+            g.DrawString(cam2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), NameFormat);
 
             if (RoundPoint == null)
             {

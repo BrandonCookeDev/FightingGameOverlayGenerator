@@ -147,7 +147,6 @@
     <None Include="Resources\3d_landscape_1551920x1080.jpg" />
     <None Include="Resources\fantasy-landscape-3d-wallpaper-9018-hd-widescreen-wallpapers.jpg" />
     <None Include="Resources\future-city.jpg" />
-    <EmbeddedResource Include="Images\Templates\CatKIIIOverlay.png" />
     <Content Include="Images\Templates\CrudeCityOverlay.png" />
     <EmbeddedResource Include="Images\Templates\FlashbackOverlayRedux2.png" />
     <Content Include="Images\Templates\SpaceWarOverlay.png" />

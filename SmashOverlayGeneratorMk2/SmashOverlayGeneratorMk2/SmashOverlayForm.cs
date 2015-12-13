@@ -616,6 +616,9 @@ namespace SmashOverlayGeneratorMk2
                 decrementTeam1Button.Enabled = false;
                 incrementTeam2Button.Enabled = false;
                 decrementTeam2Button.Enabled = false;
+
+                team1LoserCheckbox.Enabled = false;
+                team2LoserCheckbox.Enabled = false;
             }
             else
             {
@@ -642,6 +645,9 @@ namespace SmashOverlayGeneratorMk2
                 decrementTeam1Button.Enabled = true;
                 incrementTeam2Button.Enabled = true;
                 decrementTeam2Button.Enabled = true;
+
+                team1LoserCheckbox.Enabled = true;
+                team2LoserCheckbox.Enabled = true;
             }
         }
 
@@ -666,6 +672,9 @@ namespace SmashOverlayGeneratorMk2
                 decrementPlayer1Button.Enabled = false;
                 incrementPlayer2Button.Enabled = false;
                 decrementPlayer2Button.Enabled = false;
+
+                player1LoserCheckbox.Enabled = false;
+                player2LoserCheckbox.Enabled = false;
             }
             else
             {
@@ -686,6 +695,9 @@ namespace SmashOverlayGeneratorMk2
                 decrementPlayer1Button.Enabled = true;
                 incrementPlayer2Button.Enabled = true;
                 decrementPlayer2Button.Enabled = true;
+
+                player1LoserCheckbox.Enabled = true;
+                player2LoserCheckbox.Enabled = true;
             }
         }
 
@@ -1585,6 +1597,53 @@ namespace SmashOverlayGeneratorMk2
             getTournamentData();
         }
 
-        
+        private void player1LoserCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            getCombatants(GameType);
+            GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
+            singlesP1Textbox.Text = Competitor1;
+            singlesP2Textbox.Text = Competitor2;
+            generate();
+        }
+
+        private void player2LoserCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            getCombatants(GameType);
+            GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
+            singlesP1Textbox.Text = Competitor1;
+            singlesP2Textbox.Text = Competitor2;
+            generate();
+        }
+
+        private void team1LoserCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            getCombatants(GameType);
+            GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
+            string[] t1 = Competitor1.Split('&');
+            string[] t2 = Competitor2.Split('&');
+            doublesT1P1Textbox.Text = t1[0];
+            doublesT1P2Textbox.Text = t1[1];
+            doublesT2P1Textbox.Text = t2[0];
+            doublesT2P2Textbox.Text = t2[1];
+            generate();
+        }
+
+        private void team2LoserCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            getCombatants(GameType);
+            GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
+            string[] t1 = Competitor1.Split('&');
+            string[] t2 = Competitor2.Split('&');
+            doublesT1P1Textbox.Text = t1[0];
+            doublesT1P2Textbox.Text = t1[1];
+            doublesT2P1Textbox.Text = t2[0];
+            doublesT2P2Textbox.Text = t2[1];
+            generate();
+        }
+
+        private void nameSwapWebcamBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }    
 }

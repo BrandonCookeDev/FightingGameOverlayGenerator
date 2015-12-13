@@ -9,6 +9,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using SmashOverlayGeneratorMk2;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SmashOverlayGeneratorMk2.General
 {
@@ -18,6 +19,77 @@ namespace SmashOverlayGeneratorMk2.General
         private static bool debug = true;
         
         #region General
+        public static string removeWinLoseTags(string ret)
+        {
+            string lose1 = " [L]";
+            string lose2 = "[L] ";
+            string win1 = " [W]";
+            string win2 = "[W] ";
+
+            ret = ret.Replace(lose1, "");
+            ret = ret.Replace(lose2, "");
+            ret = ret.Replace(win1, "");
+            ret = ret.Replace(win2, "");
+
+            return ret;
+        }
+
+        public static void removeGrandFinalsTags(SmashOverlayGenerator form)
+        {
+            form.Competitor1 = removeWinLoseTags(form.Competitor1);
+            form.Competitor2 = removeWinLoseTags(form.Competitor2);
+        }
+
+        public static void determineGrandFinalsTags(SmashOverlayGenerator form, CheckBox box1, CheckBox box2, bool nameSwap)
+        {
+            string win = "[W]";
+            string lose = "[L]";
+            StringBuilder sb = new StringBuilder("");
+            removeGrandFinalsTags(form);
+            if (box1.Checked && box2.Checked)
+            {
+                
+                if (!nameSwap)
+                {
+                    form.Competitor1 = form.Competitor1 + " " + lose;
+                    form.Competitor2 = lose + " " + form.Competitor2;
+                }
+                else
+                {
+                    form.Competitor2 = form.Competitor2 + " " + lose;
+                    form.Competitor1 = lose + " " + form.Competitor1;
+                }
+            }
+            else if (box1.Checked)
+            {
+                if (!nameSwap)
+                {
+                    form.Competitor1 = form.Competitor1 + " " + lose;
+                    form.Competitor2 = win + " " + form.Competitor2;
+                }
+                else
+                {
+                    form.Competitor1 = lose + " " + form.Competitor1;
+                    form.Competitor2 = form.Competitor2 + " " + lose;
+                }
+            }
+            else if (box2.Checked)
+            {
+                if (!nameSwap)
+                {
+                    form.Competitor2 = form.Competitor2 + " " + lose;
+                    form.Competitor1 = win + " " + form.Competitor1;
+                }
+                else
+                {
+                    form.Competitor2 = lose + " " + form.Competitor2;
+                    form.Competitor1 = form.Competitor1 + " " + lose;
+                }
+            }
+
+            
+        }
+
         public static void createDataFile(SmashOverlayGenerator form)
         {
             
