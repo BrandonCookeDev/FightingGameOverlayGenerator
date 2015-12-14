@@ -13,6 +13,11 @@ namespace SmashOverlayGeneratorMk2.General
 {
     class ListBoxFcns
     {
+        public static void addNameToRecentNames(SmashOverlayGenerator form)
+        {
+
+        }
+
         public static void showPicturePreviewForm(Image image)
         {
             PicturePreviewForm picturePreviewForm = new PicturePreviewForm(image);

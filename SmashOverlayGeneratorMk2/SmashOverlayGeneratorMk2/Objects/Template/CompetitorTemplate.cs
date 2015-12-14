@@ -370,7 +370,7 @@ namespace SmashOverlayGeneratorMk2.Objects
 
             Bitmap image = base.getImage();
             Graphics g = Graphics.FromImage(image);
-
+            
             if (!swap)
             {
                 g.DrawString(form.Competitor1, Name1Font, Brushes.White, Competitor1Point.getPoint(), Player1Format);

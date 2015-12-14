@@ -85,34 +85,57 @@ namespace SmashOverlayGeneratorMk2.General
                     form.Competitor1 = win + " " + form.Competitor1;
                     form.Competitor2 = form.Competitor2 + " " + lose;
                 }
-            }
+            }   
+        }
 
-            
+        public static void flushRecentParticipants(string[] names, string path)
+        {
+            int i = 0;
+            foreach (String s in names)
+            {
+                if (i == 0)
+                    File.WriteAllText(path, s + ",\n");
+                else
+                    File.AppendAllText(path, s + ",\n");
+                i++;
+            }
+        }
+
+        public static string[] retrieveRecentParticipants(string path)
+        {
+            string data = ""; 
+            string[] names = null;
+            if (!File.Exists(path)) throw new Exception("File path to recent combatants does not exist");
+            else
+            {
+                data = File.ReadAllText(path);
+                data = data.Replace("\n", "");
+                names = data.Substring(0, data.Length-1).Split(',');                
+            }
+            return names;
         }
 
         public static void createDataFile(SmashOverlayGenerator form)
         {
-            
-
             string file = form.tempData;
             StringBuilder sb = new StringBuilder(
                 "TournamentName:"+form.TournamentName);
-            sb.Append("|TournamentRound:" + form.TournamentRound);
-            sb.Append("|GameType:" + form.GameType);
-            sb.Append("|Competitor1:" + form.Competitor1);
-            sb.Append("|Score1:" + form.Score1);
-            sb.Append("|Competitor2:" + form.Competitor2);            
-            sb.Append("|Score2:" + form.Score2);
-            sb.Append("|NameSwap:" + form.NameSwap);
-            sb.Append("|TemplateFileName:" + form.TemplateFileName);
+            sb.Append("|\nTournamentRound:" + form.TournamentRound);
+            sb.Append("|\nGameType:" + form.GameType);
+            sb.Append("|\nCompetitor1:" + form.Competitor1);
+            sb.Append("|\nScore1:" + form.Score1);
+            sb.Append("|\nCompetitor2:" + form.Competitor2);            
+            sb.Append("|\nScore2:" + form.Score2);
+            sb.Append("|\nNameSwap:" + form.NameSwap);
+            sb.Append("|\nTemplateFileName:" + form.TemplateFileName);
 
             if (debug)
             {
-                sb.Append("|Matchup1:" + form.MatchupCompetitor1);
-                sb.Append("|MatchupChar1:" + form.MatchupCharacter1);
-                sb.Append("|Matchup2:" + form.MatchupCompetitor2);
-                sb.Append("|MatchupChar2:" + form.MatchupCharacter2);
-                sb.Append("|MatchupPic:" + form.MatchupPicFileName);
+                sb.Append("|\nMatchup1:" + form.MatchupCompetitor1);
+                sb.Append("|\nMatchupChar1:" + form.MatchupCharacter1);
+                sb.Append("|\nMatchup2:" + form.MatchupCompetitor2);
+                sb.Append("|\nMatchupChar2:" + form.MatchupCharacter2);
+                sb.Append("|\nMatchupPic:" + form.MatchupPicFileName);
             }
 
             if (!sb.ToString().Contains("null"))
@@ -132,8 +155,9 @@ namespace SmashOverlayGeneratorMk2.General
                 string content = "";
                 foreach (string s in (File.ReadAllLines(file)))
                 {
-                    content += s;
+                    content += s.Replace("\n", "");
                 }
+
                 string[] titles = content.Split('|');
                 foreach (string s in titles)
                 {

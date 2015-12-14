@@ -57,6 +57,7 @@ namespace SmashOverlayGeneratorMk2
         private string tournamentLogoFile;
         private string resourceType;
         private bool nameSwap;
+        private bool nameSwapCam;
         private bool isError;
         private bool isAutoUpdate;
         private ArrayList templates;
@@ -65,7 +66,9 @@ namespace SmashOverlayGeneratorMk2
         private CompetitorTemplate selectedCompetitorTemplate;
 
         private string serviceUrl = "http://192.168.0.5:8081/SOGCS.svc";
-        public string overlayDirectory = @"C:\\OverlayGenerator";
+        public static string overlayDirectory = @"C:\\OverlayGenerator";
+        private string doublesBackup = overlayDirectory + "\\Data\\recentDoubles.backup";
+        private string singlesBackup = overlayDirectory + "\\Data\\recentSingles.backup";
         private Resources _resources = new Resources();
         public string tempData =  @"C:\\OverlayGenerator" + "\\Data\\overlay.temp";
         
@@ -82,6 +85,12 @@ namespace SmashOverlayGeneratorMk2
 
         /* GETTERS AND SETTERS */
         #region Getters and Setters
+
+        public bool NameSwapCam
+        {
+            get { return this.nameSwapCam; }
+            set { this.nameSwapCam = value; }
+        }
 
         private CompetitorTemplate SelectedCompetitorTemplate
         {
@@ -368,9 +377,9 @@ namespace SmashOverlayGeneratorMk2
                 {
                     tournamentNameTextbox.Text = TournamentName;
                     tournamentRoundCombobox.SelectedItem = TournamentRound;
-                    singlesP1Textbox.Text = Competitor1;
+                    singlesP1Textbox.Text = GenFcns.removeWinLoseTags(Competitor1);
                     singlesP1ScoreTextbox.Text = Score1;
-                    singlesP2Textbox.Text = Competitor2;
+                    singlesP2Textbox.Text = GenFcns.removeWinLoseTags(Competitor2);
                     singlesP2ScoreTextbox.Text = Score2;
                     templateListView.SelectedItem = TemplateFileName;
                     switch (GameType)
@@ -418,6 +427,11 @@ namespace SmashOverlayGeneratorMk2
                 //MessageBox.Show("Connection was not made");
                 logToUser("Connection was not made", true);
             }
+            if(!File.Exists(doublesBackup))
+                File.Create(doublesBackup);
+            if (!File.Exists(singlesBackup))
+                File.Create(singlesBackup);
+                        
 
             //SET THE ACCESSOR FOR THIS FORM
             //accessor = new Accessor(this);
@@ -897,9 +911,16 @@ namespace SmashOverlayGeneratorMk2
 
                 string resource = TemplateFile.Contains(".Images.Templates.") ? "resource" : "file";
 
+
+                string p1 = GenFcns.removeWinLoseTags(Competitor1);
+                string p2 = GenFcns.removeWinLoseTags(Competitor2);
+                if (!recentCombatantListBox.Items.Contains(p1)) 
+                    recentCombatantListBox.Items.Add(p1);
+                if(!recentCombatantListBox.Items.Contains(p2))
+                    recentCombatantListBox.Items.Add(p2);
+
                 //ALTER THE IMAGE WITH NEW INFORMATION
                 paintCompetitorText(TemplateFile, resource, NameSwap);
-
 
             }
             catch (Exception ex)
@@ -1088,10 +1109,22 @@ namespace SmashOverlayGeneratorMk2
             else NameSwap = true;
             if (player1LoserCheckbox.Checked ||
                 player2LoserCheckbox.Checked)
+            {
                 GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
+                singlesP1Textbox.Text = Competitor1;
+                singlesP2Textbox.Text = Competitor2;
+            }
             else if (team1LoserCheckbox.Checked ||
                 team2LoserCheckbox.Checked)
+            {
                 GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
+                string[] t1 = Competitor1.Split('&');
+                string[] t2 = Competitor2.Split('&');
+                doublesT1P1Textbox.Text = t1[0].Trim();
+                doublesT1P2Textbox.Text = t1[1].Trim();
+                doublesT2P1Textbox.Text = t2[0].Trim();
+                doublesT2P2Textbox.Text = t2[1].Trim();
+            }
             generate();
         }
         #endregion Generate Button Listeners
@@ -1103,6 +1136,15 @@ namespace SmashOverlayGeneratorMk2
             Score2 = "0";
             singlesP1ScoreTextbox.Text = Score1;
             singlesP2ScoreTextbox.Text = Score2;
+            generate();
+        }
+
+        private void clearDoublesScoresBtn_Click(object sender, EventArgs e)
+        {
+            Score1 = "0";
+            Score2 = "0";
+            doublesT1ScoreTextbox.Text = Score1;
+            doublesT2ScoreTextbox.Text = Score2;
             generate();
         }
 
@@ -1178,6 +1220,8 @@ namespace SmashOverlayGeneratorMk2
             clearDoublesFields();
             GameType = "singles";
             smashOverlayTabControl.SelectedTab = competitorsTab;
+            singlesPanel.Visible = true;
+            doublesPanel.Visible = false;
             greyOutSingles(false);
             greyOutDoubles(true);
         }
@@ -1187,6 +1231,8 @@ namespace SmashOverlayGeneratorMk2
             clearSinglesFields();
             GameType = "doubles";
             smashOverlayTabControl.SelectedTab = competitorsTab;
+            singlesPanel.Visible = false;
+            doublesPanel.Visible = true;
             greyOutSingles(true);
             greyOutDoubles(false);
         }
@@ -1627,10 +1673,10 @@ namespace SmashOverlayGeneratorMk2
             GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
             string[] t1 = Competitor1.Split('&');
             string[] t2 = Competitor2.Split('&');
-            doublesT1P1Textbox.Text = t1[0];
-            doublesT1P2Textbox.Text = t1[1];
-            doublesT2P1Textbox.Text = t2[0];
-            doublesT2P2Textbox.Text = t2[1];
+            doublesT1P1Textbox.Text = t1[0].Trim();
+            doublesT1P2Textbox.Text = t1[1].Trim();
+            doublesT2P1Textbox.Text = t2[0].Trim();
+            doublesT2P2Textbox.Text = t2[1].Trim();
             generate();
         }
 
@@ -1640,16 +1686,69 @@ namespace SmashOverlayGeneratorMk2
             GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
             string[] t1 = Competitor1.Split('&');
             string[] t2 = Competitor2.Split('&');
-            doublesT1P1Textbox.Text = t1[0];
-            doublesT1P2Textbox.Text = t1[1];
-            doublesT2P1Textbox.Text = t2[0];
-            doublesT2P2Textbox.Text = t2[1];
+            doublesT1P1Textbox.Text = t1[0].Trim();
+            doublesT1P2Textbox.Text = t1[1].Trim();
+            doublesT2P1Textbox.Text = t2[0].Trim();
+            doublesT2P2Textbox.Text = t2[1].Trim();
             generate();
         }
 
         private void nameSwapWebcamBtn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void flushListBtn_Click(object sender, EventArgs e)
+        {
+            string[] names = new string[recentCombatantListBox.Items.Count];
+            recentCombatantListBox.Items.CopyTo(names, 0);
+
+            if (GameType.Equals("singles"))
+                GenFcns.flushRecentParticipants(names, singlesBackup);
+            else if (GameType.Equals("doubles"))
+                GenFcns.flushRecentParticipants(names, doublesBackup);
+            else logToUser("Game type must be singles or doubles", true);
+
+            recentCombatantListBox.Items.Clear();
+        }
+
+        private void undoFlushListBtn_Click(object sender, EventArgs e)
+        {
+            string[] names = null;
+
+            if (GameType.Equals("singles"))
+                names = GenFcns.retrieveRecentParticipants(singlesBackup);
+            else if (GameType.Equals("doubles"))
+                names = GenFcns.retrieveRecentParticipants(doublesBackup);
+            else logToUser("Game type must be singles or doubles", true);
+
+            foreach (String s in names)
+            {
+                if(!recentCombatantListBox.Items.Contains(s))
+                    recentCombatantListBox.Items.Add(s);
+            }
+        }
+
+        private void p1RecentArrowBtn_Click(object sender, EventArgs e)
+        {
+            if (recentCombatantListBox.SelectedIndex != -1)
+            {
+                string name = recentCombatantListBox.Items[recentCombatantListBox.SelectedIndex].ToString();
+                Competitor1 = name;
+                singlesP1Textbox.Text = name;
+            }
+            else logToUser("A recent combatant must be selected to use this button", true);
+        }
+
+        private void p2RecentArraowBtn_Click(object sender, EventArgs e)
+        {
+            if (recentCombatantListBox.SelectedIndex != -1)
+            {
+                string name = recentCombatantListBox.Items[recentCombatantListBox.SelectedIndex].ToString();
+                Competitor2 = name;
+                singlesP2Textbox.Text = name;
+            }
+            else logToUser("A recent combatant must be selected to use this button", true);
         }
     }    
 }
