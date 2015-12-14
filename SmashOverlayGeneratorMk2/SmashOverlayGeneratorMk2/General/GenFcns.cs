@@ -105,12 +105,18 @@ namespace SmashOverlayGeneratorMk2.General
         {
             string data = ""; 
             string[] names = null;
-            if (!File.Exists(path)) throw new Exception("File path to recent combatants does not exist");
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+                throw new Exception("Backup data does not exist. Created!");
+            }
             else
             {
                 data = File.ReadAllText(path);
+                if (data == "" || data == null)
+                    throw new Exception("Backup has no content in it");
                 data = data.Replace("\n", "");
-                names = data.Substring(0, data.Length-1).Split(',');                
+                names = data.Substring(0, data.Length - 1).Split(',');
             }
             return names;
         }
@@ -127,6 +133,7 @@ namespace SmashOverlayGeneratorMk2.General
             sb.Append("|\nCompetitor2:" + form.Competitor2);            
             sb.Append("|\nScore2:" + form.Score2);
             sb.Append("|\nNameSwap:" + form.NameSwap);
+            sb.Append("|\nNameSwapCam:" + form.NameSwapCam);
             sb.Append("|\nTemplateFileName:" + form.TemplateFileName);
 
             if (debug)
@@ -187,6 +194,9 @@ namespace SmashOverlayGeneratorMk2.General
                             break;
                         case "NameSwap":
                             form.NameSwap = Boolean.Parse(data[1]);
+                            break;
+                        case "NameSwapCam":
+                            form.NameSwapCam = Boolean.Parse(data[1]);
                             break;
                         case "TemplateFileName":
                             form.TemplateFileName = data[1];

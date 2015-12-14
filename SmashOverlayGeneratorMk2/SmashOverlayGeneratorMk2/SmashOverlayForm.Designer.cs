@@ -172,8 +172,8 @@
             // competitorsTab
             // 
             this.competitorsTab.Controls.Add(this.recentCombatantsPanel);
-            this.competitorsTab.Controls.Add(this.singlesPanel);
             this.competitorsTab.Controls.Add(this.doublesPanel);
+            this.competitorsTab.Controls.Add(this.singlesPanel);
             this.competitorsTab.Location = new System.Drawing.Point(4, 22);
             this.competitorsTab.Name = "competitorsTab";
             this.competitorsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -199,7 +199,7 @@
             // 
             // undoFlushListBtn
             // 
-            this.undoFlushListBtn.Location = new System.Drawing.Point(125, 188);
+            this.undoFlushListBtn.Location = new System.Drawing.Point(125, 180);
             this.undoFlushListBtn.Name = "undoFlushListBtn";
             this.undoFlushListBtn.Size = new System.Drawing.Size(113, 23);
             this.undoFlushListBtn.TabIndex = 35;
@@ -210,7 +210,7 @@
             // 
             // flushListBtn
             // 
-            this.flushListBtn.Location = new System.Drawing.Point(2, 188);
+            this.flushListBtn.Location = new System.Drawing.Point(2, 180);
             this.flushListBtn.Name = "flushListBtn";
             this.flushListBtn.Size = new System.Drawing.Size(116, 23);
             this.flushListBtn.TabIndex = 34;
@@ -221,9 +221,9 @@
             // 
             // nameSwapWebcamBtn
             // 
-            this.nameSwapWebcamBtn.Location = new System.Drawing.Point(125, 217);
+            this.nameSwapWebcamBtn.Location = new System.Drawing.Point(125, 209);
             this.nameSwapWebcamBtn.Name = "nameSwapWebcamBtn";
-            this.nameSwapWebcamBtn.Size = new System.Drawing.Size(113, 34);
+            this.nameSwapWebcamBtn.Size = new System.Drawing.Size(113, 42);
             this.nameSwapWebcamBtn.TabIndex = 31;
             this.nameSwapWebcamBtn.Text = "Swap Webcam Names";
             this.nameSwapWebcamBtn.UseVisualStyleBackColor = true;
@@ -232,11 +232,11 @@
             // 
             // swapNamesBtn
             // 
-            this.swapNamesBtn.Location = new System.Drawing.Point(2, 217);
+            this.swapNamesBtn.Location = new System.Drawing.Point(2, 209);
             this.swapNamesBtn.Name = "swapNamesBtn";
-            this.swapNamesBtn.Size = new System.Drawing.Size(117, 34);
+            this.swapNamesBtn.Size = new System.Drawing.Size(117, 42);
             this.swapNamesBtn.TabIndex = 27;
-            this.swapNamesBtn.Text = "Swap Name Labels";
+            this.swapNamesBtn.Text = "Swap Top Name Labels";
             this.swapNamesBtn.UseVisualStyleBackColor = true;
             this.swapNamesBtn.UseWaitCursor = true;
             this.swapNamesBtn.Click += new System.EventHandler(this.swapNamesBtn_Click);

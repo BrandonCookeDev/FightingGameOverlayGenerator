@@ -361,7 +361,7 @@ namespace SmashOverlayGeneratorMk2.Objects
         #region ABSTRACTED METHODS
         public override Bitmap drawTextOnImage(SmashOverlayGenerator form) { return null; }
 
-        public Bitmap drawTextOnImage(SmashOverlayGenerator form, bool swap)
+        public Bitmap drawTextOnImage(SmashOverlayGenerator form, bool swap, bool camSwap)
         {
             string cam1 = GenFcns.removeWinLoseTags(form.Competitor1);
             string cam2 = GenFcns.removeWinLoseTags(form.Competitor2);
@@ -384,9 +384,18 @@ namespace SmashOverlayGeneratorMk2.Objects
                 g.DrawString(form.Competitor2, Name2Font, Brushes.White, Competitor1Point.getPoint(), Player1Format);
                 g.DrawString(form.Score1, ScoreFont, Brushes.White, Score2Point.getPoint(), ScoreFormat);
                 g.DrawString(form.Score2, ScoreFont, Brushes.White, Score1Point.getPoint(), ScoreFormat);
-            }      
-            g.DrawString(cam1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), NameFormat);
-            g.DrawString(cam2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), NameFormat);
+            }
+
+            if (!camSwap)
+            {
+                g.DrawString(cam1, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), NameFormat);
+                g.DrawString(cam2, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), NameFormat);
+            }
+            else
+            {
+                g.DrawString(cam2, Name1Font, Brushes.White, Competitor1WebcamPoint.getPoint(), NameFormat);
+                g.DrawString(cam1, Name2Font, Brushes.White, Competitor2WebcamPoint.getPoint(), NameFormat);
+            }
 
             if (RoundPoint == null)
             {

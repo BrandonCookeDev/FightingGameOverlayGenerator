@@ -377,20 +377,33 @@ namespace SmashOverlayGeneratorMk2
                 {
                     tournamentNameTextbox.Text = TournamentName;
                     tournamentRoundCombobox.SelectedItem = TournamentRound;
-                    singlesP1Textbox.Text = GenFcns.removeWinLoseTags(Competitor1);
-                    singlesP1ScoreTextbox.Text = Score1;
-                    singlesP2Textbox.Text = GenFcns.removeWinLoseTags(Competitor2);
-                    singlesP2ScoreTextbox.Text = Score2;
                     templateListView.SelectedItem = TemplateFileName;
                     switch (GameType)
                     {
                         case "singles":
                             greyOutSingles(false);
                             greyOutDoubles(true);
+                            singlesPanel.Visible = true;
+                            doublesPanel.Visible = false;
+                            singlesP1Textbox.Text = GenFcns.removeWinLoseTags(Competitor1);
+                            singlesP1ScoreTextbox.Text = Score1;
+                            singlesP2Textbox.Text = GenFcns.removeWinLoseTags(Competitor2);
+                            singlesP2ScoreTextbox.Text = Score2;
                             break;
-                        default:
+                        case "doubles":
                             greyOutSingles(true);
                             greyOutDoubles(false);
+                            singlesPanel.Visible = false;
+                            doublesPanel.Visible = true;
+                            string[] split = Competitor1.Split('&');
+                            doublesT1P1Textbox.Text = split[0].Trim();
+                            doublesT1P2Textbox.Text = split[1].Trim();
+                            split = Competitor2.Split('&');
+                            doublesT2P1Textbox.Text = split[0].Trim();
+                            doublesT2P2Textbox.Text = split[1].Trim();
+                            break;
+                        default:
+                            logToUser("Bad Game Type", true);
                             break;
                     }
 
@@ -1136,6 +1149,8 @@ namespace SmashOverlayGeneratorMk2
             Score2 = "0";
             singlesP1ScoreTextbox.Text = Score1;
             singlesP2ScoreTextbox.Text = Score2;
+            player1LoserCheckbox.Checked = false;
+            player2LoserCheckbox.Checked = false;
             generate();
         }
 
@@ -1145,6 +1160,8 @@ namespace SmashOverlayGeneratorMk2
             Score2 = "0";
             doublesT1ScoreTextbox.Text = Score1;
             doublesT2ScoreTextbox.Text = Score2;
+            team1LoserCheckbox.Checked = false;
+            team2LoserCheckbox.Checked = false;
             generate();
         }
 
@@ -1447,7 +1464,7 @@ namespace SmashOverlayGeneratorMk2
 
             
             
-            Bitmap image = cTemplate.drawTextOnImage(this, nameSwap);
+            Bitmap image = cTemplate.drawTextOnImage(this, NameSwap, NameSwapCam);
             cTemplate.saveImage(image);
 
             return cTemplate;
@@ -1651,104 +1668,170 @@ namespace SmashOverlayGeneratorMk2
 
         private void player1LoserCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            getCombatants(GameType);
-            GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
-            singlesP1Textbox.Text = Competitor1;
-            singlesP2Textbox.Text = Competitor2;
-            generate();
+            try
+            {
+                getCombatants(GameType);
+                GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
+                singlesP1Textbox.Text = Competitor1;
+                singlesP2Textbox.Text = Competitor2;
+                generate();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void player2LoserCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            getCombatants(GameType);
-            GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
-            singlesP1Textbox.Text = Competitor1;
-            singlesP2Textbox.Text = Competitor2;
-            generate();
+            try
+            {
+                getCombatants(GameType);
+                GenFcns.determineGrandFinalsTags(this, player1LoserCheckbox, player2LoserCheckbox, NameSwap);
+                singlesP1Textbox.Text = Competitor1;
+                singlesP2Textbox.Text = Competitor2;
+                generate();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void team1LoserCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            getCombatants(GameType);
-            GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
-            string[] t1 = Competitor1.Split('&');
-            string[] t2 = Competitor2.Split('&');
-            doublesT1P1Textbox.Text = t1[0].Trim();
-            doublesT1P2Textbox.Text = t1[1].Trim();
-            doublesT2P1Textbox.Text = t2[0].Trim();
-            doublesT2P2Textbox.Text = t2[1].Trim();
-            generate();
+            try
+            {
+                getCombatants(GameType);
+                GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
+                string[] t1 = Competitor1.Split('&');
+                string[] t2 = Competitor2.Split('&');
+                doublesT1P1Textbox.Text = t1[0].Trim();
+                doublesT1P2Textbox.Text = t1[1].Trim();
+                doublesT2P1Textbox.Text = t2[0].Trim();
+                doublesT2P2Textbox.Text = t2[1].Trim();
+                generate();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void team2LoserCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            getCombatants(GameType);
-            GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
-            string[] t1 = Competitor1.Split('&');
-            string[] t2 = Competitor2.Split('&');
-            doublesT1P1Textbox.Text = t1[0].Trim();
-            doublesT1P2Textbox.Text = t1[1].Trim();
-            doublesT2P1Textbox.Text = t2[0].Trim();
-            doublesT2P2Textbox.Text = t2[1].Trim();
-            generate();
+            try
+            {
+                getCombatants(GameType);
+                GenFcns.determineGrandFinalsTags(this, team1LoserCheckbox, team2LoserCheckbox, NameSwap);
+                string[] t1 = Competitor1.Split('&');
+                string[] t2 = Competitor2.Split('&');
+                doublesT1P1Textbox.Text = t1[0].Trim();
+                doublesT1P2Textbox.Text = t1[1].Trim();
+                doublesT2P1Textbox.Text = t2[0].Trim();
+                doublesT2P2Textbox.Text = t2[1].Trim();
+                generate();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void nameSwapWebcamBtn_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (NameSwapCam)
+                    NameSwapCam = false;
+                else NameSwapCam = true;
+                generate();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void flushListBtn_Click(object sender, EventArgs e)
         {
-            string[] names = new string[recentCombatantListBox.Items.Count];
-            recentCombatantListBox.Items.CopyTo(names, 0);
+            try
+            {
+                string[] names = new string[recentCombatantListBox.Items.Count];
+                recentCombatantListBox.Items.CopyTo(names, 0);
 
-            if (GameType.Equals("singles"))
-                GenFcns.flushRecentParticipants(names, singlesBackup);
-            else if (GameType.Equals("doubles"))
-                GenFcns.flushRecentParticipants(names, doublesBackup);
-            else logToUser("Game type must be singles or doubles", true);
+                if (GameType.Equals("singles"))
+                    GenFcns.flushRecentParticipants(names, singlesBackup);
+                else if (GameType.Equals("doubles"))
+                    GenFcns.flushRecentParticipants(names, doublesBackup);
+                else logToUser("Game type must be singles or doubles", true);
 
-            recentCombatantListBox.Items.Clear();
+                recentCombatantListBox.Items.Clear();
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void undoFlushListBtn_Click(object sender, EventArgs e)
         {
-            string[] names = null;
-
-            if (GameType.Equals("singles"))
-                names = GenFcns.retrieveRecentParticipants(singlesBackup);
-            else if (GameType.Equals("doubles"))
-                names = GenFcns.retrieveRecentParticipants(doublesBackup);
-            else logToUser("Game type must be singles or doubles", true);
-
-            foreach (String s in names)
+            try
             {
-                if(!recentCombatantListBox.Items.Contains(s))
-                    recentCombatantListBox.Items.Add(s);
+                string[] names = null;
+
+                if (GameType.Equals("singles"))
+                    names = GenFcns.retrieveRecentParticipants(singlesBackup);
+                else if (GameType.Equals("doubles"))
+                    names = GenFcns.retrieveRecentParticipants(doublesBackup);
+                else logToUser("Game type must be singles or doubles", true);
+
+                foreach (String s in names)
+                {
+                    if (!recentCombatantListBox.Items.Contains(s))
+                        recentCombatantListBox.Items.Add(s);
+                }
+            }
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
             }
         }
 
         private void p1RecentArrowBtn_Click(object sender, EventArgs e)
         {
-            if (recentCombatantListBox.SelectedIndex != -1)
+            try
             {
-                string name = recentCombatantListBox.Items[recentCombatantListBox.SelectedIndex].ToString();
-                Competitor1 = name;
-                singlesP1Textbox.Text = name;
+                if (recentCombatantListBox.SelectedIndex != -1)
+                {
+                    string name = recentCombatantListBox.Items[recentCombatantListBox.SelectedIndex].ToString();
+                    Competitor1 = name;
+                    singlesP1Textbox.Text = name;
+                }
+                else logToUser("A recent combatant must be selected to use this button", true);
             }
-            else logToUser("A recent combatant must be selected to use this button", true);
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
 
         private void p2RecentArraowBtn_Click(object sender, EventArgs e)
         {
-            if (recentCombatantListBox.SelectedIndex != -1)
+            try
             {
-                string name = recentCombatantListBox.Items[recentCombatantListBox.SelectedIndex].ToString();
-                Competitor2 = name;
-                singlesP2Textbox.Text = name;
+                if (recentCombatantListBox.SelectedIndex != -1)
+                {
+                    string name = recentCombatantListBox.Items[recentCombatantListBox.SelectedIndex].ToString();
+                    Competitor2 = name;
+                    singlesP2Textbox.Text = name;
+                }
+                else logToUser("A recent combatant must be selected to use this button", true);
             }
-            else logToUser("A recent combatant must be selected to use this button", true);
+            catch (Exception ex)
+            {
+                logToUser(ex.Message, true);
+            }
         }
     }    
 }
