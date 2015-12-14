@@ -36,9 +36,10 @@
             this.generateBtn = new System.Windows.Forms.Button();
             this.browsePicturesButton = new System.Windows.Forms.Button();
             this.browsePictureTextbox = new System.Windows.Forms.TextBox();
-            this.squareCutBtn = new System.Windows.Forms.Button();
-            this.pointPickerBtn = new System.Windows.Forms.Button();
             this.designerLogLabel = new System.Windows.Forms.Label();
+            this.cutBtn = new System.Windows.Forms.Button();
+            this.squareSelectBtn = new System.Windows.Forms.CheckBox();
+            this.freeSelectBtn = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.overlayDesignerDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreviewBox)).BeginInit();
             this.SuspendLayout();
@@ -75,6 +76,7 @@
             this.picturePreviewBox.Size = new System.Drawing.Size(854, 548);
             this.picturePreviewBox.TabIndex = 0;
             this.picturePreviewBox.TabStop = false;
+            this.picturePreviewBox.Click += new System.EventHandler(this.picturePreviewBox_Click);
             // 
             // clearBtn
             // 
@@ -113,41 +115,58 @@
             this.browsePictureTextbox.Size = new System.Drawing.Size(161, 20);
             this.browsePictureTextbox.TabIndex = 5;
             // 
-            // squareCutBtn
-            // 
-            this.squareCutBtn.Location = new System.Drawing.Point(869, 67);
-            this.squareCutBtn.Name = "squareCutBtn";
-            this.squareCutBtn.Size = new System.Drawing.Size(96, 23);
-            this.squareCutBtn.TabIndex = 6;
-            this.squareCutBtn.Text = "Square Cut";
-            this.squareCutBtn.UseVisualStyleBackColor = true;
-            // 
-            // pointPickerBtn
-            // 
-            this.pointPickerBtn.Location = new System.Drawing.Point(869, 96);
-            this.pointPickerBtn.Name = "pointPickerBtn";
-            this.pointPickerBtn.Size = new System.Drawing.Size(96, 23);
-            this.pointPickerBtn.TabIndex = 7;
-            this.pointPickerBtn.Text = "Point Picker";
-            this.pointPickerBtn.UseVisualStyleBackColor = true;
-            // 
             // designerLogLabel
             // 
             this.designerLogLabel.AutoSize = true;
+            this.designerLogLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.designerLogLabel.Location = new System.Drawing.Point(870, 10);
             this.designerLogLabel.Name = "designerLogLabel";
-            this.designerLogLabel.Size = new System.Drawing.Size(16, 13);
+            this.designerLogLabel.Size = new System.Drawing.Size(20, 16);
             this.designerLogLabel.TabIndex = 8;
             this.designerLogLabel.Text = "...";
+            // 
+            // cutBtn
+            // 
+            this.cutBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cutBtn.Location = new System.Drawing.Point(869, 158);
+            this.cutBtn.Name = "cutBtn";
+            this.cutBtn.Size = new System.Drawing.Size(70, 23);
+            this.cutBtn.TabIndex = 9;
+            this.cutBtn.Text = "Cut";
+            this.cutBtn.UseVisualStyleBackColor = true;
+            // 
+            // squareSelectBtn
+            // 
+            this.squareSelectBtn.Appearance = System.Windows.Forms.Appearance.Button;
+            this.squareSelectBtn.AutoSize = true;
+            this.squareSelectBtn.Location = new System.Drawing.Point(869, 68);
+            this.squareSelectBtn.Name = "squareSelectBtn";
+            this.squareSelectBtn.Size = new System.Drawing.Size(84, 23);
+            this.squareSelectBtn.TabIndex = 10;
+            this.squareSelectBtn.Text = "Square Select";
+            this.squareSelectBtn.UseVisualStyleBackColor = true;
+            this.squareSelectBtn.CheckedChanged += new System.EventHandler(this.squareSelectBtn_CheckedChanged);
+            // 
+            // freeSelectBtn
+            // 
+            this.freeSelectBtn.Appearance = System.Windows.Forms.Appearance.Button;
+            this.freeSelectBtn.AutoSize = true;
+            this.freeSelectBtn.Location = new System.Drawing.Point(869, 98);
+            this.freeSelectBtn.Name = "freeSelectBtn";
+            this.freeSelectBtn.Size = new System.Drawing.Size(71, 23);
+            this.freeSelectBtn.TabIndex = 11;
+            this.freeSelectBtn.Text = "Free Select";
+            this.freeSelectBtn.UseVisualStyleBackColor = true;
             // 
             // OverlayDesignerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1121, 570);
+            this.Controls.Add(this.freeSelectBtn);
+            this.Controls.Add(this.squareSelectBtn);
+            this.Controls.Add(this.cutBtn);
             this.Controls.Add(this.designerLogLabel);
-            this.Controls.Add(this.pointPickerBtn);
-            this.Controls.Add(this.squareCutBtn);
             this.Controls.Add(this.browsePictureTextbox);
             this.Controls.Add(this.browsePicturesButton);
             this.Controls.Add(this.generateBtn);
@@ -173,8 +192,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.Button browsePicturesButton;
         private System.Windows.Forms.TextBox browsePictureTextbox;
-        private System.Windows.Forms.Button squareCutBtn;
-        private System.Windows.Forms.Button pointPickerBtn;
         private System.Windows.Forms.Label designerLogLabel;
+        private System.Windows.Forms.Button cutBtn;
+        private System.Windows.Forms.CheckBox squareSelectBtn;
+        private System.Windows.Forms.CheckBox freeSelectBtn;
     }
 }

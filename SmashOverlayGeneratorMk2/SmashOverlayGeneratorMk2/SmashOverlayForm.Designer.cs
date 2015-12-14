@@ -1432,11 +1432,11 @@
             this.versionLabel.AutoSize = true;
             this.versionLabel.BackColor = System.Drawing.Color.Transparent;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.versionLabel.Location = new System.Drawing.Point(0, 387);
+            this.versionLabel.Location = new System.Drawing.Point(10, 378);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(49, 15);
             this.versionLabel.TabIndex = 14;
-            this.versionLabel.Text = "v 3.5.1";
+            this.versionLabel.Text = "v 3.5.2";
             // 
             // tournamentRoundCombobox
             // 

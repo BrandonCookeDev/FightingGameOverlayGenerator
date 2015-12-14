@@ -11,6 +11,22 @@ namespace SmashOverlayGeneratorMk2
 {
     public partial class OverlayDesignerForm : Form
     {
+        private bool squareCutOn = false;
+        private bool freeCutOn = false;
+
+        private Rectangle Rect = new Rectangle();
+
+        public bool SquareCutOn
+        {
+            get { return this.squareCutOn; }
+            set { this.squareCutOn = value; }
+        }
+
+        public bool FreeCutOn
+        {
+            get { return this.freeCutOn; }
+            set { this.freeCutOn = value; }
+        }
 
         delegate void SetTextCallback(string text, bool err);
 
@@ -106,5 +122,67 @@ namespace SmashOverlayGeneratorMk2
                 changePictureInBox(picturePreviewBox, image);
             }
         }
+
+        private void squareCutBtn_Click(object sender, EventArgs e)
+        {
+            if (FreeCutOn)
+            {
+                FreeCutOn = false;
+                freeSelectBtn.Checked = false;
+            }
+            else
+            {
+                FreeCutOn = true;
+                freeSelectBtn.Checked = true;
+            }            
+        }
+
+        private void squareSelectBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SquareCutOn)
+            {
+                SquareCutOn = false;
+                squareSelectBtn.Checked = false;
+            }
+            else 
+            { 
+                SquareCutOn = true; 
+                squareSelectBtn.Checked = true; 
+            }
+        }
+
+        private void picturePreviewBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (SquareCutOn || FreeCutOn)
+            {
+                // Determine the initial rectangle coordinates...
+                RectStartPoint = e.Location;
+                Invalidate();
+            }
+        }
+
+        private void pictureBox1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (SquareCutOn)
+            {
+                if (e.Button != MouseButtons.Left)
+                    return;
+                Point tempEndPoint = e.Location;
+                Rect.Location = new Point(
+                    Math.Min(RectStartPoint.X, tempEndPoint.X),
+                    Math.Min(RectStartPoint.Y, tempEndPoint.Y));
+                Rect.Size = new Size(
+                    Math.Abs(RectStartPoint.X - tempEndPoint.X),
+                    Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
+                picturePreviewBox.Invalidate();
+            }
+        }
+
+        public Point RectStartPoint { get; set; }
     }
 }
