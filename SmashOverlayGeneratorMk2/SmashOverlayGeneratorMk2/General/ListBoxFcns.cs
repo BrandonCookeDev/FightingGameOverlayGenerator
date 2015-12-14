@@ -18,6 +18,13 @@ namespace SmashOverlayGeneratorMk2.General
 
         }
 
+        public static void showOverlayDesignerForm()
+        {
+            OverlayDesignerForm overlayDesignerForm = new OverlayDesignerForm();
+            overlayDesignerForm.Location = new Point(1000, 100);
+            overlayDesignerForm.Show();
+        }
+
         public static void showPicturePreviewForm(Image image)
         {
             PicturePreviewForm picturePreviewForm = new PicturePreviewForm(image);

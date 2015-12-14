@@ -88,6 +88,12 @@
     <Compile Include="DataPoint.cs" />
     <Compile Include="Objects\Template\MatchupPictureTemplate.cs" />
     <Compile Include="Objects\Template\Template.cs" />
+    <Compile Include="OverlayDesignerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OverlayDesignerForm.Designer.cs">
+      <DependentUpon>OverlayDesignerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SmashOverlayForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     <Compile Include="XSplit\Broadcaster.cs" />
     <Compile Include="XSplit\ResourceManagerX.cs" />
     <Compile Include="XSplit\Resources.Designer.cs" />
+    <EmbeddedResource Include="OverlayDesignerForm.resx">
+      <DependentUpon>OverlayDesignerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SmashOverlayForm.resx">
       <DependentUpon>SmashOverlayForm.cs</DependentUpon>
     </EmbeddedResource>

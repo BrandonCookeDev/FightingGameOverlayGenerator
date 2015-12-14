@@ -31,28 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SmashOverlayGenerator));
             this.competitorsTab = new System.Windows.Forms.TabPage();
             this.recentCombatantsPanel = new System.Windows.Forms.Panel();
+            this.recentCombatantListBox = new System.Windows.Forms.ListBox();
             this.undoFlushListBtn = new System.Windows.Forms.Button();
             this.flushListBtn = new System.Windows.Forms.Button();
             this.nameSwapWebcamBtn = new System.Windows.Forms.Button();
             this.swapNamesBtn = new System.Windows.Forms.Button();
             this.recentCombatantsLabel = new System.Windows.Forms.Label();
-            this.singlesPanel = new System.Windows.Forms.Panel();
-            this.player2LoserCheckbox = new System.Windows.Forms.CheckBox();
-            this.player1LoserCheckbox = new System.Windows.Forms.CheckBox();
-            this.clearSinglesScoresBtn = new System.Windows.Forms.Button();
-            this.decrementPlayer2Button = new System.Windows.Forms.Button();
-            this.incrementPlayer2Button = new System.Windows.Forms.Button();
-            this.decrementPlayer1Button = new System.Windows.Forms.Button();
-            this.incrementPlayer1Button = new System.Windows.Forms.Button();
-            this.singlesClearButton = new System.Windows.Forms.Button();
-            this.singlesP2ScoreTextbox = new System.Windows.Forms.TextBox();
-            this.singlesP2ScoreLabel = new System.Windows.Forms.Label();
-            this.singlesP2Textbox = new System.Windows.Forms.TextBox();
-            this.singlesP2Label = new System.Windows.Forms.Label();
-            this.singlesP1ScoreTextbox = new System.Windows.Forms.TextBox();
-            this.singlesP1ScoreLabel = new System.Windows.Forms.Label();
-            this.singlesP1Textbox = new System.Windows.Forms.TextBox();
-            this.singlesP1Label = new System.Windows.Forms.Label();
             this.doublesPanel = new System.Windows.Forms.Panel();
             this.clearDoublesScoresBtn = new System.Windows.Forms.Button();
             this.team2LoserCheckbox = new System.Windows.Forms.CheckBox();
@@ -76,6 +60,25 @@
             this.doublesT1ScoreTextbox = new System.Windows.Forms.TextBox();
             this.doublesT1ScoreLabel = new System.Windows.Forms.Label();
             this.teamOneLabel = new System.Windows.Forms.Label();
+            this.singlesPanel = new System.Windows.Forms.Panel();
+            this.p2RecentArraowBtn = new System.Windows.Forms.Button();
+            this.p1RecentArrowBtn = new System.Windows.Forms.Button();
+            this.player2LoserCheckbox = new System.Windows.Forms.CheckBox();
+            this.player1LoserCheckbox = new System.Windows.Forms.CheckBox();
+            this.clearSinglesScoresBtn = new System.Windows.Forms.Button();
+            this.decrementPlayer2Button = new System.Windows.Forms.Button();
+            this.incrementPlayer2Button = new System.Windows.Forms.Button();
+            this.decrementPlayer1Button = new System.Windows.Forms.Button();
+            this.incrementPlayer1Button = new System.Windows.Forms.Button();
+            this.singlesClearButton = new System.Windows.Forms.Button();
+            this.singlesP2ScoreTextbox = new System.Windows.Forms.TextBox();
+            this.singlesP2ScoreLabel = new System.Windows.Forms.Label();
+            this.singlesP2Textbox = new System.Windows.Forms.TextBox();
+            this.singlesP2Label = new System.Windows.Forms.Label();
+            this.singlesP1ScoreTextbox = new System.Windows.Forms.TextBox();
+            this.singlesP1ScoreLabel = new System.Windows.Forms.Label();
+            this.singlesP1Textbox = new System.Windows.Forms.TextBox();
+            this.singlesP1Label = new System.Windows.Forms.Label();
             this.tournamentRoundLabel = new System.Windows.Forms.Label();
             this.generateButton = new System.Windows.Forms.Button();
             this.gameTypeTabTab = new System.Windows.Forms.TabPage();
@@ -132,20 +135,16 @@
             this.matchupPicListView = new System.Windows.Forms.ListBox();
             this.matchupPicPreviewLabel = new System.Windows.Forms.Label();
             this.matchupPictureBox = new System.Windows.Forms.PictureBox();
+            this.overlayDesignerLauncher = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.settingsTab = new System.Windows.Forms.TabPage();
-            this.makeConnectionBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.autoUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.versionLabel = new System.Windows.Forms.Label();
             this.tournamentRoundCombobox = new System.Windows.Forms.ComboBox();
             this.logMessageLabel = new System.Windows.Forms.Label();
-            this.p1RecentArrowBtn = new System.Windows.Forms.Button();
-            this.p2RecentArraowBtn = new System.Windows.Forms.Button();
-            this.recentCombatantListBox = new System.Windows.Forms.ListBox();
             this.competitorsTab.SuspendLayout();
             this.recentCombatantsPanel.SuspendLayout();
-            this.singlesPanel.SuspendLayout();
             this.doublesPanel.SuspendLayout();
+            this.singlesPanel.SuspendLayout();
             this.gameTypeTabTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -166,7 +165,7 @@
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matchupPictureBox)).BeginInit();
-            this.settingsTab.SuspendLayout();
+            this.overlayDesignerLauncher.SuspendLayout();
             this.SuspendLayout();
             // 
             // competitorsTab
@@ -196,6 +195,15 @@
             this.recentCombatantsPanel.Size = new System.Drawing.Size(241, 254);
             this.recentCombatantsPanel.TabIndex = 16;
             this.recentCombatantsPanel.UseWaitCursor = true;
+            // 
+            // recentCombatantListBox
+            // 
+            this.recentCombatantListBox.FormattingEnabled = true;
+            this.recentCombatantListBox.Location = new System.Drawing.Point(0, 21);
+            this.recentCombatantListBox.Name = "recentCombatantListBox";
+            this.recentCombatantListBox.Size = new System.Drawing.Size(238, 160);
+            this.recentCombatantListBox.TabIndex = 36;
+            this.recentCombatantListBox.UseWaitCursor = true;
             // 
             // undoFlushListBtn
             // 
@@ -251,195 +259,6 @@
             this.recentCombatantsLabel.TabIndex = 33;
             this.recentCombatantsLabel.Text = "Recent Combatants:";
             this.recentCombatantsLabel.UseWaitCursor = true;
-            // 
-            // singlesPanel
-            // 
-            this.singlesPanel.Controls.Add(this.p2RecentArraowBtn);
-            this.singlesPanel.Controls.Add(this.p1RecentArrowBtn);
-            this.singlesPanel.Controls.Add(this.player2LoserCheckbox);
-            this.singlesPanel.Controls.Add(this.player1LoserCheckbox);
-            this.singlesPanel.Controls.Add(this.clearSinglesScoresBtn);
-            this.singlesPanel.Controls.Add(this.decrementPlayer2Button);
-            this.singlesPanel.Controls.Add(this.incrementPlayer2Button);
-            this.singlesPanel.Controls.Add(this.decrementPlayer1Button);
-            this.singlesPanel.Controls.Add(this.incrementPlayer1Button);
-            this.singlesPanel.Controls.Add(this.singlesClearButton);
-            this.singlesPanel.Controls.Add(this.singlesP2ScoreTextbox);
-            this.singlesPanel.Controls.Add(this.singlesP2ScoreLabel);
-            this.singlesPanel.Controls.Add(this.singlesP2Textbox);
-            this.singlesPanel.Controls.Add(this.singlesP2Label);
-            this.singlesPanel.Controls.Add(this.singlesP1ScoreTextbox);
-            this.singlesPanel.Controls.Add(this.singlesP1ScoreLabel);
-            this.singlesPanel.Controls.Add(this.singlesP1Textbox);
-            this.singlesPanel.Controls.Add(this.singlesP1Label);
-            this.singlesPanel.Location = new System.Drawing.Point(7, 4);
-            this.singlesPanel.Name = "singlesPanel";
-            this.singlesPanel.Size = new System.Drawing.Size(237, 254);
-            this.singlesPanel.TabIndex = 14;
-            this.singlesPanel.UseWaitCursor = true;
-            // 
-            // player2LoserCheckbox
-            // 
-            this.player2LoserCheckbox.AutoSize = true;
-            this.player2LoserCheckbox.Location = new System.Drawing.Point(6, 104);
-            this.player2LoserCheckbox.Name = "player2LoserCheckbox";
-            this.player2LoserCheckbox.Size = new System.Drawing.Size(32, 17);
-            this.player2LoserCheckbox.TabIndex = 30;
-            this.player2LoserCheckbox.Text = "L";
-            this.player2LoserCheckbox.UseVisualStyleBackColor = true;
-            this.player2LoserCheckbox.UseWaitCursor = true;
-            this.player2LoserCheckbox.CheckedChanged += new System.EventHandler(this.player2LoserCheckbox_CheckedChanged);
-            // 
-            // player1LoserCheckbox
-            // 
-            this.player1LoserCheckbox.AutoSize = true;
-            this.player1LoserCheckbox.Location = new System.Drawing.Point(5, 32);
-            this.player1LoserCheckbox.Name = "player1LoserCheckbox";
-            this.player1LoserCheckbox.Size = new System.Drawing.Size(32, 17);
-            this.player1LoserCheckbox.TabIndex = 29;
-            this.player1LoserCheckbox.Text = "L";
-            this.player1LoserCheckbox.UseVisualStyleBackColor = true;
-            this.player1LoserCheckbox.UseWaitCursor = true;
-            this.player1LoserCheckbox.CheckedChanged += new System.EventHandler(this.player1LoserCheckbox_CheckedChanged);
-            // 
-            // clearSinglesScoresBtn
-            // 
-            this.clearSinglesScoresBtn.Location = new System.Drawing.Point(34, 180);
-            this.clearSinglesScoresBtn.Name = "clearSinglesScoresBtn";
-            this.clearSinglesScoresBtn.Size = new System.Drawing.Size(116, 23);
-            this.clearSinglesScoresBtn.TabIndex = 28;
-            this.clearSinglesScoresBtn.Text = "Clear Scores";
-            this.clearSinglesScoresBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.clearSinglesScoresBtn.UseVisualStyleBackColor = true;
-            this.clearSinglesScoresBtn.UseWaitCursor = true;
-            this.clearSinglesScoresBtn.Click += new System.EventHandler(this.clearSinglesScoresBtn_Click);
-            // 
-            // decrementPlayer2Button
-            // 
-            this.decrementPlayer2Button.Location = new System.Drawing.Point(126, 128);
-            this.decrementPlayer2Button.Name = "decrementPlayer2Button";
-            this.decrementPlayer2Button.Size = new System.Drawing.Size(24, 23);
-            this.decrementPlayer2Button.TabIndex = 26;
-            this.decrementPlayer2Button.Text = "-";
-            this.decrementPlayer2Button.UseVisualStyleBackColor = true;
-            this.decrementPlayer2Button.UseWaitCursor = true;
-            this.decrementPlayer2Button.Click += new System.EventHandler(this.decrementPlayer2Button_Click);
-            // 
-            // incrementPlayer2Button
-            // 
-            this.incrementPlayer2Button.Location = new System.Drawing.Point(95, 128);
-            this.incrementPlayer2Button.Name = "incrementPlayer2Button";
-            this.incrementPlayer2Button.Size = new System.Drawing.Size(24, 23);
-            this.incrementPlayer2Button.TabIndex = 25;
-            this.incrementPlayer2Button.Text = "+";
-            this.incrementPlayer2Button.UseVisualStyleBackColor = true;
-            this.incrementPlayer2Button.UseWaitCursor = true;
-            this.incrementPlayer2Button.Click += new System.EventHandler(this.incrementPlayer2Button_Click);
-            // 
-            // decrementPlayer1Button
-            // 
-            this.decrementPlayer1Button.Location = new System.Drawing.Point(126, 57);
-            this.decrementPlayer1Button.Name = "decrementPlayer1Button";
-            this.decrementPlayer1Button.Size = new System.Drawing.Size(24, 23);
-            this.decrementPlayer1Button.TabIndex = 24;
-            this.decrementPlayer1Button.Text = "-";
-            this.decrementPlayer1Button.UseVisualStyleBackColor = true;
-            this.decrementPlayer1Button.UseWaitCursor = true;
-            this.decrementPlayer1Button.Click += new System.EventHandler(this.decrementPlayer1Button_Click);
-            // 
-            // incrementPlayer1Button
-            // 
-            this.incrementPlayer1Button.Location = new System.Drawing.Point(95, 57);
-            this.incrementPlayer1Button.Name = "incrementPlayer1Button";
-            this.incrementPlayer1Button.Size = new System.Drawing.Size(24, 23);
-            this.incrementPlayer1Button.TabIndex = 23;
-            this.incrementPlayer1Button.Text = "+";
-            this.incrementPlayer1Button.UseVisualStyleBackColor = true;
-            this.incrementPlayer1Button.UseWaitCursor = true;
-            this.incrementPlayer1Button.Click += new System.EventHandler(this.incrementPlayer1Button_Click);
-            // 
-            // singlesClearButton
-            // 
-            this.singlesClearButton.Location = new System.Drawing.Point(34, 209);
-            this.singlesClearButton.Name = "singlesClearButton";
-            this.singlesClearButton.Size = new System.Drawing.Size(116, 23);
-            this.singlesClearButton.TabIndex = 22;
-            this.singlesClearButton.Text = "Clear All";
-            this.singlesClearButton.UseVisualStyleBackColor = true;
-            this.singlesClearButton.UseWaitCursor = true;
-            this.singlesClearButton.Click += new System.EventHandler(this.singlesClearButton_Click_1);
-            // 
-            // singlesP2ScoreTextbox
-            // 
-            this.singlesP2ScoreTextbox.Location = new System.Drawing.Point(62, 130);
-            this.singlesP2ScoreTextbox.Name = "singlesP2ScoreTextbox";
-            this.singlesP2ScoreTextbox.Size = new System.Drawing.Size(26, 20);
-            this.singlesP2ScoreTextbox.TabIndex = 20;
-            this.singlesP2ScoreTextbox.UseWaitCursor = true;
-            // 
-            // singlesP2ScoreLabel
-            // 
-            this.singlesP2ScoreLabel.AutoSize = true;
-            this.singlesP2ScoreLabel.Location = new System.Drawing.Point(18, 133);
-            this.singlesP2ScoreLabel.Name = "singlesP2ScoreLabel";
-            this.singlesP2ScoreLabel.Size = new System.Drawing.Size(38, 13);
-            this.singlesP2ScoreLabel.TabIndex = 19;
-            this.singlesP2ScoreLabel.Text = "Score:";
-            this.singlesP2ScoreLabel.UseWaitCursor = true;
-            // 
-            // singlesP2Textbox
-            // 
-            this.singlesP2Textbox.Location = new System.Drawing.Point(43, 100);
-            this.singlesP2Textbox.Name = "singlesP2Textbox";
-            this.singlesP2Textbox.Size = new System.Drawing.Size(147, 20);
-            this.singlesP2Textbox.TabIndex = 18;
-            this.singlesP2Textbox.UseWaitCursor = true;
-            // 
-            // singlesP2Label
-            // 
-            this.singlesP2Label.AutoSize = true;
-            this.singlesP2Label.Location = new System.Drawing.Point(3, 85);
-            this.singlesP2Label.Name = "singlesP2Label";
-            this.singlesP2Label.Size = new System.Drawing.Size(67, 13);
-            this.singlesP2Label.TabIndex = 17;
-            this.singlesP2Label.Text = "Combatant 2";
-            this.singlesP2Label.UseWaitCursor = true;
-            // 
-            // singlesP1ScoreTextbox
-            // 
-            this.singlesP1ScoreTextbox.Location = new System.Drawing.Point(62, 59);
-            this.singlesP1ScoreTextbox.Name = "singlesP1ScoreTextbox";
-            this.singlesP1ScoreTextbox.Size = new System.Drawing.Size(26, 20);
-            this.singlesP1ScoreTextbox.TabIndex = 16;
-            this.singlesP1ScoreTextbox.UseWaitCursor = true;
-            // 
-            // singlesP1ScoreLabel
-            // 
-            this.singlesP1ScoreLabel.AutoSize = true;
-            this.singlesP1ScoreLabel.Location = new System.Drawing.Point(18, 62);
-            this.singlesP1ScoreLabel.Name = "singlesP1ScoreLabel";
-            this.singlesP1ScoreLabel.Size = new System.Drawing.Size(38, 13);
-            this.singlesP1ScoreLabel.TabIndex = 15;
-            this.singlesP1ScoreLabel.Text = "Score:";
-            this.singlesP1ScoreLabel.UseWaitCursor = true;
-            // 
-            // singlesP1Textbox
-            // 
-            this.singlesP1Textbox.Location = new System.Drawing.Point(43, 30);
-            this.singlesP1Textbox.Name = "singlesP1Textbox";
-            this.singlesP1Textbox.Size = new System.Drawing.Size(147, 20);
-            this.singlesP1Textbox.TabIndex = 14;
-            this.singlesP1Textbox.UseWaitCursor = true;
-            // 
-            // singlesP1Label
-            // 
-            this.singlesP1Label.AutoSize = true;
-            this.singlesP1Label.Location = new System.Drawing.Point(3, 14);
-            this.singlesP1Label.Name = "singlesP1Label";
-            this.singlesP1Label.Size = new System.Drawing.Size(67, 13);
-            this.singlesP1Label.TabIndex = 13;
-            this.singlesP1Label.Text = "Combatant 1";
-            this.singlesP1Label.UseWaitCursor = true;
             // 
             // doublesPanel
             // 
@@ -688,6 +507,217 @@
             this.teamOneLabel.TabIndex = 23;
             this.teamOneLabel.Text = "Team 1";
             this.teamOneLabel.UseWaitCursor = true;
+            // 
+            // singlesPanel
+            // 
+            this.singlesPanel.Controls.Add(this.p2RecentArraowBtn);
+            this.singlesPanel.Controls.Add(this.p1RecentArrowBtn);
+            this.singlesPanel.Controls.Add(this.player2LoserCheckbox);
+            this.singlesPanel.Controls.Add(this.player1LoserCheckbox);
+            this.singlesPanel.Controls.Add(this.clearSinglesScoresBtn);
+            this.singlesPanel.Controls.Add(this.decrementPlayer2Button);
+            this.singlesPanel.Controls.Add(this.incrementPlayer2Button);
+            this.singlesPanel.Controls.Add(this.decrementPlayer1Button);
+            this.singlesPanel.Controls.Add(this.incrementPlayer1Button);
+            this.singlesPanel.Controls.Add(this.singlesClearButton);
+            this.singlesPanel.Controls.Add(this.singlesP2ScoreTextbox);
+            this.singlesPanel.Controls.Add(this.singlesP2ScoreLabel);
+            this.singlesPanel.Controls.Add(this.singlesP2Textbox);
+            this.singlesPanel.Controls.Add(this.singlesP2Label);
+            this.singlesPanel.Controls.Add(this.singlesP1ScoreTextbox);
+            this.singlesPanel.Controls.Add(this.singlesP1ScoreLabel);
+            this.singlesPanel.Controls.Add(this.singlesP1Textbox);
+            this.singlesPanel.Controls.Add(this.singlesP1Label);
+            this.singlesPanel.Location = new System.Drawing.Point(7, 4);
+            this.singlesPanel.Name = "singlesPanel";
+            this.singlesPanel.Size = new System.Drawing.Size(237, 254);
+            this.singlesPanel.TabIndex = 14;
+            this.singlesPanel.UseWaitCursor = true;
+            // 
+            // p2RecentArraowBtn
+            // 
+            this.p2RecentArraowBtn.Location = new System.Drawing.Point(196, 99);
+            this.p2RecentArraowBtn.Name = "p2RecentArraowBtn";
+            this.p2RecentArraowBtn.Size = new System.Drawing.Size(38, 23);
+            this.p2RecentArraowBtn.TabIndex = 32;
+            this.p2RecentArraowBtn.Text = "<==";
+            this.p2RecentArraowBtn.UseVisualStyleBackColor = true;
+            this.p2RecentArraowBtn.UseWaitCursor = true;
+            this.p2RecentArraowBtn.Click += new System.EventHandler(this.p2RecentArraowBtn_Click);
+            // 
+            // p1RecentArrowBtn
+            // 
+            this.p1RecentArrowBtn.Location = new System.Drawing.Point(196, 28);
+            this.p1RecentArrowBtn.Name = "p1RecentArrowBtn";
+            this.p1RecentArrowBtn.Size = new System.Drawing.Size(38, 23);
+            this.p1RecentArrowBtn.TabIndex = 31;
+            this.p1RecentArrowBtn.Text = "<==";
+            this.p1RecentArrowBtn.UseVisualStyleBackColor = true;
+            this.p1RecentArrowBtn.UseWaitCursor = true;
+            this.p1RecentArrowBtn.Click += new System.EventHandler(this.p1RecentArrowBtn_Click);
+            // 
+            // player2LoserCheckbox
+            // 
+            this.player2LoserCheckbox.AutoSize = true;
+            this.player2LoserCheckbox.Location = new System.Drawing.Point(6, 104);
+            this.player2LoserCheckbox.Name = "player2LoserCheckbox";
+            this.player2LoserCheckbox.Size = new System.Drawing.Size(32, 17);
+            this.player2LoserCheckbox.TabIndex = 30;
+            this.player2LoserCheckbox.Text = "L";
+            this.player2LoserCheckbox.UseVisualStyleBackColor = true;
+            this.player2LoserCheckbox.UseWaitCursor = true;
+            this.player2LoserCheckbox.CheckedChanged += new System.EventHandler(this.player2LoserCheckbox_CheckedChanged);
+            // 
+            // player1LoserCheckbox
+            // 
+            this.player1LoserCheckbox.AutoSize = true;
+            this.player1LoserCheckbox.Location = new System.Drawing.Point(5, 32);
+            this.player1LoserCheckbox.Name = "player1LoserCheckbox";
+            this.player1LoserCheckbox.Size = new System.Drawing.Size(32, 17);
+            this.player1LoserCheckbox.TabIndex = 29;
+            this.player1LoserCheckbox.Text = "L";
+            this.player1LoserCheckbox.UseVisualStyleBackColor = true;
+            this.player1LoserCheckbox.UseWaitCursor = true;
+            this.player1LoserCheckbox.CheckedChanged += new System.EventHandler(this.player1LoserCheckbox_CheckedChanged);
+            // 
+            // clearSinglesScoresBtn
+            // 
+            this.clearSinglesScoresBtn.Location = new System.Drawing.Point(34, 180);
+            this.clearSinglesScoresBtn.Name = "clearSinglesScoresBtn";
+            this.clearSinglesScoresBtn.Size = new System.Drawing.Size(116, 23);
+            this.clearSinglesScoresBtn.TabIndex = 28;
+            this.clearSinglesScoresBtn.Text = "Clear Scores";
+            this.clearSinglesScoresBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.clearSinglesScoresBtn.UseVisualStyleBackColor = true;
+            this.clearSinglesScoresBtn.UseWaitCursor = true;
+            this.clearSinglesScoresBtn.Click += new System.EventHandler(this.clearSinglesScoresBtn_Click);
+            // 
+            // decrementPlayer2Button
+            // 
+            this.decrementPlayer2Button.Location = new System.Drawing.Point(126, 128);
+            this.decrementPlayer2Button.Name = "decrementPlayer2Button";
+            this.decrementPlayer2Button.Size = new System.Drawing.Size(24, 23);
+            this.decrementPlayer2Button.TabIndex = 26;
+            this.decrementPlayer2Button.Text = "-";
+            this.decrementPlayer2Button.UseVisualStyleBackColor = true;
+            this.decrementPlayer2Button.UseWaitCursor = true;
+            this.decrementPlayer2Button.Click += new System.EventHandler(this.decrementPlayer2Button_Click);
+            // 
+            // incrementPlayer2Button
+            // 
+            this.incrementPlayer2Button.Location = new System.Drawing.Point(95, 128);
+            this.incrementPlayer2Button.Name = "incrementPlayer2Button";
+            this.incrementPlayer2Button.Size = new System.Drawing.Size(24, 23);
+            this.incrementPlayer2Button.TabIndex = 25;
+            this.incrementPlayer2Button.Text = "+";
+            this.incrementPlayer2Button.UseVisualStyleBackColor = true;
+            this.incrementPlayer2Button.UseWaitCursor = true;
+            this.incrementPlayer2Button.Click += new System.EventHandler(this.incrementPlayer2Button_Click);
+            // 
+            // decrementPlayer1Button
+            // 
+            this.decrementPlayer1Button.Location = new System.Drawing.Point(126, 57);
+            this.decrementPlayer1Button.Name = "decrementPlayer1Button";
+            this.decrementPlayer1Button.Size = new System.Drawing.Size(24, 23);
+            this.decrementPlayer1Button.TabIndex = 24;
+            this.decrementPlayer1Button.Text = "-";
+            this.decrementPlayer1Button.UseVisualStyleBackColor = true;
+            this.decrementPlayer1Button.UseWaitCursor = true;
+            this.decrementPlayer1Button.Click += new System.EventHandler(this.decrementPlayer1Button_Click);
+            // 
+            // incrementPlayer1Button
+            // 
+            this.incrementPlayer1Button.Location = new System.Drawing.Point(95, 57);
+            this.incrementPlayer1Button.Name = "incrementPlayer1Button";
+            this.incrementPlayer1Button.Size = new System.Drawing.Size(24, 23);
+            this.incrementPlayer1Button.TabIndex = 23;
+            this.incrementPlayer1Button.Text = "+";
+            this.incrementPlayer1Button.UseVisualStyleBackColor = true;
+            this.incrementPlayer1Button.UseWaitCursor = true;
+            this.incrementPlayer1Button.Click += new System.EventHandler(this.incrementPlayer1Button_Click);
+            // 
+            // singlesClearButton
+            // 
+            this.singlesClearButton.Location = new System.Drawing.Point(34, 209);
+            this.singlesClearButton.Name = "singlesClearButton";
+            this.singlesClearButton.Size = new System.Drawing.Size(116, 23);
+            this.singlesClearButton.TabIndex = 22;
+            this.singlesClearButton.Text = "Clear All";
+            this.singlesClearButton.UseVisualStyleBackColor = true;
+            this.singlesClearButton.UseWaitCursor = true;
+            this.singlesClearButton.Click += new System.EventHandler(this.singlesClearButton_Click_1);
+            // 
+            // singlesP2ScoreTextbox
+            // 
+            this.singlesP2ScoreTextbox.Location = new System.Drawing.Point(62, 130);
+            this.singlesP2ScoreTextbox.Name = "singlesP2ScoreTextbox";
+            this.singlesP2ScoreTextbox.Size = new System.Drawing.Size(26, 20);
+            this.singlesP2ScoreTextbox.TabIndex = 20;
+            this.singlesP2ScoreTextbox.UseWaitCursor = true;
+            // 
+            // singlesP2ScoreLabel
+            // 
+            this.singlesP2ScoreLabel.AutoSize = true;
+            this.singlesP2ScoreLabel.Location = new System.Drawing.Point(18, 133);
+            this.singlesP2ScoreLabel.Name = "singlesP2ScoreLabel";
+            this.singlesP2ScoreLabel.Size = new System.Drawing.Size(38, 13);
+            this.singlesP2ScoreLabel.TabIndex = 19;
+            this.singlesP2ScoreLabel.Text = "Score:";
+            this.singlesP2ScoreLabel.UseWaitCursor = true;
+            // 
+            // singlesP2Textbox
+            // 
+            this.singlesP2Textbox.Location = new System.Drawing.Point(43, 100);
+            this.singlesP2Textbox.Name = "singlesP2Textbox";
+            this.singlesP2Textbox.Size = new System.Drawing.Size(147, 20);
+            this.singlesP2Textbox.TabIndex = 18;
+            this.singlesP2Textbox.UseWaitCursor = true;
+            // 
+            // singlesP2Label
+            // 
+            this.singlesP2Label.AutoSize = true;
+            this.singlesP2Label.Location = new System.Drawing.Point(3, 85);
+            this.singlesP2Label.Name = "singlesP2Label";
+            this.singlesP2Label.Size = new System.Drawing.Size(67, 13);
+            this.singlesP2Label.TabIndex = 17;
+            this.singlesP2Label.Text = "Combatant 2";
+            this.singlesP2Label.UseWaitCursor = true;
+            // 
+            // singlesP1ScoreTextbox
+            // 
+            this.singlesP1ScoreTextbox.Location = new System.Drawing.Point(62, 59);
+            this.singlesP1ScoreTextbox.Name = "singlesP1ScoreTextbox";
+            this.singlesP1ScoreTextbox.Size = new System.Drawing.Size(26, 20);
+            this.singlesP1ScoreTextbox.TabIndex = 16;
+            this.singlesP1ScoreTextbox.UseWaitCursor = true;
+            // 
+            // singlesP1ScoreLabel
+            // 
+            this.singlesP1ScoreLabel.AutoSize = true;
+            this.singlesP1ScoreLabel.Location = new System.Drawing.Point(18, 62);
+            this.singlesP1ScoreLabel.Name = "singlesP1ScoreLabel";
+            this.singlesP1ScoreLabel.Size = new System.Drawing.Size(38, 13);
+            this.singlesP1ScoreLabel.TabIndex = 15;
+            this.singlesP1ScoreLabel.Text = "Score:";
+            this.singlesP1ScoreLabel.UseWaitCursor = true;
+            // 
+            // singlesP1Textbox
+            // 
+            this.singlesP1Textbox.Location = new System.Drawing.Point(43, 30);
+            this.singlesP1Textbox.Name = "singlesP1Textbox";
+            this.singlesP1Textbox.Size = new System.Drawing.Size(147, 20);
+            this.singlesP1Textbox.TabIndex = 14;
+            this.singlesP1Textbox.UseWaitCursor = true;
+            // 
+            // singlesP1Label
+            // 
+            this.singlesP1Label.AutoSize = true;
+            this.singlesP1Label.Location = new System.Drawing.Point(3, 14);
+            this.singlesP1Label.Name = "singlesP1Label";
+            this.singlesP1Label.Size = new System.Drawing.Size(67, 13);
+            this.singlesP1Label.TabIndex = 13;
+            this.singlesP1Label.Text = "Combatant 1";
+            this.singlesP1Label.UseWaitCursor = true;
             // 
             // tournamentRoundLabel
             // 
@@ -947,6 +977,7 @@
             this.smashOverlayTabControl.Controls.Add(this.competitorsTab);
             this.smashOverlayTabControl.Controls.Add(this.casterTab);
             this.smashOverlayTabControl.Controls.Add(this.matchupPicTab);
+            this.smashOverlayTabControl.Controls.Add(this.overlayDesignerLauncher);
             this.smashOverlayTabControl.Controls.Add(this.settingsTab);
             this.smashOverlayTabControl.Location = new System.Drawing.Point(13, 13);
             this.smashOverlayTabControl.Multiline = true;
@@ -994,7 +1025,7 @@
             // 
             // clearCasterButton
             // 
-            this.clearCasterButton.Location = new System.Drawing.Point(16, 245);
+            this.clearCasterButton.Location = new System.Drawing.Point(19, 245);
             this.clearCasterButton.Name = "clearCasterButton";
             this.clearCasterButton.Size = new System.Drawing.Size(121, 22);
             this.clearCasterButton.TabIndex = 14;
@@ -1366,11 +1397,29 @@
             this.matchupPictureBox.TabStop = false;
             this.matchupPictureBox.Click += new System.EventHandler(this.matchupPictureBox_Click);
             // 
+            // overlayDesignerLauncher
+            // 
+            this.overlayDesignerLauncher.Controls.Add(this.button1);
+            this.overlayDesignerLauncher.Location = new System.Drawing.Point(4, 22);
+            this.overlayDesignerLauncher.Name = "overlayDesignerLauncher";
+            this.overlayDesignerLauncher.Padding = new System.Windows.Forms.Padding(3);
+            this.overlayDesignerLauncher.Size = new System.Drawing.Size(506, 273);
+            this.overlayDesignerLauncher.TabIndex = 6;
+            this.overlayDesignerLauncher.Text = "Overlay Designer";
+            this.overlayDesignerLauncher.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(315, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(156, 48);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Launch Overlay Designer";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // settingsTab
             // 
-            this.settingsTab.Controls.Add(this.makeConnectionBtn);
-            this.settingsTab.Controls.Add(this.label1);
-            this.settingsTab.Controls.Add(this.autoUpdateCheckbox);
             this.settingsTab.Location = new System.Drawing.Point(4, 22);
             this.settingsTab.Name = "settingsTab";
             this.settingsTab.Size = new System.Drawing.Size(506, 273);
@@ -1378,46 +1427,16 @@
             this.settingsTab.Text = "Settings";
             this.settingsTab.UseVisualStyleBackColor = true;
             // 
-            // makeConnectionBtn
-            // 
-            this.makeConnectionBtn.Location = new System.Drawing.Point(72, 194);
-            this.makeConnectionBtn.Name = "makeConnectionBtn";
-            this.makeConnectionBtn.Size = new System.Drawing.Size(95, 42);
-            this.makeConnectionBtn.TabIndex = 2;
-            this.makeConnectionBtn.Text = "Make Connection";
-            this.makeConnectionBtn.UseVisualStyleBackColor = true;
-            this.makeConnectionBtn.Click += new System.EventHandler(this.makeConnectionBtn_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(176, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "This functionality is not yet available";
-            // 
-            // autoUpdateCheckbox
-            // 
-            this.autoUpdateCheckbox.AutoSize = true;
-            this.autoUpdateCheckbox.Location = new System.Drawing.Point(26, 39);
-            this.autoUpdateCheckbox.Name = "autoUpdateCheckbox";
-            this.autoUpdateCheckbox.Size = new System.Drawing.Size(122, 17);
-            this.autoUpdateCheckbox.TabIndex = 0;
-            this.autoUpdateCheckbox.Text = "Auto Update Picture";
-            this.autoUpdateCheckbox.UseVisualStyleBackColor = true;
-            this.autoUpdateCheckbox.CheckedChanged += new System.EventHandler(this.autoUpdateCheckbox_CheckedChanged);
-            // 
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
             this.versionLabel.BackColor = System.Drawing.Color.Transparent;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.versionLabel.Location = new System.Drawing.Point(490, 9);
+            this.versionLabel.Location = new System.Drawing.Point(0, 387);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(37, 15);
+            this.versionLabel.Size = new System.Drawing.Size(49, 15);
             this.versionLabel.TabIndex = 14;
-            this.versionLabel.Text = "v 3.4";
+            this.versionLabel.Text = "v 3.5.1";
             // 
             // tournamentRoundCombobox
             // 
@@ -1443,46 +1462,18 @@
             this.logMessageLabel.AutoSize = true;
             this.logMessageLabel.BackColor = System.Drawing.Color.Transparent;
             this.logMessageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logMessageLabel.Location = new System.Drawing.Point(17, 362);
+            this.logMessageLabel.Location = new System.Drawing.Point(30, 353);
             this.logMessageLabel.Name = "logMessageLabel";
             this.logMessageLabel.Size = new System.Drawing.Size(19, 15);
             this.logMessageLabel.TabIndex = 19;
             this.logMessageLabel.Text = "...";
-            // 
-            // p1RecentArrowBtn
-            // 
-            this.p1RecentArrowBtn.Location = new System.Drawing.Point(196, 28);
-            this.p1RecentArrowBtn.Name = "p1RecentArrowBtn";
-            this.p1RecentArrowBtn.Size = new System.Drawing.Size(38, 23);
-            this.p1RecentArrowBtn.TabIndex = 31;
-            this.p1RecentArrowBtn.Text = "<==";
-            this.p1RecentArrowBtn.UseVisualStyleBackColor = true;
-            this.p1RecentArrowBtn.Click += new System.EventHandler(this.p1RecentArrowBtn_Click);
-            // 
-            // p2RecentArraowBtn
-            // 
-            this.p2RecentArraowBtn.Location = new System.Drawing.Point(196, 99);
-            this.p2RecentArraowBtn.Name = "p2RecentArraowBtn";
-            this.p2RecentArraowBtn.Size = new System.Drawing.Size(38, 23);
-            this.p2RecentArraowBtn.TabIndex = 32;
-            this.p2RecentArraowBtn.Text = "<==";
-            this.p2RecentArraowBtn.UseVisualStyleBackColor = true;
-            this.p2RecentArraowBtn.Click += new System.EventHandler(this.p2RecentArraowBtn_Click);
-            // 
-            // recentCombatantListBox
-            // 
-            this.recentCombatantListBox.FormattingEnabled = true;
-            this.recentCombatantListBox.Location = new System.Drawing.Point(0, 21);
-            this.recentCombatantListBox.Name = "recentCombatantListBox";
-            this.recentCombatantListBox.Size = new System.Drawing.Size(238, 160);
-            this.recentCombatantListBox.TabIndex = 36;
             // 
             // SmashOverlayGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::SmashOverlayGeneratorMk2.Properties.Resources.future_city;
-            this.ClientSize = new System.Drawing.Size(537, 436);
+            this.ClientSize = new System.Drawing.Size(537, 402);
             this.Controls.Add(this.logMessageLabel);
             this.Controls.Add(this.tournamentRoundCombobox);
             this.Controls.Add(this.tournamentRoundLabel);
@@ -1498,10 +1489,10 @@
             this.competitorsTab.ResumeLayout(false);
             this.recentCombatantsPanel.ResumeLayout(false);
             this.recentCombatantsPanel.PerformLayout();
-            this.singlesPanel.ResumeLayout(false);
-            this.singlesPanel.PerformLayout();
             this.doublesPanel.ResumeLayout(false);
             this.doublesPanel.PerformLayout();
+            this.singlesPanel.ResumeLayout(false);
+            this.singlesPanel.PerformLayout();
             this.gameTypeTabTab.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -1527,8 +1518,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.matchupPictureBox)).EndInit();
-            this.settingsTab.ResumeLayout(false);
-            this.settingsTab.PerformLayout();
+            this.overlayDesignerLauncher.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1613,9 +1603,6 @@
         private System.Windows.Forms.Button incrementPlayer1Button;
         private System.Windows.Forms.ComboBox tournamentRoundCombobox;
         private System.Windows.Forms.TabPage settingsTab;
-        private System.Windows.Forms.CheckBox autoUpdateCheckbox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button makeConnectionBtn;
         private System.Windows.Forms.Label logMessageLabel;
         private System.Windows.Forms.TabPage matchupPicTab;
         private System.Windows.Forms.SplitContainer splitContainer3;
@@ -1649,6 +1636,8 @@
         private System.Windows.Forms.Button p1RecentArrowBtn;
         private System.Windows.Forms.Button p2RecentArraowBtn;
         private System.Windows.Forms.ListBox recentCombatantListBox;
+        private System.Windows.Forms.TabPage overlayDesignerLauncher;
+        private System.Windows.Forms.Button button1;
 
 
     }

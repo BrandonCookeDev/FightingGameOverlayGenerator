@@ -395,12 +395,18 @@ namespace SmashOverlayGeneratorMk2
                             greyOutDoubles(false);
                             singlesPanel.Visible = false;
                             doublesPanel.Visible = true;
-                            string[] split = Competitor1.Split('&');
-                            doublesT1P1Textbox.Text = split[0].Trim();
-                            doublesT1P2Textbox.Text = split[1].Trim();
-                            split = Competitor2.Split('&');
-                            doublesT2P1Textbox.Text = split[0].Trim();
-                            doublesT2P2Textbox.Text = split[1].Trim();
+                            if (Competitor1.Contains('&'))
+                            {
+                                string[] split = Competitor1.Split('&');
+                                doublesT1P1Textbox.Text = split[0].Trim();
+                                doublesT1P2Textbox.Text = split[1].Trim();
+                            }
+                            if(Competitor2.Contains('&'))
+                            {
+                                string[] split = Competitor2.Split('&');
+                                doublesT2P1Textbox.Text = split[0].Trim();
+                                doublesT2P2Textbox.Text = split[1].Trim();
+                            }
                             break;
                         default:
                             logToUser("Bad Game Type", true);
@@ -1234,6 +1240,14 @@ namespace SmashOverlayGeneratorMk2
 
         private void singlesButtonBig_Click(object sender, EventArgs e)
         {
+            if (GameType.Equals("doubles"))
+            {
+                string[] names = new string[recentCombatantListBox.Items.Count];
+                recentCombatantListBox.Items.CopyTo(names, 0);
+                GenFcns.flushRecentParticipants(names, doublesBackup);
+                recentCombatantListBox.Items.Clear();
+            }
+
             clearDoublesFields();
             GameType = "singles";
             smashOverlayTabControl.SelectedTab = competitorsTab;
@@ -1241,10 +1255,18 @@ namespace SmashOverlayGeneratorMk2
             doublesPanel.Visible = false;
             greyOutSingles(false);
             greyOutDoubles(true);
+            
         }
 
         private void doublesButtonBig_Click(object sender, EventArgs e)
-        {
+        {            
+            if (GameType.Equals("singles"))
+            {
+                string[] names = new string[recentCombatantListBox.Items.Count];
+                recentCombatantListBox.Items.CopyTo(names, 0);
+                GenFcns.flushRecentParticipants(names, doublesBackup);
+                recentCombatantListBox.Items.Clear();
+            }
             clearSinglesFields();
             GameType = "doubles";
             smashOverlayTabControl.SelectedTab = competitorsTab;
@@ -1322,7 +1344,11 @@ namespace SmashOverlayGeneratorMk2
         //SHORTCUT FOR SCORE UP AND DOWN
         private void SmashOverlayGenerator_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F5)
+            if (e.KeyCode == Keys.Enter)
+            {
+                generate();
+            }
+            else if (e.KeyCode == Keys.F5)
             {
                 incrementPlayer1();
             }
@@ -1832,6 +1858,11 @@ namespace SmashOverlayGeneratorMk2
             {
                 logToUser(ex.Message, true);
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            ListBoxFcns.showOverlayDesignerForm();
         }
     }    
 }

@@ -132,7 +132,7 @@ namespace SmashOverlayGeneratorMk2.General
                     int p2spy = cur.GetInt32(16);
                     int dpx = cur.GetInt32(17);
                     int dpy = cur.GetInt32(18);
-                    string opt = cur.GetString(19);
+                    string opt = cur.GetString(19).Replace("\n", "");
 
                     CompetitorPoint player1pt = new CompetitorPoint(p1px, p1py);
                     CompetitorPoint player2pt = new CompetitorPoint(p2px, p2py);
