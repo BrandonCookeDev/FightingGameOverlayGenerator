@@ -5,16 +5,45 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace SmashOverlayGeneratorMk2
 {
     public partial class OverlayDesignerForm : Form
     {
+        private Point mouseLocation;
+        private Image image;
+        private Hashtable imageStorage;
         private bool squareCutOn = false;
         private bool freeCutOn = false;
+        private bool isEditing = false;
 
         private Rectangle Rect = new Rectangle();
+
+        public Hashtable ImageStorage
+        {
+            get { return this.imageStorage; }
+            set { this.imageStorage = value; }
+        }
+
+        public Image GetImage
+        {
+            get { return this.image; }
+            set { this.image = value; }
+        }
+
+        public Point MouseLocation
+        {
+            get { return this.mouseLocation; }
+            set { this.mouseLocation = value; }
+        }
+
+        public bool IsEditing
+        {
+            get { return this.isEditing; }
+            set { this.isEditing = value; }
+        }
 
         public bool SquareCutOn
         {
@@ -34,6 +63,7 @@ namespace SmashOverlayGeneratorMk2
         {
             InitializeComponent();
             populateDataGrid();
+
         }
 
         private void clearBtn_Click(object sender, EventArgs e)
@@ -54,6 +84,7 @@ namespace SmashOverlayGeneratorMk2
 
         private void populateDataGrid()
         {
+            #region DataGrid
             overlayDesignerDataGrid.Rows.Add("FileName", "");
             overlayDesignerDataGrid.Rows.Add("TournamentPointX", "");
             overlayDesignerDataGrid.Rows.Add("TournamentPointY", "");
@@ -81,6 +112,12 @@ namespace SmashOverlayGeneratorMk2
             overlayDesignerDataGrid.Rows.Add("tourneyFormat", "");
             overlayDesignerDataGrid.Rows.Add("dateFormat", "");
             overlayDesignerDataGrid.Rows.Add("Color", "");
+            #endregion DataGrid
+        }
+
+        private void addToStorage(Point p, Color c)
+        {
+            ImageStorage.Add(p, c);
         }
 
         public static void changePictureInBox(PictureBox box, Bitmap image)
@@ -110,6 +147,7 @@ namespace SmashOverlayGeneratorMk2
             }
         }
 
+        #region Browse
         private void browsePicturesButton_Click(object sender, EventArgs e)
         {
             var FD = new System.Windows.Forms.OpenFileDialog();
@@ -119,21 +157,25 @@ namespace SmashOverlayGeneratorMk2
                 System.IO.FileInfo File = new System.IO.FileInfo(FD.FileName);
                 browsePictureTextbox.Text = fileToOpen;
                 Bitmap image = new Bitmap(Image.FromFile(fileToOpen));
+                GetImage = image;
+
                 changePictureInBox(picturePreviewBox, image);
             }
         }
+        #endregion Browse
 
+        #region CheckBoxButtons
         private void squareCutBtn_Click(object sender, EventArgs e)
         {
             if (FreeCutOn)
             {
                 FreeCutOn = false;
-                freeSelectBtn.Checked = false;
+                pointSelectBtn.Checked = false;
             }
             else
             {
                 FreeCutOn = true;
-                freeSelectBtn.Checked = true;
+                pointSelectBtn.Checked = true;
             }            
         }
 
@@ -150,11 +192,67 @@ namespace SmashOverlayGeneratorMk2
                 squareSelectBtn.Checked = true; 
             }
         }
+        #endregion CheckBoxButtons
 
         private void picturePreviewBox_Click(object sender, EventArgs e)
         {
 
         }
+
+        #region MouseOverPictureBoxEvents
+        public Point getCoordinates(object sender, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            Point coordinates = me.Location;
+            return coordinates;
+        }
+
+        private void picturePreviewBox_PaintPerpendicularLines(object sender, PaintEventArgs e)
+        {
+            Point point = MouseLocation;
+        }
+
+        private void picturePreviewBox_MouseOver(object sender, EventArgs e)
+        {
+            MouseLocation = getCoordinates(sender, e);
+
+            if (picturePreviewBox.Image != null)
+            {
+                using (Graphics g = Graphics.FromImage(picturePreviewBox.Image))
+                {
+                    //UNDRAW GREY LINE
+                    //for (int i = 0; i < ImageStorage.Count; i++ )
+                    //{
+                        
+                    //}
+                    g.DrawImage(GetImage, 0, 0);
+
+                    //DRAW GREY LINE
+
+                    //DRAW LINE TO THE BOTTOM OF BOX
+                    g.DrawLine(
+                        new Pen(Color.Gray, 2f),
+                        MouseLocation, new Point(MouseLocation.X, picturePreviewBox.Size.Height));
+
+                    //DRAW LINE TO THE TOP OF BOX
+                    g.DrawLine(
+                        new Pen(Color.Gray, 2f),
+                        MouseLocation, new Point(MouseLocation.X, 0));
+
+                    //DRAW LINE TO THE RIGHT SIDE OF BOX
+                    g.DrawLine(
+                        new Pen(Color.Gray, 2f),
+                        MouseLocation, new Point(picturePreviewBox.Size.Width, MouseLocation.Y));
+
+                    //DRAW LINE TO THE LEFT SIDE OF THE BOX
+                    g.DrawLine(
+                        new Pen(Color.Gray, 2f),
+                        MouseLocation, new Point(0, MouseLocation.Y));
+                }
+                picturePreviewBox.Invalidate();
+            }
+        }
+        #endregion MouseOverPictureBoxEvents
 
         private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -184,5 +282,12 @@ namespace SmashOverlayGeneratorMk2
         }
 
         public Point RectStartPoint { get; set; }
+
+        private void pointSelectBtn_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

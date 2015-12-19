@@ -39,7 +39,7 @@
             this.designerLogLabel = new System.Windows.Forms.Label();
             this.cutBtn = new System.Windows.Forms.Button();
             this.squareSelectBtn = new System.Windows.Forms.CheckBox();
-            this.freeSelectBtn = new System.Windows.Forms.CheckBox();
+            this.pointSelectBtn = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.overlayDesignerDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreviewBox)).BeginInit();
             this.SuspendLayout();
@@ -77,6 +77,7 @@
             this.picturePreviewBox.TabIndex = 0;
             this.picturePreviewBox.TabStop = false;
             this.picturePreviewBox.Click += new System.EventHandler(this.picturePreviewBox_Click);
+            this.picturePreviewBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picturePreviewBox_MouseOver);
             // 
             // clearBtn
             // 
@@ -147,23 +148,24 @@
             this.squareSelectBtn.UseVisualStyleBackColor = true;
             this.squareSelectBtn.CheckedChanged += new System.EventHandler(this.squareSelectBtn_CheckedChanged);
             // 
-            // freeSelectBtn
+            // pointSelectBtn
             // 
-            this.freeSelectBtn.Appearance = System.Windows.Forms.Appearance.Button;
-            this.freeSelectBtn.AutoSize = true;
-            this.freeSelectBtn.Location = new System.Drawing.Point(869, 98);
-            this.freeSelectBtn.Name = "freeSelectBtn";
-            this.freeSelectBtn.Size = new System.Drawing.Size(71, 23);
-            this.freeSelectBtn.TabIndex = 11;
-            this.freeSelectBtn.Text = "Free Select";
-            this.freeSelectBtn.UseVisualStyleBackColor = true;
+            this.pointSelectBtn.Appearance = System.Windows.Forms.Appearance.Button;
+            this.pointSelectBtn.AutoSize = true;
+            this.pointSelectBtn.Location = new System.Drawing.Point(869, 98);
+            this.pointSelectBtn.Name = "pointSelectBtn";
+            this.pointSelectBtn.Size = new System.Drawing.Size(74, 23);
+            this.pointSelectBtn.TabIndex = 11;
+            this.pointSelectBtn.Text = "Point Select";
+            this.pointSelectBtn.UseVisualStyleBackColor = true;
+            this.pointSelectBtn.CheckedChanged += new System.EventHandler(this.pointSelectBtn_CheckedChanged);
             // 
             // OverlayDesignerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1121, 570);
-            this.Controls.Add(this.freeSelectBtn);
+            this.Controls.Add(this.pointSelectBtn);
             this.Controls.Add(this.squareSelectBtn);
             this.Controls.Add(this.cutBtn);
             this.Controls.Add(this.designerLogLabel);
@@ -195,6 +197,6 @@
         private System.Windows.Forms.Label designerLogLabel;
         private System.Windows.Forms.Button cutBtn;
         private System.Windows.Forms.CheckBox squareSelectBtn;
-        private System.Windows.Forms.CheckBox freeSelectBtn;
+        private System.Windows.Forms.CheckBox pointSelectBtn;
     }
 }
