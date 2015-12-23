@@ -340,8 +340,8 @@ namespace SmashOverlayGeneratorMk2
 
             greyOutDoubles(true);
             greyOutSingles(true);
-            greyOutCaster(1, true);
-            greyOutCaster(2, true);
+            greyOutCaster(1, false);
+            greyOutCaster(2, false);
 
             singlesP1ScoreTextbox.Text = 0.ToString();
             singlesP2ScoreTextbox.Text = 0.ToString();

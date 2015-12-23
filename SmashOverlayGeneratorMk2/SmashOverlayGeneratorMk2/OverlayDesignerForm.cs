@@ -13,7 +13,8 @@ namespace SmashOverlayGeneratorMk2
     public partial class OverlayDesignerForm : Form
     {
         private Point mouseLocation;
-        private Image image;
+        private Image originalImage;
+        private Image copyImage;
         private Hashtable imageStorage;
         private bool squareCutOn = false;
         private bool freeCutOn = false;
@@ -27,10 +28,16 @@ namespace SmashOverlayGeneratorMk2
             set { this.imageStorage = value; }
         }
 
-        public Image GetImage
+        public Image OriginalImage
         {
-            get { return this.image; }
-            set { this.image = value; }
+            get { return this.originalImage; }
+            set { this.originalImage = value; }
+        }
+
+        public Image CopyImage
+        {
+            get { return this.copyImage; }
+            set { this.copyImage = value; }
         }
 
         public Point MouseLocation
@@ -157,7 +164,8 @@ namespace SmashOverlayGeneratorMk2
                 System.IO.FileInfo File = new System.IO.FileInfo(FD.FileName);
                 browsePictureTextbox.Text = fileToOpen;
                 Bitmap image = new Bitmap(Image.FromFile(fileToOpen));
-                GetImage = image;
+                OriginalImage = image;
+                CopyImage = image;
 
                 changePictureInBox(picturePreviewBox, image);
             }
@@ -204,6 +212,7 @@ namespace SmashOverlayGeneratorMk2
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
+            picturePreviewBox.PointToClient(coordinates);
             return coordinates;
         }
 
@@ -214,42 +223,50 @@ namespace SmashOverlayGeneratorMk2
 
         private void picturePreviewBox_MouseOver(object sender, EventArgs e)
         {
-            MouseLocation = getCoordinates(sender, e);
-
             if (picturePreviewBox.Image != null)
             {
-                using (Graphics g = Graphics.FromImage(picturePreviewBox.Image))
+                MouseLocation = getCoordinates(sender, e);
+                using (Graphics g = Graphics.FromImage(CopyImage))
                 {
-                    //UNDRAW GREY LINE
-                    //for (int i = 0; i < ImageStorage.Count; i++ )
-                    //{
-                        
-                    //}
-                    g.DrawImage(GetImage, 0, 0);
+                    using (Bitmap b = new Bitmap(OriginalImage))
+                    {
+                        //g.DrawImage(GetImage, 0, 0);
+                        //changePictureInBox(picturePreviewBox, new Bitmap(CopyImage));
+                        //DRAW GREY LINE
 
-                    //DRAW GREY LINE
+                        picturePreviewBox.Refresh();
 
-                    //DRAW LINE TO THE BOTTOM OF BOX
-                    g.DrawLine(
-                        new Pen(Color.Gray, 2f),
-                        MouseLocation, new Point(MouseLocation.X, picturePreviewBox.Size.Height));
+                        System.Single lineSize = 20f;
+                        Color lineColor = Color.FromArgb(90, 160, 160, 160);
 
-                    //DRAW LINE TO THE TOP OF BOX
-                    g.DrawLine(
-                        new Pen(Color.Gray, 2f),
-                        MouseLocation, new Point(MouseLocation.X, 0));
+                        picturePreviewBox.Refresh();
 
-                    //DRAW LINE TO THE RIGHT SIDE OF BOX
-                    g.DrawLine(
-                        new Pen(Color.Gray, 2f),
-                        MouseLocation, new Point(picturePreviewBox.Size.Width, MouseLocation.Y));
+                        //DRAW LINE TO THE BOTTOM OF BOX
+                        g.DrawLine(
+                            new Pen(lineColor, lineSize),
+                            MouseLocation, new Point(MouseLocation.X, picturePreviewBox.Image.Size.Height));
 
-                    //DRAW LINE TO THE LEFT SIDE OF THE BOX
-                    g.DrawLine(
-                        new Pen(Color.Gray, 2f),
-                        MouseLocation, new Point(0, MouseLocation.Y));
+                        //DRAW LINE TO THE TOP OF BOX
+                        g.DrawLine(
+                            new Pen(lineColor, lineSize),
+                            MouseLocation, new Point(MouseLocation.X, 0));
+
+                        //DRAW LINE TO THE RIGHT SIDE OF BOX
+                        g.DrawLine(
+                            new Pen(lineColor, lineSize),
+                            MouseLocation, new Point(picturePreviewBox.Image.Size.Width, MouseLocation.Y));
+
+                        //DRAW LINE TO THE LEFT SIDE OF THE BOX
+                        g.DrawLine(
+                            new Pen(lineColor, lineSize),
+                            MouseLocation, new Point(0, MouseLocation.Y));
+                    }
+
+                    g.Dispose();
                 }
+                
                 picturePreviewBox.Invalidate();
+                //picturePreviewBox.Invalidate();
             }
         }
         #endregion MouseOverPictureBoxEvents
