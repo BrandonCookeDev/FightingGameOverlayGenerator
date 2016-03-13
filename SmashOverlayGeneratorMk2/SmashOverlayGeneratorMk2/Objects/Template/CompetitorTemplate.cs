@@ -406,17 +406,9 @@ namespace SmashOverlayGeneratorMk2.Objects
             {
                 g.DrawString(form.TournamentName, TournamentFont, Brushes.White, TournamentNameRoundPoint.getPoint(), TourneyFormat);
 
-
-                if (form.TournamentRound.Equals("Pools") || form.TournamentRound.Equals("Friendlies"))
-                {
-                    RoundFont = new Font(FontFamily.GenericSerif, 30, FontStyle.Bold);
-                    g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, new Point(RoundPoint.X, RoundPoint.Y + 10), NameFormat);
-                }
-                else
-                {
-                    RoundFont = new Font(FontFamily.GenericSerif, 25, FontStyle.Bold);
-                    g.DrawString(form.TournamentRound.Replace(" ", "\n"), RoundFont, Brushes.White, RoundPoint.getPoint(), NameFormat);
-                }
+                RoundFont = new Font(FontFamily.GenericSerif, 25, FontStyle.Bold);
+                g.DrawString(form.TournamentRound, RoundFont, Brushes.White, RoundPoint.getPoint(), NameFormat);
+                
             }
 
             if (DatePoint != null)
@@ -458,11 +450,11 @@ namespace SmashOverlayGeneratorMk2.Objects
             }
             else
             {
-                Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 8, FontStyle.Bold);
-                Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 8, FontStyle.Bold);
-                ScoreFont = new Font(FontFamily.GenericSansSerif, 35, FontStyle.Bold);
-                RoundFont = new Font(FontFamily.GenericSerif, 25, FontStyle.Bold);
-                TournamentFont = new Font(FontFamily.GenericSansSerif, 27, FontStyle.Bold);
+                Name1Font = new Font(FontFamily.GenericSansSerif, fontSize[0] + 3, FontStyle.Bold);
+                Name2Font = new Font(FontFamily.GenericSansSerif, fontSize[1] + 3, FontStyle.Bold);
+                ScoreFont = new Font(FontFamily.GenericSansSerif, 23, FontStyle.Bold);
+                RoundFont = new Font(FontFamily.GenericSerif, 23, FontStyle.Bold);
+                TournamentFont = new Font(FontFamily.GenericSansSerif, 23, FontStyle.Bold);
             }
         }
     }

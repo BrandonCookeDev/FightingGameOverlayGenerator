@@ -156,13 +156,16 @@
     <None Include="Resources\3d_landscape_1551920x1080.jpg" />
     <None Include="Resources\fantasy-landscape-3d-wallpaper-9018-hd-widescreen-wallpapers.jpg" />
     <None Include="Resources\future-city.jpg" />
+    <Content Include="Images\Caster\WTT Commentary.png" />
     <Content Include="Images\Templates\CrudeCityOverlay.png" />
-    <EmbeddedResource Include="Images\Templates\FlashbackOverlayRedux2.png" />
+    <EmbeddedResource Include="Images\Templates\DarkBlue.png" />
+    <EmbeddedResource Include="Images\Templates\FBGTeamsOverlay.png" />
+    <Content Include="Images\Templates\FlashbackOverlayRedux2.png" />
     <Content Include="Images\Templates\SpaceWarOverlay.png" />
     <Content Include="Images\Templates\SpaceSunriseOverlay.png" />
     <Content Include="Images\Templates\FlashbackOverlayPOC.png" />
     <Content Include="Images\Templates\FlashbackOverlayPOCExtra.png" />
-    <EmbeddedResource Include="Images\Templates\FlashbackOverlayRedux.png" />
+    <Content Include="Images\Templates\FlashbackOverlayRedux.png" />
     <Content Include="Images\Templates\GreenOverlay.png" />
     <Content Include="Images\Templates\PurpleOverlay.png" />
     <EmbeddedResource Include="Images\Matchup\PurpleNeb.jpg" />
@@ -194,9 +197,11 @@
     <Content Include="Images\Templates\FireOverlay.png" />
     <EmbeddedResource Include="Images\Characters\SmashRenders\MrGame&amp;Watch.png" />
     <EmbeddedResource Include="Images\Tournament\S%40CsLogo.png" />
-    <EmbeddedResource Include="Images\Templates\FireOverlayNew.png" />
+    <None Include="Images\Templates\FireOverlayNew.png" />
     <Content Include="Images\Templates\GreenOverlayNew.png" />
     <Content Include="Images\Templates\PurpleOverlayNew.png" />
+    <EmbeddedResource Include="Images\Templates\WTT Singles.png" />
+    <EmbeddedResource Include="Images\Templates\WTT Teams.png" />
     <Content Include="smash-bros-logo.ico" />
   </ItemGroup>
   <ItemGroup>
